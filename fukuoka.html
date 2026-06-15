@@ -57,37 +57,43 @@
   .daytabs button.on{background:var(--ink); color:#fff; border-color:var(--ink)}
   .daytabs button span{font-weight:600; opacity:.75; font-size:11px; margin-left:4px}
   /* timeline */
-  .item{position:relative; margin:0 0 9px; padding-left:14px}
-  .item:before{content:""; position:absolute; left:4px; top:6px; bottom:-9px; width:2px; background:var(--line)}
+  .day-head{font-size:18px; font-weight:900; letter-spacing:-.3px; margin:8px 2px 16px; color:var(--ink)}
+  .day-head span{font-weight:700; color:var(--muted); font-size:13px; margin-left:7px}
+  .item{position:relative; margin:0 0 16px; padding-left:19px}
+  .item:before{content:""; position:absolute; left:5px; top:9px; bottom:-16px; width:2px; background:var(--line)}
   .item:last-child:before{display:none}
-  .dot{position:absolute; left:0; top:5px; width:10px; height:10px; border-radius:50%; box-shadow:0 0 0 3px var(--bg)}
-  .ic{display:flex; align-items:baseline; gap:8px}
-  .time{font-weight:800; font-size:13px; min-width:42px; color:var(--ink)}
-  .ititle{font-weight:800; font-size:14.5px; flex:1}
-  .badge-fix{font-size:10px; font-weight:800; color:#fff; padding:2px 6px; border-radius:6px; letter-spacing:.3px}
-  .places{margin:6px 0 0}
-  .place{display:flex; align-items:center; gap:8px; padding:8px 10px; border:1px solid var(--line); border-radius:10px; background:#fff; margin-top:6px}
-  .place.fix{border-left-width:4px}
-  .pname{flex:1; font-weight:600; font-size:14px}
+  .dot{position:absolute; left:0; top:7px; width:12px; height:12px; border-radius:50%; box-shadow:0 0 0 3px var(--bg)}
+  .ic{display:flex; align-items:center; gap:9px; margin-bottom:8px}
+  .time{font-weight:800; font-size:12.5px; color:#fff; background:var(--c,#999); padding:3px 9px; border-radius:7px; min-width:48px; text-align:center}
+  .ititle{font-weight:800; font-size:15px; flex:1; line-height:1.25; letter-spacing:-.2px}
+  .badge-fix{font-size:10px; font-weight:800; color:var(--c); border:1px solid var(--c); padding:1px 6px; border-radius:6px; letter-spacing:.3px; white-space:nowrap}
+  .del-item{background:none; border:0; color:#c0392b; font-weight:800; cursor:pointer; font-size:16px; padding:2px 4px; line-height:1}
+  .places{display:flex; flex-direction:column; gap:8px}
+  .place{display:flex; align-items:center; gap:10px; padding:12px 13px; border:1px solid var(--line); border-radius:12px; background:#fff}
+  .place.fix{background:color-mix(in srgb, var(--c) 7%, #fff); border-color:color-mix(in srgb, var(--c) 24%, var(--line))}
+  .circle{flex:0 0 auto; width:26px; height:26px; border-radius:50%; border:2px solid #cfcabf; background:#fff; color:transparent; font-weight:900; cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center; padding:0}
+  .place.done .circle{background:var(--sights); border-color:var(--sights); color:#fff}
+  .pname{flex:1; font-weight:700; font-size:14.5px; line-height:1.3}
   .place.done .pname{color:var(--muted); text-decoration:line-through}
-  .pbtn{border:0; background:#f1efe9; border-radius:8px; padding:6px 8px; font-size:13px; cursor:pointer; color:var(--ink); font-weight:700; text-decoration:none; display:inline-flex; align-items:center}
-  .pbtn.map{background:#eaf1ff; color:#2563eb}
-  .pbtn.chk{min-width:34px; justify-content:center}
-  .place.done .pbtn.chk{background:var(--sights); color:#fff}
-  .pexp{font-size:12px; color:var(--muted); cursor:pointer; user-select:none; padding:4px 2px}
-  /* purchase list */
-  .plist{margin:6px 0 2px; padding:8px 10px; background:#faf8f3; border:1px dashed var(--line); border-radius:10px}
-  .pitem{display:flex; align-items:center; gap:8px; margin-bottom:6px}
-  .pitem input.pi-name{flex:1; border:0; background:transparent; padding:4px 0; font-weight:600}
-  .pitem input.pi-price{width:92px; text-align:right}
-  .pitem .pi-chk{width:22px; height:22px; flex:0 0 auto}
+  .map-btn{flex:0 0 auto; text-decoration:none; background:#eaf1ff; color:#2563eb; font-weight:800; font-size:14px; padding:8px 11px; border-radius:9px}
+  .mini{flex:0 0 auto; background:none; border:0; color:#9aa0a8; cursor:pointer; font-size:15px; padding:5px 4px; line-height:1}
+  .mini.del{color:#c0392b}
+  /* purchase accordion */
+  .acc{width:100%; text-align:left; background:#f3efe6; border:1px solid var(--line); border-radius:11px; padding:10px 13px; font-weight:800; font-size:13px; color:var(--ink); cursor:pointer; display:flex; align-items:center; gap:8px}
+  .acc .cnt{background:var(--shopping); color:#fff; border-radius:999px; font-size:11px; padding:1px 8px; font-weight:800}
+  .acc .chev{margin-left:auto; color:var(--muted); font-size:12px}
+  .plist{padding:12px 13px; background:#faf8f3; border:1px solid var(--line); border-top:0; border-radius:0 0 11px 11px; margin-top:-1px}
+  .pitem{display:flex; align-items:center; gap:10px; margin-bottom:9px}
+  .pitem input.pi-name{flex:1; border:0; background:transparent; padding:5px 0; font-weight:700; font-size:14px}
+  .pitem input.pi-price{width:86px; text-align:right; padding:8px 9px}
+  .pitem .pi-chk{width:24px; height:24px; flex:0 0 auto}
   .pitem.bought input.pi-name{color:var(--muted); text-decoration:line-through}
-  .pi-meta{display:flex; gap:6px; margin:0 0 8px 30px}
+  .pi-meta{display:flex; gap:7px; margin:0 0 11px 34px}
   .seg{display:inline-flex; border:1px solid var(--line); border-radius:8px; overflow:hidden}
-  .seg button{border:0; background:#fff; padding:4px 9px; font-size:12px; font-weight:700; cursor:pointer; color:var(--muted)}
+  .seg button{border:0; background:#fff; padding:6px 12px; font-size:12px; font-weight:800; cursor:pointer; color:var(--muted)}
   .seg button.on{background:var(--ink); color:#fff}
-  .pi-del{color:#b91c1c; background:none; border:0; font-weight:800; cursor:pointer}
-  .addrow{display:flex; gap:6px; margin-top:4px}
+  .pi-del{color:#b91c1c; background:none; border:0; font-weight:800; cursor:pointer; padding:4px}
+  .addrow{display:flex; gap:7px; margin-top:6px}
   /* money */
   .money-card{padding:13px; margin-bottom:12px}
   .rate-row{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
@@ -118,8 +124,7 @@
   /* category colour helpers */
   .c-transport{--c:var(--transport)} .c-lodging{--c:var(--lodging)} .c-food{--c:var(--food)}
   .c-shopping{--c:var(--shopping)} .c-sights{--c:var(--sights)} .c-cafe{--c:var(--cafe)}
-  .dot{background:var(--c,#999)} .place.fix{border-left-color:var(--c,#999)}
-  .badge-fix{background:var(--c,#999)} .e-cat{background:var(--c,#999)}
+  .dot{background:var(--c,#999)} .e-cat{background:var(--c,#999)}
 </style>
 </head>
 <body>
@@ -133,6 +138,8 @@
     <button id="tab-money" onclick="switchTab('money')">돈</button>
   </div>
 </header>
+
+<div id="errbar" style="display:none; background:#7f1d1d; color:#fff; font-size:12.5px; font-weight:700; padding:8px 12px; line-height:1.4"></div>
 
 <!-- PLAN VIEW -->
 <div id="view-plan" class="wrap">
@@ -279,19 +286,35 @@ const DEFAULT_ALERTS = [
 ];
 const CATPICK = {식비:'food', 쇼핑:'shopping', 교통:'transport', 관광:'sights', 기타:'lodging'};
 
+/* ---------- 에러 표시 ---------- */
+function showErr(msg){
+  var b=document.getElementById('errbar');
+  if(b){ b.style.display='block'; b.textContent='⚠ '+msg; }
+}
+window.addEventListener('error', function(e){
+  showErr((e.message||'스크립트 오류')+(e.lineno?(' (줄 '+e.lineno+')'):''));
+});
+window.addEventListener('unhandledrejection', function(e){
+  showErr('비동기 오류: '+((e.reason&&e.reason.message)||e.reason||''));
+});
+
 /* ---------- 저장소: Firebase 있으면 연동, 없으면 폰 로컬 ---------- */
-let DB, state = {};
+let DB, state = {}, FB_MODE=false;
 const FB_OK = firebaseConfig.apiKey && firebaseConfig.apiKey.indexOf('여기에') === -1;
-if (FB_OK) {
-  firebase.initializeApp(firebaseConfig);
-  const root = firebase.database().ref('fukuoka');
-  DB = {
-    sub(cb){ root.on('value', s => cb(s.val()||{})); },
-    set(p,v){ root.child(p).set(v); },
-    push(p,v){ return root.child(p).push(v).key; },
-    rm(p){ root.child(p).remove(); }
-  };
-} else {
+if (FB_OK && typeof firebase !== 'undefined') {
+  try {
+    firebase.initializeApp(firebaseConfig);
+    const root = firebase.database().ref('fukuoka');
+    DB = {
+      sub(cb){ root.on('value', s => cb(s.val()||{}), err => showErr('동기화 오류: '+err.message)); },
+      set(p,v){ root.child(p).set(v); },
+      push(p,v){ return root.child(p).push(v).key; },
+      rm(p){ root.child(p).remove(); }
+    };
+    FB_MODE=true;
+  } catch(e){ console.error(e); showErr('Firebase 연결 실패 → 로컬 모드. '+(e&&e.message||e)); }
+}
+if (!DB) {
   const KEY='fukuoka_trip_local';
   let data = JSON.parse(localStorage.getItem(KEY)||'{}'); let subs=[];
   const setIn=(o,p,v)=>{const k=p.split('/'); let c=o; for(let i=0;i<k.length-1;i++){c[k[i]]=c[k[i]]||{}; c=c[k[i]];} if(v===null) delete c[k[k.length-1]]; else c[k[k.length-1]]=v;};
@@ -314,6 +337,7 @@ function comma(n){ return (Number(n)||0).toLocaleString('ko-KR'); }
 function pid(di,ii,pi){ return DAYS[di].id+'_'+ii+'_'+pi; }
 
 let activeDay = 0, activeTab='plan';
+const openPur = new Set(); // 구매목록 펼침 상태 (동기화 X, 폰에서만)
 
 /* ---------- render ---------- */
 function render(){
@@ -338,10 +362,11 @@ function renderDayTabs(){
 }
 function renderTimeline(){
   const d = DAYS[activeDay], di = activeDay;
-  const done = state.done||{}, links = state.links||{};
-  let html = `<div class="sec-title">${d.date} · ${d.sub}</div>`;
+  const done = state.done||{}, links = state.links||{}, hidden = state.hidden||{};
+  let html = `<div class="day-head">${d.date}<span>${d.sub}</span></div>`;
   d.items.forEach((it,ii)=>{
     const c='c-'+it.cat;
+    const canBuy = ['food','shopping','cafe'].includes(it.cat);
     html += `<div class="item ${c}"><div class="dot"></div>
       <div class="ic"><span class="time num">${it.t}</span>
         <span class="ititle">${esc(it.title)}</span>
@@ -349,17 +374,19 @@ function renderTimeline(){
       <div class="places">`;
     it.places.forEach((pl,pi)=>{
       const id=pid(di,ii,pi);
+      if(hidden[id]) return;
       const q = (links[id]&&links[id].q) || pl.q;
       const nm = (links[id]&&links[id].n) || pl.n;
       const isDone = !!done[id];
-      const canBuy = ['food','shopping','cafe'].includes(it.cat);
+      const eN = esc(nm).replace(/'/g,"\\'"), eQ = esc(q).replace(/'/g,"\\'");
       html += `<div class="place ${it.fix?'fix':''} ${isDone?'done':''}">
+        ${it.fix?'':`<button class="circle" onclick="toggleDone('${id}')">✓</button>`}
         <span class="pname">${esc(nm)}</span>
-        <a class="pbtn map" href="${mapUrl(q)}" target="_blank" rel="noopener">📍</a>
-        <button class="pbtn" onclick="editLink('${id}','${esc(nm).replace(/'/g,"\\'")}','${esc(q).replace(/'/g,"\\'")}')">✎</button>
-        ${it.fix?'':`<button class="pbtn chk" onclick="toggleDone('${id}')">${isDone?'✓':'○'}</button>`}
+        <a class="map-btn" href="${mapUrl(q)}" target="_blank" rel="noopener">📍</a>
+        <button class="mini" onclick="editLink('${id}','${eN}','${eQ}')">✎</button>
+        ${it.fix?'':`<button class="mini del" onclick="delPlace('${id}','${eN}')">✕</button>`}
       </div>`;
-      if(canBuy) html += renderPurchase(id);
+      if(canBuy) html += accordion(id);
     });
     html += `</div></div>`;
   });
@@ -367,34 +394,43 @@ function renderTimeline(){
   const custom = (state.custom&&state.custom[d.id])||{};
   Object.keys(custom).forEach(k=>{
     const cp=custom[k]; const c='c-'+(cp.cat||'food'); const id='cust_'+k;
-    const done2=!!(state.done||{})[id];
+    const done2=!!done[id]; const canBuy=['food','shopping','cafe'].includes(cp.cat);
+    const et = esc(cp.title).replace(/'/g,"\\'");
     html += `<div class="item ${c}"><div class="dot"></div>
-      <div class="ic"><span class="time num">${esc(cp.t||'')}</span><span class="ititle">${esc(cp.title)}</span>
-      <button class="x" style="background:none;border:0;color:#b91c1c;font-weight:800;cursor:pointer" onclick="DB.rm('custom/${d.id}/${k}')">✕</button></div>
+      <div class="ic"><span class="time num">${esc(cp.t||'—')}</span><span class="ititle">${esc(cp.title)}</span>
+      <span class="badge-fix">추가</span></div>
       <div class="places"><div class="place ${done2?'done':''}">
+        <button class="circle" onclick="toggleDone('${id}')">✓</button>
         <span class="pname">${esc(cp.title)}</span>
-        <a class="pbtn map" href="${mapUrl(cp.q||cp.title)}" target="_blank" rel="noopener">📍</a>
-        <button class="pbtn chk" onclick="toggleDone('${id}')">${done2?'✓':'○'}</button>
-      </div>${['food','shopping','cafe'].includes(cp.cat)?renderPurchase(id):''}</div></div>`;
+        <a class="map-btn" href="${mapUrl(cp.q||cp.title)}" target="_blank" rel="noopener">📍</a>
+        <button class="mini" onclick="editLink('${id}','${et}','${esc(cp.q||cp.title).replace(/'/g,"\\'")}')">✎</button>
+        <button class="mini del" onclick="delCustom('${d.id}','${k}','${et}')">✕</button>
+      </div>${canBuy?accordion(id):''}</div></div>`;
   });
   // add custom place
-  html += `<div class="card" style="padding:11px; margin-top:10px">
-    <div class="sec-title" style="margin:0 0 8px">+ 장소 직접 추가</div>
-    <div class="addrow"><input type="text" id="cpName" placeholder="장소 이름"><input type="text" id="cpTime" class="num" style="max-width:70px" placeholder="시간"></div>
-    <div class="pickrow" id="cpCat" data-pick="cpcat" style="margin-top:8px">
+  html += `<div class="card" style="padding:12px; margin-top:12px">
+    <div class="sec-title" style="margin:0 0 9px">+ 장소 직접 추가</div>
+    <div class="addrow"><input type="text" id="cpName" placeholder="장소 이름"><input type="text" id="cpTime" class="num" style="max-width:74px" placeholder="시간"></div>
+    <div class="pickrow" id="cpCat" data-pick="cpcat" style="margin-top:9px">
       <button class="pick on" data-v="food">식사</button><button class="pick" data-v="shopping">쇼핑</button>
       <button class="pick" data-v="sights">관광</button><button class="pick" data-v="cafe">카페</button>
       <button class="pick" data-v="transport">이동</button>
     </div>
-    <button class="btn solid" style="width:100%; margin-top:8px" onclick="addCustom()">추가</button>
+    <button class="btn solid" style="width:100%; margin-top:9px" onclick="addCustom()">추가</button>
   </div>`;
   $('#timeline').innerHTML = html;
+}
+function accordion(id){
+  const n=Object.keys((state.purchases&&state.purchases[id])||{}).length;
+  const open=openPur.has(id);
+  let h = `<button class="acc" onclick="togglePur('${id}')">🛒 구매목록${n?` <span class="cnt">${n}</span>`:''}<span class="chev">${open?'▾ 닫기':'▸ 열기'}</span></button>`;
+  if(open) h += renderPurchase(id);
+  return h;
 }
 function renderPurchase(placeId){
   const pur = (state.purchases&&state.purchases[placeId])||{};
   const keys=Object.keys(pur);
   let h = `<div class="plist">`;
-  if(keys.length===0) h += `<div class="hint" style="margin:0 0 6px">구매 항목 추가하면 체크 시 가계부에 반영돼</div>`;
   keys.forEach(k=>{
     const it=pur[k];
     h += `<div class="pitem ${it.bought?'bought':''}">
@@ -416,6 +452,7 @@ function renderPurchase(placeId){
       </div>`;
     }
   });
+  if(keys.length===0) h += `<div class="hint" style="margin:2px 0 8px">살 것을 추가하고 체크하면 가계부에 자동 반영돼</div>`;
   h += `<div class="addrow"><input type="text" placeholder="살 것 추가…" onkeydown="if(event.key==='Enter'){addPur('${placeId}',this.value);this.value=''}">
     <button class="btn" onclick="var i=this.previousElementSibling; addPur('${placeId}',i.value); i.value=''">+</button></div>`;
   h += `</div>`;
@@ -476,6 +513,19 @@ function switchTab(t){ activeTab=t;
   window.scrollTo(0,0);
 }
 function setDay(i){ activeDay=i; renderDayTabs(); renderTimeline(); }
+function togglePur(id){ if(openPur.has(id)) openPur.delete(id); else openPur.add(id); renderTimeline(); }
+function delPlace(id, name){
+  if(!confirm('"'+name+'"\n이 장소를 목록에서 삭제할까?')) return;
+  DB.set('hidden/'+id, true);
+  DB.rm('purchases/'+id); DB.rm('done/'+id); DB.rm('links/'+id);
+  openPur.delete(id);
+}
+function delCustom(dayId, k, title){
+  if(!confirm('"'+title+'"\n이 추가 장소를 삭제할까?')) return;
+  DB.rm('custom/'+dayId+'/'+k);
+  DB.rm('purchases/cust_'+k); DB.rm('done/cust_'+k);
+  openPur.delete('cust_'+k);
+}
 function addAlert(){ const v=$('#newAlert').value.trim(); if(!v)return; DB.push('alerts',v); $('#newAlert').value=''; }
 function editAlert(k,v){ v=v.trim(); if(v) DB.set('alerts/'+k,v); else DB.rm('alerts/'+k); }
 function toggleDone(id){ const d=state.done||{}; if(d[id]) DB.rm('done/'+id); else DB.set('done/'+id,true); }
