@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#0f766e">
+<title>후쿠오카 6.15–18</title>
+<style>
+  :root{
+    --bg:#f5f3ee; --card:#ffffff; --ink:#1d2530; --muted:#6b7480; --line:#e7e3da;
+    --accent:#0f766e;
+    --transport:#2563eb; --lodging:#9a6a3a; --food:#ea580c;
+    --shopping:#9333ea; --sights:#16a34a; --cafe:#d4960a;
+    --warn:#dc2626; --warnbg:#fef2f2;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+  html,body{margin:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+    font-size:15px; line-height:1.45; padding-bottom:40px;
+  }
+  .num{font-variant-numeric:tabular-nums}
+  /* header */
+  header{
+    position:sticky; top:0; z-index:30; background:var(--accent); color:#fff;
+    padding:calc(env(safe-area-inset-top) + 10px) 14px 0;
+  }
+  .htop{display:flex; align-items:center; justify-content:space-between}
+  .htop h1{font-size:17px; font-weight:800; margin:0; letter-spacing:-.2px}
+  .htop h1 small{font-weight:600; opacity:.8; font-size:13px; margin-left:6px}
+  .mymap{color:#fff; text-decoration:none; font-size:13px; font-weight:700; background:rgba(255,255,255,.18); padding:6px 10px; border-radius:999px}
+  .tabs{display:flex; gap:4px; margin-top:10px}
+  .tabs button{flex:1; border:0; background:transparent; color:rgba(255,255,255,.7); font-weight:800; font-size:14px; padding:10px 0; border-radius:10px 10px 0 0; cursor:pointer}
+  .tabs button.on{background:var(--bg); color:var(--ink)}
+  /* generic */
+  .wrap{padding:12px}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:14px}
+  .sec-title{font-size:12px; font-weight:800; letter-spacing:.4px; color:var(--muted); text-transform:uppercase; margin:18px 2px 8px}
+  button.btn{border:1px solid var(--line); background:#fff; border-radius:10px; padding:8px 12px; font-weight:700; font-size:13px; cursor:pointer; color:var(--ink)}
+  button.btn.solid{background:var(--accent); color:#fff; border-color:var(--accent)}
+  input,select,textarea{font-family:inherit; font-size:15px}
+  input[type=text],input[type=number],select,textarea{
+    border:1px solid var(--line); border-radius:10px; padding:9px 10px; background:#fff; color:var(--ink); width:100%}
+  /* alerts */
+  #alertsBox{margin-bottom:6px}
+  .alert{display:flex; gap:8px; align-items:flex-start; background:var(--warnbg); border:1px solid #fbcaca; border-left:4px solid var(--warn); border-radius:10px; padding:9px 11px; margin-bottom:7px}
+  .alert .txt{flex:1; font-size:13.5px; font-weight:600; color:#7f1d1d}
+  .alert .x{color:#b91c1c; font-weight:800; cursor:pointer; padding:0 4px; background:none; border:0; font-size:15px}
+  .alert .txt[contenteditable]{outline:none}
+  .addalert{display:flex; gap:6px; margin-top:2px}
+  /* day subtabs */
+  .daytabs{display:flex; gap:6px; overflow-x:auto; padding:4px 0 10px; -webkit-overflow-scrolling:touch}
+  .daytabs button{flex:0 0 auto; border:1px solid var(--line); background:#fff; border-radius:999px; padding:8px 13px; font-weight:800; font-size:13px; cursor:pointer; color:var(--muted)}
+  .daytabs button.on{background:var(--ink); color:#fff; border-color:var(--ink)}
+  .daytabs button span{font-weight:600; opacity:.75; font-size:11px; margin-left:4px}
+  /* timeline */
+  .item{position:relative; margin:0 0 9px; padding-left:14px}
+  .item:before{content:""; position:absolute; left:4px; top:6px; bottom:-9px; width:2px; background:var(--line)}
+  .item:last-child:before{display:none}
+  .dot{position:absolute; left:0; top:5px; width:10px; height:10px; border-radius:50%; box-shadow:0 0 0 3px var(--bg)}
+  .ic{display:flex; align-items:baseline; gap:8px}
+  .time{font-weight:800; font-size:13px; min-width:42px; color:var(--ink)}
+  .ititle{font-weight:800; font-size:14.5px; flex:1}
+  .badge-fix{font-size:10px; font-weight:800; color:#fff; padding:2px 6px; border-radius:6px; letter-spacing:.3px}
+  .places{margin:6px 0 0}
+  .place{display:flex; align-items:center; gap:8px; padding:8px 10px; border:1px solid var(--line); border-radius:10px; background:#fff; margin-top:6px}
+  .place.fix{border-left-width:4px}
+  .pname{flex:1; font-weight:600; font-size:14px}
+  .place.done .pname{color:var(--muted); text-decoration:line-through}
+  .pbtn{border:0; background:#f1efe9; border-radius:8px; padding:6px 8px; font-size:13px; cursor:pointer; color:var(--ink); font-weight:700; text-decoration:none; display:inline-flex; align-items:center}
+  .pbtn.map{background:#eaf1ff; color:#2563eb}
+  .pbtn.chk{min-width:34px; justify-content:center}
+  .place.done .pbtn.chk{background:var(--sights); color:#fff}
+  .pexp{font-size:12px; color:var(--muted); cursor:pointer; user-select:none; padding:4px 2px}
+  /* purchase list */
+  .plist{margin:6px 0 2px; padding:8px 10px; background:#faf8f3; border:1px dashed var(--line); border-radius:10px}
+  .pitem{display:flex; align-items:center; gap:8px; margin-bottom:6px}
+  .pitem input.pi-name{flex:1; border:0; background:transparent; padding:4px 0; font-weight:600}
+  .pitem input.pi-price{width:92px; text-align:right}
+  .pitem .pi-chk{width:22px; height:22px; flex:0 0 auto}
+  .pitem.bought input.pi-name{color:var(--muted); text-decoration:line-through}
+  .pi-meta{display:flex; gap:6px; margin:0 0 8px 30px}
+  .seg{display:inline-flex; border:1px solid var(--line); border-radius:8px; overflow:hidden}
+  .seg button{border:0; background:#fff; padding:4px 9px; font-size:12px; font-weight:700; cursor:pointer; color:var(--muted)}
+  .seg button.on{background:var(--ink); color:#fff}
+  .pi-del{color:#b91c1c; background:none; border:0; font-weight:800; cursor:pointer}
+  .addrow{display:flex; gap:6px; margin-top:4px}
+  /* money */
+  .money-card{padding:13px; margin-bottom:12px}
+  .rate-row{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+  .rate-row b{font-weight:800}
+  .conv{display:flex; align-items:center; gap:8px; margin-top:10px}
+  .conv input{flex:1}
+  .conv .eq{color:var(--muted); font-weight:800}
+  .total{font-size:30px; font-weight:900; letter-spacing:-.5px}
+  .total small{font-size:15px; font-weight:700; color:var(--muted)}
+  .krw{color:var(--accent); font-weight:800; margin-top:2px}
+  .bd{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+  .chip{background:#f1efe9; border-radius:999px; padding:5px 11px; font-size:12.5px; font-weight:700}
+  .chip b{font-weight:900}
+  .ex{display:flex; align-items:center; gap:8px; padding:9px 0; border-top:1px solid var(--line)}
+  .ex .e-cat{font-size:11px; font-weight:800; color:#fff; padding:2px 7px; border-radius:6px}
+  .ex .e-main{flex:1}
+  .ex .e-main .e-memo{font-weight:700; font-size:13.5px}
+  .ex .e-main .e-sub{font-size:11.5px; color:var(--muted)}
+  .ex .e-amt{font-weight:800; font-variant-numeric:tabular-nums}
+  .ex .e-x{color:#b91c1c; background:none; border:0; font-weight:800; cursor:pointer; font-size:15px}
+  .addex .r{display:flex; gap:8px; margin-bottom:8px}
+  .addex .r > *{flex:1}
+  .pickrow{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px}
+  .pick{border:1px solid var(--line); background:#fff; border-radius:999px; padding:6px 12px; font-weight:700; font-size:13px; cursor:pointer; color:var(--muted)}
+  .pick.on{background:var(--accent); color:#fff; border-color:var(--accent)}
+  .hint{font-size:12px; color:var(--muted); margin:6px 2px}
+  .empty{color:var(--muted); font-size:13px; text-align:center; padding:14px}
+  /* category colour helpers */
+  .c-transport{--c:var(--transport)} .c-lodging{--c:var(--lodging)} .c-food{--c:var(--food)}
+  .c-shopping{--c:var(--shopping)} .c-sights{--c:var(--sights)} .c-cafe{--c:var(--cafe)}
+  .dot{background:var(--c,#999)} .place.fix{border-left-color:var(--c,#999)}
+  .badge-fix{background:var(--c,#999)} .e-cat{background:var(--c,#999)}
+</style>
+</head>
+<body>
+<header>
+  <div class="htop">
+    <h1>후쿠오카 <small>6.15–18</small></h1>
+    <a class="mymap" id="mymap" href="https://www.google.com/maps/d/viewer?mid=19CPW2iyssLfpVSDNefUO7TPHxp9hnLo" target="_blank" rel="noopener">🗺 마이맵</a>
+  </div>
+  <div class="tabs">
+    <button id="tab-plan" class="on" onclick="switchTab('plan')">일정</button>
+    <button id="tab-money" onclick="switchTab('money')">돈</button>
+  </div>
+</header>
+
+<!-- PLAN VIEW -->
+<div id="view-plan" class="wrap">
+  <div id="alertsBox">
+    <div class="sec-title" style="margin-top:4px">핵심 알림 · 직접 수정</div>
+    <div id="alertsList"></div>
+    <div class="addalert">
+      <input type="text" id="newAlert" placeholder="알림 추가…">
+      <button class="btn solid" onclick="addAlert()">추가</button>
+    </div>
+  </div>
+
+  <div class="daytabs" id="dayTabs"></div>
+  <div id="timeline"></div>
+</div>
+
+<!-- MONEY VIEW -->
+<div id="view-money" class="wrap" style="display:none">
+  <div class="card money-card">
+    <div class="rate-row">
+      <b>환율</b> 100엔 =
+      <input type="number" id="rateInput" class="num" style="width:90px" inputmode="numeric"> 원
+      <button class="btn" onclick="saveRate()">적용</button>
+    </div>
+    <div class="conv">
+      <input type="number" id="convYen" class="num" inputmode="numeric" placeholder="엔(¥)" oninput="convFrom('yen')">
+      <span class="eq">↔</span>
+      <input type="number" id="convWon" class="num" inputmode="numeric" placeholder="원(₩)" oninput="convFrom('won')">
+    </div>
+    <div class="hint">쇼핑하다 "이거 얼마지?" 할 때 바로 계산</div>
+  </div>
+
+  <div class="card money-card">
+    <div class="total num">¥<span id="totalYen">0</span></div>
+    <div class="krw num">≈ ₩<span id="totalWon">0</span></div>
+    <div class="bd" id="breakdown"></div>
+  </div>
+
+  <div class="sec-title">지출 추가</div>
+  <div class="card money-card addex">
+    <div class="r">
+      <input type="number" id="exAmt" class="num" inputmode="numeric" placeholder="금액 ¥">
+      <input type="text" id="exMemo" placeholder="메모(선택)">
+    </div>
+    <div class="pickrow" id="exCat" data-pick="cat">
+      <button class="pick on" data-v="식비">식비</button>
+      <button class="pick" data-v="쇼핑">쇼핑</button>
+      <button class="pick" data-v="교통">교통</button>
+      <button class="pick" data-v="관광">관광</button>
+      <button class="pick" data-v="기타">기타</button>
+    </div>
+    <div class="pickrow" id="exPayer" data-pick="payer">
+      <button class="pick on" data-v="나">나</button>
+      <button class="pick" data-v="여친">여친</button>
+    </div>
+    <div class="pickrow" id="exMethod" data-pick="method">
+      <button class="pick on" data-v="현금">현금</button>
+      <button class="pick" data-v="카드">카드</button>
+    </div>
+    <button class="btn solid" style="width:100%" onclick="addExpense()">지출 추가</button>
+  </div>
+
+  <div class="sec-title">전체 내역</div>
+  <div class="card money-card"><div id="expenseList"></div></div>
+</div>
+
+<!-- ===== Firebase (compat). 아래 config만 네 프로젝트 값으로 바꾸면 연동 시작 ===== -->
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
+<script>
+/* ▼▼▼ 여기에 Firebase 콘솔의 config 붙여넣기 ▼▼▼
+   (Firebase 콘솔 → 프로젝트 설정 → 내 앱 → SDK 설정 및 구성 → 구성)
+   databaseURL 줄이 꼭 있어야 함(Realtime Database). 없으면 콘솔에서 RTDB 생성 후 복사. */
+const firebaseConfig = {
+  apiKey: "AIzaSyD_PKmqjBji6pTP9IuB6ZHHDP6Stm3gVvw",
+  authDomain: "trvl-68a7b.firebaseapp.com",
+  databaseURL: "https://trvl-68a7b-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "trvl-68a7b",
+  storageBucket: "trvl-68a7b.firebasestorage.app",
+  messagingSenderId: "923600163729",
+  appId: "1:923600163729:web:a92e81bbd9ec643a390030"
+};
+/* ▲▲▲ 여기까지 ▲▲▲ */
+</script>
+
+<script>
+/* ---------- 일정 데이터 (고정 항목 / 선택지) ---------- */
+const CAT = {transport:'이동',lodging:'숙소',food:'식사',shopping:'쇼핑',sights:'관광',cafe:'카페'};
+function P(n,q){return {n, q:q||n}}
+const DAYS = [
+{id:'d1', label:'Day 1', date:'6/15 (월)', sub:'도착·텐진', items:[
+  {cat:'transport', t:'19:40', title:'FUK 도착', fix:1, places:[P('후쿠오카공항 국제선','Fukuoka Airport International Terminal')]},
+  {cat:'transport', t:'20:00', title:'공항선 → 텐진 (11분)', fix:1, places:[P('텐진역','Tenjin Station Fukuoka')]},
+  {cat:'lodging', t:'20:00', title:'체크인 · 오리엔탈 익스프레스 텐진', fix:1, places:[P('Hotel Oriental Express Fukuoka Tenjin')]},
+  {cat:'food', t:'21:00', title:'야식', places:[P('이치란 텐진점','Ichiran Tenjin Fukuoka'),P('이치란 텐진 니시도리점','Ichiran Tenjin Nishidori'),P('나카스 야타이','Nakasu Yatai Fukuoka')]},
+]},
+{id:'d2', label:'Day 2', date:'6/16 (화)', sub:'시내·모모치 선셋', items:[
+  {cat:'lodging', t:'08:00', title:'텐진 호텔 체크아웃', fix:1, places:[P('Hotel Oriental Express Fukuoka Tenjin')]},
+  {cat:'food', t:'08:30', title:'조식', places:[P('토마토라멘 산미(333)','とまとラーメン三味 天神大名'),P('오무스비 요코쵸 다이묘점','おむすび横丁 大名')]},
+  {cat:'sights', t:'09:00', title:'오호리공원 + 성터', places:[P('오호리 공원','Ohori Park Fukuoka'),P('후쿠오카 성터','Fukuoka Castle Ruins Maizuru Park')]},
+  {cat:'lodging', t:'10:00', title:'다이묘 숙소 백팩 보관', fix:1, places:[P('램프라이트북스호텔','Lamplight Books Hotel Fukuoka')]},
+  {cat:'shopping', t:'11:00', title:'텐진·다이묘 쇼핑 (메인)', places:[P('파르코 텐진','PARCO Tenjin Fukuoka'),P('GU 미나 텐진','GU MINA Tenjin'),P('텐진쇼퍼즈','Tenjin Shoppers Fukuoka'),P('다이소 텐진','Daiso Tenjin'),P('Standard Products Lachic','Standard Products Lachic Fukuoka Tenjin'),P('THREEPPY','THREEPPY Tenjin'),P('몽벨 텐진','Montbell Tenjin Fukuoka'),P('KALDI 텐진 지하상가','KALDI Tenjin Chikagai'),P('드럭스토어 모리','Drug Store Mori Tenjin')]},
+  {cat:'food', t:'13:00', title:'점심', places:[P('키와미야 함바그 (PARCO)','極味や PARCO福岡'),P('잇푸도 다이묘본점','一風堂 大名本店'),P('사시스 텐진 (스시)','寿司酒場 さしす 天神')]},
+  {cat:'cafe', t:'14:00', title:'디저트', places:[P('RINGO 애플파이','RINGO 天神地下街'),P('이모야 킨지로','いも屋金次郎 天神'),P('자크 다이묘점','Zacca Daimyo Fukuoka')]},
+  {cat:'transport', t:'16:00', title:'모모치 이동 (~25분)', fix:1, places:[P('후쿠오카 타워','Fukuoka Tower')]},
+  {cat:'sights', t:'16:30', title:'모모치', places:[P('후쿠오카 타워','Fukuoka Tower'),P('시사이드 모모치 해변','Seaside Momochi Beach Park'),P('마리존','Marizon Fukuoka')]},
+  {cat:'sights', t:'19:30', title:'해질녘 선셋 ★', fix:1, places:[P('시사이드 모모치 해변','Seaside Momochi Beach Park')]},
+  {cat:'lodging', t:'20:00', title:'다이묘 숙소 체크인', fix:1, places:[P('램프라이트북스호텔','Lamplight Books Hotel Fukuoka')]},
+  {cat:'food', t:'21:00', title:'저녁 (야키니쿠 + 마무리)', places:[P('야키니쿠 쵸스케','焼肉 長介 福岡'),P('야키니쿠 규센닌','焼肉 牛仙人 福岡'),P('야키니쿠 류우자','焼肉 龍者 福岡'),P('야키니쿠 밧텐','焼肉 ばってん 福岡'),P('모츠나베 이치후지 텐진','もつ鍋 一藤 天神'),P('신신라멘 텐진본점','Shin-Shin ラーメン 天神'),P('텐진 포차거리','Tenjin Yatai Fukuoka')]},
+]},
+{id:'d3', label:'Day 3', date:'6/17 (수)', sub:'유후인 이동·료칸', items:[
+  {cat:'food', t:'08:00', title:'조식', places:[P('오무스비 요코쵸 (다이묘)','おむすび横丁 大名'),P('사바타로 (7:30 예약·화휴)','さばたろう 福岡 赤坂')]},
+  {cat:'lodging', t:'10:00', title:'다이묘 체크아웃', fix:1, places:[P('램프라이트북스호텔','Lamplight Books Hotel Fukuoka')]},
+  {cat:'transport', t:'10:55', title:'고속버스 출발 (텐진 터미널)', fix:1, places:[P('니시테츠 텐진 고속버스터미널','西鉄天神高速バスターミナル')]},
+  {cat:'transport', t:'13:17', title:'유후인 도착', fix:1, places:[P('유후인역앞 버스센터','由布院駅前バスセンター')]},
+  {cat:'food', t:'13:30', title:'점심', places:[P('유후마부시 신 (역앞)','由布まぶし心 由布院駅前支店'),P('유노타케안','湯の岳庵 由布院'),P('이나카안','田舎庵 由布院'),P('유후인 海鮮小屋','湯布院 海鮮小屋')]},
+  {cat:'shopping', t:'14:00', title:'유노츠보 군것질', places:[P('시이타케 몬스터','しいたけ モンスター 由布院'),P('유후인 금상고로케','由布院 金賞コロッケ'),P('테라토 녹차 젤라또','由布院 抹茶ジェラート テラト'),P('유후인 포테하니','由布院 ポテはに'),P('유노츠보 거리','湯の坪街道 由布院')]},
+  {cat:'sights', t:'15:00', title:'긴린코 호수', places:[P('긴린코','金鱗湖 由布院')]},
+  {cat:'shopping', t:'15:30', title:'료칸 간식 장보기', places:[P('이온 유후인','AEON 由布院'),P('로손 역앞거리점','Lawson 由布院駅前通り'),P('A-COOP 유후인','A-COOP 由布院')]},
+  {cat:'lodging', t:'16:00', title:'료칸 체크인 · 이요토미 (입욕세 500엔 현금)', fix:1, places:[P('유후인 이요토미','由布院 いよとみ')]},
+  {cat:'lodging', t:'17:00', title:'전용 온천 (빈 곳 이용)', fix:1, places:[P('유후인 이요토미','由布院 いよとみ')]},
+  {cat:'food', t:'18:00', title:'가이세키 석식 (18:00 시작)', fix:1, places:[P('유후인 이요토미','由布院 いよとみ')]},
+]},
+{id:'d4', label:'Day 4', date:'6/18 (목)', sub:'유후인 → 귀국', items:[
+  {cat:'lodging', t:'08:00', title:'기상·조식 (~9시 마감)', fix:1, places:[P('유후인 이요토미','由布院 いよとみ')]},
+  {cat:'lodging', t:'09:00', title:'아침 전용 온천', fix:1, places:[P('유후인 이요토미','由布院 いよとみ')]},
+  {cat:'sights', t:'09:30', title:'긴린코·유노츠보 산책', places:[P('긴린코','金鱗湖 由布院')]},
+  {cat:'lodging', t:'10:00', title:'체크아웃', fix:1, places:[P('유후인 이요토미','由布院 いよとみ')]},
+  {cat:'transport', t:'11:45', title:'유후인역', fix:1, places:[P('유후인역','由布院駅')]},
+  {cat:'transport', t:'12:01', title:'유후인노모리 → 하카타 (14:19)', fix:1, places:[P('유후인역','由布院駅')]},
+  {cat:'transport', t:'14:19', title:'하카타역 도착', fix:1, places:[P('하카타역','博多駅')]},
+  {cat:'food', t:'15:00', title:'점심', places:[P('오오야마 모츠나베 (KITTE)','博多もつ鍋 おおやま KITTE博多'),P('사시스 (KITTE)','寿司酒場 さしす KITTE博多'),P('텟판야키 리카엔','鉄板焼 利花苑 博多'),P('후지우나 장어덮밥','ふじ うなぎ 博多'),P('멘야 카네토라 (데이토스)','麺や 兼虎 博多デイトス'),P('로피아 (요도바시)','ロピア ヨドバシ博多')]},
+  {cat:'cafe', t:'16:00', title:'간식·디저트', places:[P('일 포르노 델 미뇽','Il Forno del Mignon 博多駅'),P('스즈카케 본점','鈴懸 本店 博多')]},
+  {cat:'transport', t:'17:30', title:'공항行 (지하철+국제선 셔틀)', fix:1, places:[P('후쿠오카공항 국제선','Fukuoka Airport International Terminal')]},
+  {cat:'transport', t:'18:30', title:'국제선 체크인', fix:1, places:[P('후쿠오카공항 국제선','Fukuoka Airport International Terminal')]},
+  {cat:'transport', t:'20:40', title:'FUK → ICN', fix:1, places:[P('후쿠오카공항 국제선','Fukuoka Airport International Terminal')]},
+]},
+];
+const DEFAULT_ALERTS = [
+  '유후 입욕세 500엔(2인) — 현금만, 6/17 체크인 시',
+  '6/18 유후인노모리 QR 승차권: 데이터로 실시간 표시(스샷 불가)',
+  '버스 6/17 10:55 텐진터미널 · 기차 6/18 12:01 유후인역',
+  '사바타로 가면 7:30 예약(화요일 휴무)'
+];
+const CATPICK = {식비:'food', 쇼핑:'shopping', 교통:'transport', 관광:'sights', 기타:'lodging'};
+
+/* ---------- 저장소: Firebase 있으면 연동, 없으면 폰 로컬 ---------- */
+let DB, state = {};
+const FB_OK = firebaseConfig.apiKey && firebaseConfig.apiKey.indexOf('여기에') === -1;
+if (FB_OK) {
+  firebase.initializeApp(firebaseConfig);
+  const root = firebase.database().ref('fukuoka');
+  DB = {
+    sub(cb){ root.on('value', s => cb(s.val()||{})); },
+    set(p,v){ root.child(p).set(v); },
+    push(p,v){ return root.child(p).push(v).key; },
+    rm(p){ root.child(p).remove(); }
+  };
+} else {
+  const KEY='fukuoka_trip_local';
+  let data = JSON.parse(localStorage.getItem(KEY)||'{}'); let subs=[];
+  const setIn=(o,p,v)=>{const k=p.split('/'); let c=o; for(let i=0;i<k.length-1;i++){c[k[i]]=c[k[i]]||{}; c=c[k[i]];} if(v===null) delete c[k[k.length-1]]; else c[k[k.length-1]]=v;};
+  const save=()=>{localStorage.setItem(KEY,JSON.stringify(data)); subs.forEach(cb=>cb(data));};
+  DB = {
+    sub(cb){ subs.push(cb); cb(data); },
+    set(p,v){ setIn(data,p,v); save(); },
+    push(p,v){ const id='k'+Date.now().toString(36)+Math.random().toString(36).slice(2,6); setIn(data,p+'/'+id,v); save(); return id; },
+    rm(p){ setIn(data,p,null); save(); }
+  };
+}
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const mapUrl=q=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);
+function rate(){ return Number(state.rate)||920; }
+function won(yen){ return Math.round((Number(yen)||0)*rate()/100); }
+function comma(n){ return (Number(n)||0).toLocaleString('ko-KR'); }
+function pid(di,ii,pi){ return DAYS[di].id+'_'+ii+'_'+pi; }
+
+let activeDay = 0, activeTab='plan';
+
+/* ---------- render ---------- */
+function render(){
+  renderAlerts();
+  renderDayTabs();
+  renderTimeline();
+  renderMoney();
+}
+function renderAlerts(){
+  const al = state.alerts || {};
+  let keys = Object.keys(al);
+  const box = $('#alertsList');
+  box.innerHTML = keys.map(k=>`
+    <div class="alert">
+      <div class="txt" contenteditable onblur="editAlert('${k}', this.innerText)">${esc(al[k])}</div>
+      <button class="x" onclick="DB.rm('alerts/${k}')">✕</button>
+    </div>`).join('') || `<div class="hint">알림 없음 · 아래에서 추가</div>`;
+}
+function renderDayTabs(){
+  $('#dayTabs').innerHTML = DAYS.map((d,i)=>`
+    <button class="${i===activeDay?'on':''}" onclick="setDay(${i})">${d.label}<span>${d.date.split(' ')[0]}</span></button>`).join('');
+}
+function renderTimeline(){
+  const d = DAYS[activeDay], di = activeDay;
+  const done = state.done||{}, links = state.links||{};
+  let html = `<div class="sec-title">${d.date} · ${d.sub}</div>`;
+  d.items.forEach((it,ii)=>{
+    const c='c-'+it.cat;
+    html += `<div class="item ${c}"><div class="dot"></div>
+      <div class="ic"><span class="time num">${it.t}</span>
+        <span class="ititle">${esc(it.title)}</span>
+        ${it.fix?`<span class="badge-fix">${CAT[it.cat]}</span>`:''}</div>
+      <div class="places">`;
+    it.places.forEach((pl,pi)=>{
+      const id=pid(di,ii,pi);
+      const q = (links[id]&&links[id].q) || pl.q;
+      const nm = (links[id]&&links[id].n) || pl.n;
+      const isDone = !!done[id];
+      const canBuy = ['food','shopping','cafe'].includes(it.cat);
+      html += `<div class="place ${it.fix?'fix':''} ${isDone?'done':''}">
+        <span class="pname">${esc(nm)}</span>
+        <a class="pbtn map" href="${mapUrl(q)}" target="_blank" rel="noopener">📍</a>
+        <button class="pbtn" onclick="editLink('${id}','${esc(nm).replace(/'/g,"\\'")}','${esc(q).replace(/'/g,"\\'")}')">✎</button>
+        ${it.fix?'':`<button class="pbtn chk" onclick="toggleDone('${id}')">${isDone?'✓':'○'}</button>`}
+      </div>`;
+      if(canBuy) html += renderPurchase(id);
+    });
+    html += `</div></div>`;
+  });
+  // custom places
+  const custom = (state.custom&&state.custom[d.id])||{};
+  Object.keys(custom).forEach(k=>{
+    const cp=custom[k]; const c='c-'+(cp.cat||'food'); const id='cust_'+k;
+    const done2=!!(state.done||{})[id];
+    html += `<div class="item ${c}"><div class="dot"></div>
+      <div class="ic"><span class="time num">${esc(cp.t||'')}</span><span class="ititle">${esc(cp.title)}</span>
+      <button class="x" style="background:none;border:0;color:#b91c1c;font-weight:800;cursor:pointer" onclick="DB.rm('custom/${d.id}/${k}')">✕</button></div>
+      <div class="places"><div class="place ${done2?'done':''}">
+        <span class="pname">${esc(cp.title)}</span>
+        <a class="pbtn map" href="${mapUrl(cp.q||cp.title)}" target="_blank" rel="noopener">📍</a>
+        <button class="pbtn chk" onclick="toggleDone('${id}')">${done2?'✓':'○'}</button>
+      </div>${['food','shopping','cafe'].includes(cp.cat)?renderPurchase(id):''}</div></div>`;
+  });
+  // add custom place
+  html += `<div class="card" style="padding:11px; margin-top:10px">
+    <div class="sec-title" style="margin:0 0 8px">+ 장소 직접 추가</div>
+    <div class="addrow"><input type="text" id="cpName" placeholder="장소 이름"><input type="text" id="cpTime" class="num" style="max-width:70px" placeholder="시간"></div>
+    <div class="pickrow" id="cpCat" data-pick="cpcat" style="margin-top:8px">
+      <button class="pick on" data-v="food">식사</button><button class="pick" data-v="shopping">쇼핑</button>
+      <button class="pick" data-v="sights">관광</button><button class="pick" data-v="cafe">카페</button>
+      <button class="pick" data-v="transport">이동</button>
+    </div>
+    <button class="btn solid" style="width:100%; margin-top:8px" onclick="addCustom()">추가</button>
+  </div>`;
+  $('#timeline').innerHTML = html;
+}
+function renderPurchase(placeId){
+  const pur = (state.purchases&&state.purchases[placeId])||{};
+  const keys=Object.keys(pur);
+  let h = `<div class="plist">`;
+  if(keys.length===0) h += `<div class="hint" style="margin:0 0 6px">구매 항목 추가하면 체크 시 가계부에 반영돼</div>`;
+  keys.forEach(k=>{
+    const it=pur[k];
+    h += `<div class="pitem ${it.bought?'bought':''}">
+      <input type="checkbox" class="pi-chk" ${it.bought?'checked':''} onchange="setPur('${placeId}','${k}','bought',this.checked)">
+      <input type="text" class="pi-name" value="${esc(it.name)}" onblur="setPur('${placeId}','${k}','name',this.value)">
+      <input type="number" class="pi-price num" inputmode="numeric" placeholder="¥" value="${it.price!=null?it.price:''}" onblur="setPur('${placeId}','${k}','price',this.value)">
+      <button class="pi-del" onclick="DB.rm('purchases/${placeId}/${k}')">✕</button>
+    </div>`;
+    if(it.bought){
+      h += `<div class="pi-meta">
+        <span class="seg">
+          <button class="${(it.payer||'나')==='나'?'on':''}" onclick="setPur('${placeId}','${k}','payer','나')">나</button>
+          <button class="${it.payer==='여친'?'on':''}" onclick="setPur('${placeId}','${k}','payer','여친')">여친</button>
+        </span>
+        <span class="seg">
+          <button class="${(it.method||'카드')==='현금'?'on':''}" onclick="setPur('${placeId}','${k}','method','현금')">현금</button>
+          <button class="${(it.method||'카드')==='카드'?'on':''}" onclick="setPur('${placeId}','${k}','method','카드')">카드</button>
+        </span>
+      </div>`;
+    }
+  });
+  h += `<div class="addrow"><input type="text" placeholder="살 것 추가…" onkeydown="if(event.key==='Enter'){addPur('${placeId}',this.value);this.value=''}">
+    <button class="btn" onclick="var i=this.previousElementSibling; addPur('${placeId}',i.value); i.value=''">+</button></div>`;
+  h += `</div>`;
+  return h;
+}
+function renderMoney(){
+  if(document.activeElement!==$('#rateInput')) $('#rateInput').value = rate();
+  // entries = manual + bought purchases
+  const entries=[];
+  const ex = state.expenses||{};
+  Object.keys(ex).forEach(k=>{const e=ex[k]; entries.push({id:k,manual:1,amt:+e.amt||0,cat:e.cat||'기타',payer:e.payer||'나',method:e.method||'현금',memo:e.memo||''});});
+  const pur = state.purchases||{};
+  Object.keys(pur).forEach(pl=>{Object.keys(pur[pl]).forEach(k=>{const it=pur[pl][k];
+    if(it.bought){ entries.push({manual:0, amt:+it.price||0, cat:catOfPlace(pl), payer:it.payer||'나', method:it.method||'카드', memo:it.name+' · '+placeLabel(pl)});}
+  });});
+  const tot = entries.reduce((s,e)=>s+e.amt,0);
+  $('#totalYen').textContent = comma(tot);
+  $('#totalWon').textContent = comma(won(tot));
+  // breakdown
+  const by=(f)=>entries.reduce((m,e)=>{m[e[f]]=(m[e[f]]||0)+e.amt;return m;},{});
+  const cash=by('method'); const payer=by('payer');
+  $('#breakdown').innerHTML =
+    `<span class="chip">현금 <b class="num">¥${comma(cash['현금']||0)}</b></span>`+
+    `<span class="chip">카드 <b class="num">¥${comma(cash['카드']||0)}</b></span>`+
+    `<span class="chip">나 <b class="num">¥${comma(payer['나']||0)}</b></span>`+
+    `<span class="chip">여친 <b class="num">¥${comma(payer['여친']||0)}</b></span>`;
+  // list (newest first)
+  entries.sort((a,b)=>(b.id||'').localeCompare(a.id||''));
+  $('#expenseList').innerHTML = entries.length? entries.map(e=>`
+    <div class="ex c-${CATPICK[e.cat]||'lodging'}">
+      <span class="e-cat">${esc(e.cat)}</span>
+      <div class="e-main"><div class="e-memo">${esc(e.memo||e.cat)}</div>
+        <div class="e-sub">${e.payer} · ${e.method}${e.manual?'':' · 구매리스트'}</div></div>
+      <span class="e-amt num">¥${comma(e.amt)}</span>
+      ${e.manual?`<button class="e-x" onclick="DB.rm('expenses/${e.id}')">✕</button>`:''}
+    </div>`).join('') : `<div class="empty">아직 지출 없음</div>`;
+}
+function catOfPlace(placeId){
+  // placeId = dId_ii_pi  또는 cust_..
+  if(placeId.startsWith('cust_')) return '기타';
+  const [d,ii] = placeId.split('_'); const day=DAYS.find(x=>x.id===d); if(!day) return '기타';
+  const it=day.items[+ii]; if(!it) return '기타';
+  return ({food:'식비',shopping:'쇼핑',cafe:'식비',sights:'관광',transport:'교통',lodging:'기타'})[it.cat]||'기타';
+}
+function placeLabel(placeId){
+  if(placeId.startsWith('cust_')) return '추가장소';
+  const [d,ii,pi]=placeId.split('_'); const day=DAYS.find(x=>x.id===d); if(!day) return '';
+  const it=day.items[+ii]; if(!it||!it.places[+pi]) return '';
+  return it.places[+pi].n;
+}
+
+/* ---------- actions ---------- */
+function switchTab(t){ activeTab=t;
+  $('#view-plan').style.display = t==='plan'?'':'none';
+  $('#view-money').style.display = t==='money'?'':'none';
+  $('#tab-plan').classList.toggle('on',t==='plan');
+  $('#tab-money').classList.toggle('on',t==='money');
+  window.scrollTo(0,0);
+}
+function setDay(i){ activeDay=i; renderDayTabs(); renderTimeline(); }
+function addAlert(){ const v=$('#newAlert').value.trim(); if(!v)return; DB.push('alerts',v); $('#newAlert').value=''; }
+function editAlert(k,v){ v=v.trim(); if(v) DB.set('alerts/'+k,v); else DB.rm('alerts/'+k); }
+function toggleDone(id){ const d=state.done||{}; if(d[id]) DB.rm('done/'+id); else DB.set('done/'+id,true); }
+function editLink(id,curN,curQ){
+  const n=prompt('표시 이름', curN); if(n===null) return;
+  const q=prompt('지도 검색어(장소명/주소)', curQ); if(q===null) return;
+  DB.set('links/'+id, {n:n.trim()||curN, q:q.trim()||curQ});
+}
+function addPur(placeId,name){ name=(name||'').trim(); if(!name)return; DB.push('purchases/'+placeId,{name,price:'',bought:false,payer:'나',method:'카드'}); }
+function setPur(placeId,k,field,val){
+  if(field==='price') val = val===''?'':Number(val);
+  if(field==='bought') val = !!val;
+  DB.set('purchases/'+placeId+'/'+k+'/'+field, val);
+}
+function pickVal(id){ const el=document.querySelector('#'+id+' .pick.on'); return el?el.dataset.v:''; }
+function addExpense(){
+  const amt=Number($('#exAmt').value); if(!amt){ $('#exAmt').focus(); return; }
+  DB.push('expenses',{amt, memo:$('#exMemo').value.trim(), cat:pickVal('exCat'), payer:pickVal('exPayer'), method:pickVal('exMethod')});
+  $('#exAmt').value=''; $('#exMemo').value='';
+}
+function addCustom(){
+  const name=$('#cpName').value.trim(); if(!name){ $('#cpName').focus(); return; }
+  DB.push('custom/'+DAYS[activeDay].id, {title:name, t:$('#cpTime').value.trim(), cat:pickVal('cpCat'), q:name});
+  $('#cpName').value=''; $('#cpTime').value='';
+}
+function saveRate(){ const r=Number($('#rateInput').value); if(r>0) DB.set('rate',r); }
+function convFrom(src){
+  const y=$('#convYen'), w=$('#convWon'); const r=rate();
+  if(src==='yen'){ w.value = y.value?Math.round(Number(y.value)*r/100):''; }
+  else { y.value = w.value?Math.round(Number(w.value)*100/r):''; }
+}
+// pick groups (event delegation)
+document.addEventListener('click',e=>{
+  const b=e.target.closest('.pick'); if(!b)return;
+  const row=b.parentElement; row.querySelectorAll('.pick').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+});
+
+/* ---------- boot ---------- */
+DB.sub(d=>{ state=d||{}; 
+  if(!state.alerts){ DEFAULT_ALERTS.forEach(a=>DB.push('alerts',a)); } // seed once
+  if(state.rate==null){ DB.set('rate',920); }
+  render();
+});
+render();
+</script>
+</body>
+</html>
