@@ -1,0 +1,32 @@
+{
+  "name": "My Share",
+  "short_name": "My Share",
+  "description": "휴대폰과 PC 사이 24시간 임시 파일·텍스트 공유",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#eaf3f0",
+  "theme_color": "#5f9e9a",
+  "orientation": "portrait-primary",
+  "lang": "ko",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

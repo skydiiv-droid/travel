@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#5f9e9a" />
+    <title>My Share</title>
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/icons/icon-180.png" />
+    <!-- iOS 홈화면 앱(전체화면) 지원 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="My Share" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <!-- 로그인 화면 -->
+    <section id="login" class="login hidden">
+      <form id="loginForm" class="login-card">
+        <h1>My Share</h1>
+        <label for="password">공유 비밀번호</label>
+        <input
+          id="password"
+          type="password"
+          autocomplete="current-password"
+          inputmode="text"
+          placeholder="••••••••••"
+        />
+        <button type="submit" id="loginBtn">접속</button>
+        <p id="loginError" class="error" role="alert"></p>
+      </form>
+    </section>
+
+    <!-- 접속 확인 중 스플래시 -->
+    <section id="splash" class="splash">
+      <div class="spinner" aria-hidden="true"></div>
+      <p>접속 중…</p>
+    </section>
+
+    <!-- 메인 공유 화면 -->
+    <main id="app" class="app hidden">
+      <header class="topbar">
+        <h1>My Share</h1>
+        <span class="hint">24시간 후 자동 삭제</span>
+      </header>
+
+      <!-- 텍스트 등록 -->
+      <section class="composer">
+        <textarea
+          id="textInput"
+          rows="3"
+          placeholder="여기에 텍스트를 입력…"
+        ></textarea>
+        <button id="textSubmit" class="primary">등록</button>
+      </section>
+
+      <!-- 업로드 -->
+      <section
+        id="dropzone"
+        class="dropzone"
+        aria-label="파일을 끌어다 놓거나 버튼으로 선택"
+      >
+        <p class="drop-text">파일을 여기로 끌어다 놓기</p>
+        <div class="upload-buttons">
+          <button id="pickFile">＋ 파일 / 영상</button>
+          <button id="pickImageCompressed">사진 저화질</button>
+          <button id="pickImageOriginal">사진 원본</button>
+        </div>
+        <input id="fileInput" type="file" multiple hidden />
+        <input
+          id="imageInputCompressed"
+          type="file"
+          accept="image/*"
+          multiple
+          hidden
+        />
+        <input
+          id="imageInputOriginal"
+          type="file"
+          accept="image/*"
+          multiple
+          hidden
+        />
+      </section>
+
+      <!-- 업로드 진행 표시 -->
+      <ul id="progressList" class="progress-list"></ul>
+
+      <!-- 자료 목록 -->
+      <section id="list" class="list" aria-live="polite"></section>
+      <p id="emptyState" class="empty hidden">아직 등록된 자료가 없습니다.</p>
+    </main>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

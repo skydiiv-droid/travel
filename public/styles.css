@@ -1,0 +1,342 @@
+:root {
+  --bg: #eaf3f0; /* 페이지 배경 (민트 화이트) */
+  --surface: #ffffff; /* 카드 */
+  --surface-2: #dce8e4; /* 보조 버튼 / hover */
+  --ink: #303b3a; /* 본문 글자 (딥 차콜그린) */
+  --muted: #67746f; /* 보조 글자 */
+  --border: #d3e1dc;
+  --primary: #5f9e9a; /* 브랜드/액센트 (세이지 틸) */
+  --primary-strong: #3e7672; /* 버튼 배경(흰 글자용, 대비 확보) */
+  --on-primary: #ffffff;
+  --danger: #b5544a; /* 삭제 등 (틸과 어울리는 테라코타) */
+  --tag-original: #96692c;
+  --tag-compressed: #3e7672;
+  --radius: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+
+.hidden {
+  display: none !important;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 14px;
+  background: var(--surface-2);
+  color: var(--ink);
+  transition: filter 0.15s ease, background 0.15s ease;
+}
+button:hover {
+  filter: brightness(0.97);
+}
+button:active {
+  transform: translateY(1px);
+}
+button.primary {
+  background: var(--primary-strong);
+  color: var(--on-primary);
+  font-weight: 700;
+}
+button.primary:hover {
+  filter: brightness(1.06);
+}
+
+/* ---------- 로그인 ---------- */
+.login,
+.splash {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.login-card {
+  width: 100%;
+  max-width: 320px;
+  background: var(--surface);
+  padding: 32px 24px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 30px rgba(48, 59, 58, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+}
+.login-card h1 {
+  margin: 0 0 8px;
+  font-size: 1.6rem;
+  color: var(--primary-strong);
+}
+.login-card label {
+  text-align: left;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.login-card input {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 1.1rem;
+  text-align: center;
+  letter-spacing: 2px;
+}
+.login-card input:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+  border-color: var(--primary);
+}
+.login-card button {
+  background: var(--primary-strong);
+  color: var(--on-primary);
+  font-weight: 700;
+  padding: 12px;
+}
+.error {
+  color: var(--danger);
+  min-height: 1.2em;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.spinner {
+  width: 34px;
+  height: 34px;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 12px;
+}
+.splash {
+  flex-direction: column;
+  color: var(--muted);
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- 메인 ---------- */
+.app {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 16px 16px calc(24px + env(safe-area-inset-bottom));
+}
+.topbar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 8px 4px 16px;
+}
+.topbar h1 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: var(--primary-strong);
+}
+.hint {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.composer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.composer textarea {
+  width: 100%;
+  resize: vertical;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 1rem;
+}
+.composer textarea:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+  border-color: var(--primary);
+}
+
+.dropzone {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 14px;
+  background: var(--surface);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.dropzone.dragover {
+  border-color: var(--primary);
+  background: rgba(95, 158, 154, 0.1);
+}
+.drop-text {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.upload-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.progress-list {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.progress-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.progress-bar {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--surface-2);
+  margin-top: 6px;
+  overflow: hidden;
+}
+.progress-bar > span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--primary);
+  transition: width 0.2s ease;
+}
+
+/* ---------- 목록 ---------- */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 2px 8px rgba(48, 59, 58, 0.04);
+}
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card-icon {
+  font-size: 1.2rem;
+}
+.card-name {
+  font-weight: 600;
+  word-break: break-all;
+  flex: 1;
+  min-width: 0;
+}
+.tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.tag.original {
+  background: rgba(150, 105, 44, 0.14);
+  color: var(--tag-original);
+}
+.tag.compressed {
+  background: rgba(95, 158, 154, 0.18);
+  color: var(--tag-compressed);
+}
+.card-meta {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.card-text {
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 0.95rem;
+  max-height: 260px;
+  overflow: auto;
+}
+.card-thumb {
+  max-width: 100%;
+  max-height: 320px;
+  border-radius: 8px;
+  align-self: flex-start;
+}
+.card video {
+  max-width: 100%;
+  max-height: 360px;
+  border-radius: 8px;
+}
+.card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.card-actions button {
+  padding: 7px 12px;
+  font-size: 0.85rem;
+}
+.card-actions .danger {
+  color: var(--danger);
+  background: rgba(181, 84, 74, 0.1);
+}
+
+.empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 32px 0;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  box-shadow: 0 8px 24px rgba(48, 59, 58, 0.25);
+  z-index: 50;
+}
