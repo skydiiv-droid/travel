@@ -1,0 +1,24 @@
+rules_version = '2';
+
+// 공유 계정(share@myshare.app)으로 로그인한 사용자만 접근 가능.
+// 이미지·일반 파일: 10MB 이하 / 영상: 20MB 이하
+service firebase.storage {
+  match /b/{bucket}/o {
+    function isShareUser() {
+      return request.auth != null
+        && request.auth.token.email == 'share@myshare.app';
+    }
+
+    match /uploads/{fileName} {
+      allow read: if isShareUser();
+      allow delete: if isShareUser();
+
+      allow create: if isShareUser()
+        && (
+          (request.resource.contentType.matches('video/.*')
+            && request.resource.size <= 20 * 1024 * 1024)
+          || (request.resource.size <= 10 * 1024 * 1024)
+        );
+    }
+  }
+}
