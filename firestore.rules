@@ -1,0 +1,47 @@
+rules_version = '2';
+
+// 공유 계정(share@myshare.app)으로 로그인한 사용자만 접근 가능.
+// 이메일을 고정 확인하므로, 누가 다른 계정을 만들어도 자료엔 접근하지 못한다.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isShareUser() {
+      return request.auth != null
+        && request.auth.token.email == 'share@myshare.app';
+    }
+
+    match /files/{fileId} {
+      allow read: if isShareUser();
+      allow delete: if isShareUser();
+
+      // 수정은 고정/해제만 허용 (pinned, expiresAt 두 필드만 변경 가능)
+      // - 고정: pinned == true, expiresAt 제거 → 자동삭제 대상에서 제외
+      // - 해제: pinned == false, expiresAt 을 지금부터 최대 25시간 이내로 재설정
+      allow update: if isShareUser()
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['pinned', 'expiresAt'])
+        && request.resource.data.pinned is bool
+        && (
+          (request.resource.data.pinned == true
+            && !('expiresAt' in request.resource.data))
+          || (request.resource.data.pinned == false
+            && request.resource.data.expiresAt is timestamp
+            && request.resource.data.expiresAt <= request.time + duration.value(25, 'h'))
+        );
+
+      allow create: if isShareUser()
+        && request.resource.data.keys().hasAll(['kind', 'createdAt', 'expiresAt'])
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.expiresAt is timestamp
+        && (
+          request.resource.data.kind == 'text'
+          || (request.resource.data.size is int
+              && request.resource.data.size <= 20 * 1024 * 1024)
+        )
+        && (
+          request.resource.data.kind != 'text'
+          || (request.resource.data.content is string
+              && request.resource.data.content.size() <= 20000)
+        );
+    }
+  }
+}

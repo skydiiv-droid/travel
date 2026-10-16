@@ -24,8 +24,7 @@ firebase.json      Hosting 설정
 이 저장소의 `public/` 은 배포된 사이트에서 그대로 내려받아 복원했다.
 배포 사이트로는 받을 수 없는 아래 항목은 아직 저장소에 없다.
 
-- Firestore 보안 규칙 (`firestore.rules`)
 - Cloud Functions (`functions/index.js`, 리전 `asia-northeast3` — 24시간 만료 자동삭제로 추정)
 
-`storage.rules` 는 콘솔에서 복사해 넣었다(배포본과 동일). 규칙·함수를 저장소에 넣기 전에
+`storage.rules` 는 콘솔에서 복사해 넣었다(배포본과 동일). `firestore.rules` 는 콘솔 배포본에 고정(pin) 수정 허용을 추가한 것이다. 규칙·함수를 저장소에 넣기 전에
 `firebase deploy` 를 전체로 돌리면 안 되고, 반드시 `firebase deploy --only hosting` 으로 배포한다.
