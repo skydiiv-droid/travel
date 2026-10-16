@@ -1,6 +1,6 @@
 // 앱 셸 캐시. 공유 자료(Firestore/Storage)는 항상 네트워크로 가져온다.
 // 전략: 네트워크 우선(online이면 항상 최신 코드) + 실패 시 캐시 폴백(오프라인 대비).
-const CACHE = "myshare-shell-v2";
+const CACHE = "myshare-shell-v3";
 const SHELL = [
   "/",
   "/index.html",

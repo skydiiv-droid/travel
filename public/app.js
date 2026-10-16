@@ -11,6 +11,8 @@ import {
   collection,
   addDoc,
   deleteDoc,
+  updateDoc,
+  deleteField,
   doc,
   onSnapshot,
   query,
@@ -124,12 +126,15 @@ function startListening() {
 }
 
 function renderList(items) {
-  // 만료된 항목은(자동삭제 전이라도) 화면에서 숨김
+  // 만료된 항목은(자동삭제 전이라도) 화면에서 숨김. 고정 항목은 만료 없음.
   const now = Date.now();
   const visible = items.filter((it) => {
+    if (it.pinned) return true;
     const exp = it.expiresAt && it.expiresAt.toMillis ? it.expiresAt.toMillis() : 0;
     return !exp || exp > now;
   });
+  // 고정 항목을 맨 위로 (각 그룹 안에서는 최신순 유지)
+  visible.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
 
   emptyState.classList.toggle("hidden", visible.length > 0);
   listEl.innerHTML = "";
@@ -140,7 +145,7 @@ function renderList(items) {
 
 function renderCard(item) {
   const card = document.createElement("article");
-  card.className = "card";
+  card.className = item.pinned ? "card pinned" : "card";
 
   if (item.kind === "text") {
     card.appendChild(cardHead("📝", "텍스트", null, item));
@@ -203,6 +208,13 @@ function cardHead(icon, name, quality, item) {
   nm.textContent = name;
   head.appendChild(nm);
 
+  if (item.pinned) {
+    const pin = document.createElement("span");
+    pin.className = "tag pinned";
+    pin.textContent = "📌 고정";
+    head.appendChild(pin);
+  }
+
   if (quality) {
     const tag = document.createElement("span");
     tag.className = "tag " + (quality === "original" ? "original" : "compressed");
@@ -222,6 +234,7 @@ function cardActions(item, extra) {
     parts.push(formatBytes(item.size));
   }
   parts.push(relativeTime(item.createdAt));
+  if (!item.pinned) parts.push(remainingTime(item.expiresAt));
   meta.textContent = parts.join(" · ");
 
   const actions = document.createElement("div");
@@ -232,6 +245,11 @@ function cardActions(item, extra) {
     btn.addEventListener("click", a.onClick);
     actions.appendChild(btn);
   }
+  const pinBtn = document.createElement("button");
+  pinBtn.textContent = item.pinned ? "고정 해제" : "📌 고정";
+  pinBtn.addEventListener("click", () => togglePin(item));
+  actions.appendChild(pinBtn);
+
   const del = document.createElement("button");
   del.className = "danger";
   del.textContent = "삭제";
@@ -432,6 +450,28 @@ async function removeItem(item) {
   }
 }
 
+// 고정: expiresAt 을 지워 자동삭제 대상에서 제외. 해제: 지금부터 다시 24시간.
+async function togglePin(item) {
+  try {
+    if (item.pinned) {
+      await updateDoc(doc(db, "files", item.id), {
+        pinned: false,
+        expiresAt: Timestamp.fromMillis(Date.now() + TTL_MS),
+      });
+      toast("고정 해제 — 24시간 후 삭제됩니다.");
+    } else {
+      await updateDoc(doc(db, "files", item.id), {
+        pinned: true,
+        expiresAt: deleteField(),
+      });
+      toast("고정되었습니다. 자동 삭제되지 않습니다.");
+    }
+  } catch (err) {
+    console.error(err);
+    toast("고정 변경에 실패했습니다.");
+  }
+}
+
 async function copyText(text) {
   try {
     await navigator.clipboard.writeText(text);
@@ -487,6 +527,13 @@ function relativeTime(ts) {
   const hr = Math.floor(min / 60);
   if (hr < 24) return `${hr}시간 전`;
   return `${Math.floor(hr / 24)}일 전`;
+}
+
+function remainingTime(ts) {
+  if (!ts || !ts.toMillis) return "";
+  const min = Math.max(0, Math.floor((ts.toMillis() - Date.now()) / 60000));
+  if (min < 60) return `${min}분 후 삭제`;
+  return `${Math.floor(min / 60)}시간 후 삭제`;
 }
 
 function sanitize(name) {
