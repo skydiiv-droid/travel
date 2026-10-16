@@ -26,5 +26,10 @@ firebase.json      Hosting 설정
 
 - Cloud Functions (`functions/index.js`, 리전 `asia-northeast3` — 24시간 만료 자동삭제로 추정)
 
-`storage.rules` 는 콘솔에서 복사해 넣었다(배포본과 동일). `firestore.rules` 는 콘솔 배포본에 고정(pin) 수정 허용을 추가한 것이다. 규칙·함수를 저장소에 넣기 전에
-`firebase deploy` 를 전체로 돌리면 안 되고, 반드시 `firebase deploy --only hosting` 으로 배포한다.
+`storage.rules` 는 콘솔에서 복사해 넣었다(배포본과 동일). `firestore.rules` 는 콘솔 배포본에 고정(pin) 수정 허용을 추가한 것이다.
+
+Functions 가 저장소에 없으므로 `firebase deploy` 를 전체로 돌리지 말고 대상을 지정해 배포한다:
+
+```
+firebase deploy --only hosting,firestore:rules,storage
+```
