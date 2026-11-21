@@ -1,0 +1,7445 @@
+{
+ "schema_version": 1,
+ "exported_at": "2026-11-21T10:20:55.853Z",
+ "destinations": [
+  {
+   "id": "gangneung",
+   "name": "강릉",
+   "type": "domestic",
+   "region": "강원",
+   "tags": [
+    "바다",
+    "카페",
+    "KTX"
+   ],
+   "scores": {
+    "move": 5.5,
+    "drive": 6,
+    "crowd": 5,
+    "food": 8,
+    "nature": 8,
+    "city": 6,
+    "walk": 7,
+    "stay": 8,
+    "weather": 6,
+    "value": 6,
+    "activity": 6
+   },
+   "monthly": {
+    "1": {
+     "weather": -2,
+     "crowd": 1
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 1
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 1
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "6": {
+     "weather": 1,
+     "crowd": -1
+    },
+    "7": {
+     "weather": 0,
+     "crowd": -2
+    },
+    "8": {
+     "weather": -1,
+     "crowd": -3
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 1
+    },
+    "12": {
+     "weather": -2,
+     "crowd": 1
+    }
+   },
+   "travel_time": {
+    "work": 200,
+    "home": 180
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "KTX 강릉선. 경포·안목 커피거리·주문진 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "sokcho",
+   "name": "속초",
+   "type": "domestic",
+   "region": "강원",
+   "tags": [
+    "바다",
+    "설악산",
+    "시장"
+   ],
+   "scores": {
+    "move": 5.5,
+    "drive": 4,
+    "crowd": 5,
+    "food": 8,
+    "nature": 9,
+    "city": 5,
+    "walk": 6,
+    "stay": 8,
+    "weather": 6,
+    "value": 6,
+    "activity": 7
+   },
+   "monthly": {
+    "1": {
+     "weather": -2,
+     "crowd": 1
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 1
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 1
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "6": {
+     "weather": 1,
+     "crowd": -1
+    },
+    "7": {
+     "weather": 0,
+     "crowd": -2
+    },
+    "8": {
+     "weather": -1,
+     "crowd": -3
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 1
+    },
+    "12": {
+     "weather": -2,
+     "crowd": 1
+    }
+   },
+   "travel_time": {
+    "work": 200,
+    "home": 180
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "동서울 버스 2시간대. 설악산·중앙시장 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "yangyang",
+   "name": "양양",
+   "type": "domestic",
+   "region": "강원",
+   "tags": [
+    "서핑",
+    "바다"
+   ],
+   "scores": {
+    "move": 6,
+    "drive": 3,
+    "crowd": 5,
+    "food": 6,
+    "nature": 8,
+    "city": 3,
+    "walk": 7,
+    "stay": 7,
+    "weather": 6,
+    "value": 6,
+    "activity": 8
+   },
+   "monthly": {
+    "1": {
+     "weather": -2,
+     "crowd": 1
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 1
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 1
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "6": {
+     "weather": 1,
+     "crowd": -1
+    },
+    "7": {
+     "weather": 0,
+     "crowd": -2
+    },
+    "8": {
+     "weather": -1,
+     "crowd": -3
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 1
+    },
+    "12": {
+     "weather": -2,
+     "crowd": 1
+    }
+   },
+   "travel_time": {
+    "work": 190,
+    "home": 170
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "서핑·낙산사. 차량 이동 위주 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "chuncheon",
+   "name": "춘천",
+   "type": "domestic",
+   "region": "강원",
+   "tags": [
+    "호수",
+    "닭갈비",
+    "ITX"
+   ],
+   "scores": {
+    "move": 7.5,
+    "drive": 7,
+    "crowd": 6,
+    "food": 7,
+    "nature": 7,
+    "city": 5,
+    "walk": 7,
+    "stay": 6,
+    "weather": 6,
+    "value": 7,
+    "activity": 6
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -2,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 120,
+    "home": 100
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "ITX-청춘·경춘선. 남이섬·소양강 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "pyeongchang",
+   "name": "평창",
+   "type": "domestic",
+   "region": "강원",
+   "tags": [
+    "스키",
+    "목장",
+    "KTX"
+   ],
+   "scores": {
+    "move": 6,
+    "drive": 3,
+    "crowd": 6,
+    "food": 6,
+    "nature": 9,
+    "city": 3,
+    "walk": 6,
+    "stay": 8,
+    "weather": 6,
+    "value": 5,
+    "activity": 8
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "2": {
+     "weather": -2,
+     "crowd": -2
+    },
+    "3": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 1,
+     "crowd": 1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "6": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "7": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "8": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "9": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -3,
+     "crowd": -1
+    }
+   },
+   "travel_time": {
+    "work": 175,
+    "home": 160
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "KTX 진부·평창역. 대관령 목장·리조트 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "jeongseon",
+   "name": "정선",
+   "type": "domestic",
+   "region": "강원",
+   "tags": [
+    "오일장",
+    "레일바이크",
+    "하이원"
+   ],
+   "scores": {
+    "move": 5,
+    "drive": 2,
+    "crowd": 7,
+    "food": 6,
+    "nature": 9,
+    "city": 3,
+    "walk": 5,
+    "stay": 6,
+    "weather": 6,
+    "value": 6,
+    "activity": 7
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "3": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 1,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "7": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "8": {
+     "weather": 0,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -3,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 220,
+    "home": 200
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "정선 5일장(2·7일), 하이원 리조트 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "samcheok",
+   "name": "삼척",
+   "type": "domestic",
+   "region": "강원",
+   "tags": [
+    "동굴",
+    "해상케이블카",
+    "바다"
+   ],
+   "scores": {
+    "move": 4,
+    "drive": 3,
+    "crowd": 7,
+    "food": 6,
+    "nature": 9,
+    "city": 3,
+    "walk": 6,
+    "stay": 6,
+    "weather": 6,
+    "value": 7,
+    "activity": 6
+   },
+   "monthly": {
+    "1": {
+     "weather": -2,
+     "crowd": 1
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 1
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 1
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "6": {
+     "weather": 1,
+     "crowd": -1
+    },
+    "7": {
+     "weather": 0,
+     "crowd": -2
+    },
+    "8": {
+     "weather": -1,
+     "crowd": -3
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 1
+    },
+    "12": {
+     "weather": -2,
+     "crowd": 1
+    }
+   },
+   "travel_time": {
+    "work": 260,
+    "home": 240
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "환선굴·장호항·해상케이블카 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "donghae",
+   "name": "동해",
+   "type": "domestic",
+   "region": "강원",
+   "tags": [
+    "바다",
+    "계곡"
+   ],
+   "scores": {
+    "move": 4.5,
+    "drive": 4,
+    "crowd": 7,
+    "food": 6,
+    "nature": 8,
+    "city": 3,
+    "walk": 7,
+    "stay": 6,
+    "weather": 6,
+    "value": 7,
+    "activity": 5
+   },
+   "monthly": {
+    "1": {
+     "weather": -2,
+     "crowd": 1
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 1
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 1
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "6": {
+     "weather": 1,
+     "crowd": -1
+    },
+    "7": {
+     "weather": 0,
+     "crowd": -2
+    },
+    "8": {
+     "weather": -1,
+     "crowd": -3
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 1
+    },
+    "12": {
+     "weather": -2,
+     "crowd": 1
+    }
+   },
+   "travel_time": {
+    "work": 240,
+    "home": 220
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "무릉계곡·묵호 논골담길. KTX 동해역 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "hongcheon",
+   "name": "홍천",
+   "type": "domestic",
+   "region": "강원",
+   "tags": [
+    "리조트",
+    "워터파크"
+   ],
+   "scores": {
+    "move": 7.5,
+    "drive": 2,
+    "crowd": 7,
+    "food": 5,
+    "nature": 8,
+    "city": 2,
+    "walk": 7,
+    "stay": 7,
+    "weather": 6,
+    "value": 6,
+    "activity": 7
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "2": {
+     "weather": -2,
+     "crowd": -2
+    },
+    "3": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 1,
+     "crowd": 1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "6": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "7": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "8": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "9": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -3,
+     "crowd": -1
+    }
+   },
+   "travel_time": {
+    "work": 130,
+    "home": 110
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "비발디파크·오션월드 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "inje",
+   "name": "인제",
+   "type": "domestic",
+   "region": "강원",
+   "tags": [
+    "래프팅",
+    "숲"
+   ],
+   "scores": {
+    "move": 6.5,
+    "drive": 2,
+    "crowd": 7,
+    "food": 5,
+    "nature": 9,
+    "city": 2,
+    "walk": 5,
+    "stay": 5,
+    "weather": 6,
+    "value": 7,
+    "activity": 8
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 1
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 1
+    },
+    "3": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 1,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "7": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "8": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "9": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -3
+    },
+    "11": {
+     "weather": 0,
+     "crowd": -2
+    },
+    "12": {
+     "weather": -3,
+     "crowd": 1
+    }
+   },
+   "travel_time": {
+    "work": 170,
+    "home": 150
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "내린천 래프팅·원대리 자작나무숲 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "cheorwon",
+   "name": "철원",
+   "type": "domestic",
+   "region": "강원",
+   "tags": [
+    "협곡",
+    "트레킹"
+   ],
+   "scores": {
+    "move": 7,
+    "drive": 2,
+    "crowd": 8,
+    "food": 5,
+    "nature": 8,
+    "city": 3,
+    "walk": 7,
+    "stay": 4,
+    "weather": 5,
+    "value": 7,
+    "activity": 5
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 1
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 1
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "8": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "9": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -3
+    },
+    "11": {
+     "weather": 1,
+     "crowd": -2
+    },
+    "12": {
+     "weather": -2,
+     "crowd": 1
+    }
+   },
+   "travel_time": {
+    "work": 120,
+    "home": 120
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "한탄강 주상절리길·고석정 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "gapyeong",
+   "name": "가평",
+   "type": "domestic",
+   "region": "경기",
+   "tags": [
+    "펜션",
+    "수상레저",
+    "ITX"
+   ],
+   "scores": {
+    "move": 8,
+    "drive": 5,
+    "crowd": 5,
+    "food": 6,
+    "nature": 8,
+    "city": 3,
+    "walk": 7,
+    "stay": 7,
+    "weather": 6,
+    "value": 6,
+    "activity": 8
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -2,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 95,
+    "home": 85
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "ITX-청춘 가평역. 쁘띠프랑스·자라섬 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "yangpyeong",
+   "name": "양평",
+   "type": "domestic",
+   "region": "경기",
+   "tags": [
+    "카페",
+    "강",
+    "전철"
+   ],
+   "scores": {
+    "move": 8,
+    "drive": 5,
+    "crowd": 6,
+    "food": 7,
+    "nature": 8,
+    "city": 3,
+    "walk": 8,
+    "stay": 6,
+    "weather": 6,
+    "value": 6,
+    "activity": 5
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -2,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 90,
+    "home": 75
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "경의중앙선. 두물머리·세미원 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "ganghwa",
+   "name": "강화도",
+   "type": "domestic",
+   "region": "인천",
+   "tags": [
+    "섬",
+    "역사",
+    "해산물"
+   ],
+   "scores": {
+    "move": 8.5,
+    "drive": 3,
+    "crowd": 7,
+    "food": 7,
+    "nature": 7,
+    "city": 5,
+    "walk": 7,
+    "stay": 5,
+    "weather": 6,
+    "value": 7,
+    "activity": 5
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -2,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 35,
+    "home": 60
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "완정에서 가까움. 전등사·조양방직·석모도 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "yeongjong",
+   "name": "영종·무의도",
+   "type": "domestic",
+   "region": "인천",
+   "tags": [
+    "바다",
+    "호캉스"
+   ],
+   "scores": {
+    "move": 9,
+    "drive": 6,
+    "crowd": 6,
+    "food": 6,
+    "nature": 7,
+    "city": 4,
+    "walk": 8,
+    "stay": 8,
+    "weather": 6,
+    "value": 6,
+    "activity": 5
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 1
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 1
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 1
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "6": {
+     "weather": 1,
+     "crowd": -1
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -2
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -3
+    },
+    "9": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 1
+    },
+    "12": {
+     "weather": -2,
+     "crowd": 1
+    }
+   },
+   "travel_time": {
+    "work": 35,
+    "home": 45
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "을왕리·무의도. 공항철도 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "suwon",
+   "name": "수원",
+   "type": "domestic",
+   "region": "경기",
+   "tags": [
+    "성곽",
+    "행궁동",
+    "갈비"
+   ],
+   "scores": {
+    "move": 8.5,
+    "drive": 8,
+    "crowd": 5,
+    "food": 7,
+    "nature": 4,
+    "city": 7,
+    "walk": 6,
+    "stay": 7,
+    "weather": 6,
+    "value": 7,
+    "activity": 4
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -1
+    },
+    "9": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -2,
+     "crowd": -1
+    }
+   },
+   "travel_time": {
+    "work": 75,
+    "home": 60
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "수원화성·행궁동. 전철·버스 편리 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "paju",
+   "name": "파주",
+   "type": "domestic",
+   "region": "경기",
+   "tags": [
+    "출판단지",
+    "DMZ",
+    "카페"
+   ],
+   "scores": {
+    "move": 9,
+    "drive": 4,
+    "crowd": 6,
+    "food": 6,
+    "nature": 6,
+    "city": 6,
+    "walk": 7,
+    "stay": 6,
+    "weather": 6,
+    "value": 7,
+    "activity": 5
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -2,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 40,
+    "home": 45
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "헤이리·출판도시·임진각 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "pocheon",
+   "name": "포천",
+   "type": "domestic",
+   "region": "경기",
+   "tags": [
+    "호수",
+    "아트밸리",
+    "온천"
+   ],
+   "scores": {
+    "move": 8,
+    "drive": 2,
+    "crowd": 7,
+    "food": 6,
+    "nature": 8,
+    "city": 3,
+    "walk": 6,
+    "stay": 6,
+    "weather": 6,
+    "value": 7,
+    "activity": 6
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 1
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 1
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "8": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "9": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -3
+    },
+    "11": {
+     "weather": 1,
+     "crowd": -2
+    },
+    "12": {
+     "weather": -2,
+     "crowd": 1
+    }
+   },
+   "travel_time": {
+    "work": 95,
+    "home": 90
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "산정호수·포천아트밸리 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "daebudo",
+   "name": "대부도",
+   "type": "domestic",
+   "region": "경기",
+   "tags": [
+    "갯벌",
+    "칼국수",
+    "섬"
+   ],
+   "scores": {
+    "move": 8,
+    "drive": 3,
+    "crowd": 6,
+    "food": 7,
+    "nature": 6,
+    "city": 3,
+    "walk": 8,
+    "stay": 5,
+    "weather": 6,
+    "value": 7,
+    "activity": 5
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -2,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 80,
+    "home": 75
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "제부도·궁평항, 바지락칼국수 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "danyang",
+   "name": "단양",
+   "type": "domestic",
+   "region": "충북",
+   "tags": [
+    "패러글라이딩",
+    "강",
+    "동굴"
+   ],
+   "scores": {
+    "move": 6,
+    "drive": 4,
+    "crowd": 6,
+    "food": 6,
+    "nature": 9,
+    "city": 4,
+    "walk": 6,
+    "stay": 6,
+    "weather": 6,
+    "value": 7,
+    "activity": 8
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 1
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 1
+    },
+    "3": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 1,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "7": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "8": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "9": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -3
+    },
+    "11": {
+     "weather": 0,
+     "crowd": -2
+    },
+    "12": {
+     "weather": -3,
+     "crowd": 1
+    }
+   },
+   "travel_time": {
+    "work": 180,
+    "home": 160
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "도담삼봉·패러글라이딩·고수동굴 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "jecheon",
+   "name": "제천",
+   "type": "domestic",
+   "region": "충북",
+   "tags": [
+    "호수",
+    "케이블카",
+    "리조트"
+   ],
+   "scores": {
+    "move": 6.5,
+    "drive": 3,
+    "crowd": 7,
+    "food": 6,
+    "nature": 8,
+    "city": 3,
+    "walk": 7,
+    "stay": 7,
+    "weather": 6,
+    "value": 7,
+    "activity": 6
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 1
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 1
+    },
+    "3": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 1,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "7": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "8": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "9": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -3
+    },
+    "11": {
+     "weather": 0,
+     "crowd": -2
+    },
+    "12": {
+     "weather": -3,
+     "crowd": 1
+    }
+   },
+   "travel_time": {
+    "work": 160,
+    "home": 140
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "청풍호 케이블카·의림지 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "chungju",
+   "name": "충주",
+   "type": "domestic",
+   "region": "충북",
+   "tags": [
+    "호수",
+    "동굴",
+    "온천"
+   ],
+   "scores": {
+    "move": 7,
+    "drive": 4,
+    "crowd": 7,
+    "food": 6,
+    "nature": 8,
+    "city": 3,
+    "walk": 7,
+    "stay": 6,
+    "weather": 6,
+    "value": 7,
+    "activity": 6
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 1
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 1
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "8": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "9": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -3
+    },
+    "11": {
+     "weather": 1,
+     "crowd": -2
+    },
+    "12": {
+     "weather": -2,
+     "crowd": 1
+    }
+   },
+   "travel_time": {
+    "work": 140,
+    "home": 120
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "충주호·활옥동굴·수안보온천 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "gongju",
+   "name": "공주",
+   "type": "domestic",
+   "region": "충남",
+   "tags": [
+    "백제",
+    "성곽"
+   ],
+   "scores": {
+    "move": 7,
+    "drive": 4,
+    "crowd": 8,
+    "food": 6,
+    "nature": 6,
+    "city": 6,
+    "walk": 7,
+    "stay": 5,
+    "weather": 6,
+    "value": 8,
+    "activity": 4
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -2,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 135,
+    "home": 120
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "공산성·무령왕릉 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "buyeo",
+   "name": "부여",
+   "type": "domestic",
+   "region": "충남",
+   "tags": [
+    "백제",
+    "연못"
+   ],
+   "scores": {
+    "move": 6.5,
+    "drive": 4,
+    "crowd": 8,
+    "food": 6,
+    "nature": 7,
+    "city": 6,
+    "walk": 7,
+    "stay": 5,
+    "weather": 6,
+    "value": 8,
+    "activity": 4
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -2,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 155,
+    "home": 140
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "궁남지·부소산성 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "taean",
+   "name": "태안",
+   "type": "domestic",
+   "region": "충남",
+   "tags": [
+    "해변",
+    "안면도",
+    "낙조"
+   ],
+   "scores": {
+    "move": 6.5,
+    "drive": 2,
+    "crowd": 6,
+    "food": 7,
+    "nature": 8,
+    "city": 3,
+    "walk": 7,
+    "stay": 6,
+    "weather": 6,
+    "value": 7,
+    "activity": 6
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 1
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 1
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 1
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "6": {
+     "weather": 1,
+     "crowd": -1
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -2
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -3
+    },
+    "9": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 1
+    },
+    "12": {
+     "weather": -2,
+     "crowd": 1
+    }
+   },
+   "travel_time": {
+    "work": 150,
+    "home": 140
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "안면도 꽃지·신두리 해안사구. 자차 권장 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "boryeong",
+   "name": "보령",
+   "type": "domestic",
+   "region": "충남",
+   "tags": [
+    "해수욕장",
+    "머드",
+    "해산물"
+   ],
+   "scores": {
+    "move": 6.5,
+    "drive": 4,
+    "crowd": 5,
+    "food": 7,
+    "nature": 7,
+    "city": 4,
+    "walk": 8,
+    "stay": 6,
+    "weather": 6,
+    "value": 7,
+    "activity": 7
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 1
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 1
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 1
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "6": {
+     "weather": 1,
+     "crowd": -1
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -2
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -3
+    },
+    "9": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 1
+    },
+    "12": {
+     "weather": -2,
+     "crowd": 1
+    }
+   },
+   "travel_time": {
+    "work": 145,
+    "home": 135
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "대천해수욕장·머드축제(7월) (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "asan",
+   "name": "아산",
+   "type": "domestic",
+   "region": "충남",
+   "tags": [
+    "온천",
+    "KTX"
+   ],
+   "scores": {
+    "move": 8,
+    "drive": 7,
+    "crowd": 7,
+    "food": 6,
+    "nature": 5,
+    "city": 4,
+    "walk": 8,
+    "stay": 6,
+    "weather": 6,
+    "value": 7,
+    "activity": 5
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -2,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 95,
+    "home": 80
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "온양온천·외암민속마을. 천안아산역 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "cheongju",
+   "name": "청주",
+   "type": "domestic",
+   "region": "충북",
+   "tags": [
+    "산성",
+    "도심"
+   ],
+   "scores": {
+    "move": 7.5,
+    "drive": 6,
+    "crowd": 7,
+    "food": 6,
+    "nature": 6,
+    "city": 5,
+    "walk": 7,
+    "stay": 6,
+    "weather": 6,
+    "value": 8,
+    "activity": 4
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -1
+    },
+    "9": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -2,
+     "crowd": -1
+    }
+   },
+   "travel_time": {
+    "work": 125,
+    "home": 110
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "수암골·청남대·상당산성 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "jeonju",
+   "name": "전주",
+   "type": "domestic",
+   "region": "전북",
+   "tags": [
+    "한옥마을",
+    "맛집",
+    "KTX"
+   ],
+   "scores": {
+    "move": 6.5,
+    "drive": 7,
+    "crowd": 4,
+    "food": 9,
+    "nature": 4,
+    "city": 7,
+    "walk": 6,
+    "stay": 7,
+    "weather": 6,
+    "value": 8,
+    "activity": 4
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -1
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": -1
+    }
+   },
+   "travel_time": {
+    "work": 165,
+    "home": 150
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "KTX 전라선. 한옥마을·남부시장 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "gunsan",
+   "name": "군산",
+   "type": "domestic",
+   "region": "전북",
+   "tags": [
+    "근대거리",
+    "섬",
+    "짬뽕"
+   ],
+   "scores": {
+    "move": 6,
+    "drive": 6,
+    "crowd": 7,
+    "food": 8,
+    "nature": 5,
+    "city": 6,
+    "walk": 7,
+    "stay": 6,
+    "weather": 6,
+    "value": 8,
+    "activity": 4
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 175,
+    "home": 165
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "근대문화거리·선유도 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "yeosu",
+   "name": "여수",
+   "type": "domestic",
+   "region": "전남",
+   "tags": [
+    "밤바다",
+    "케이블카",
+    "해산물",
+    "항공"
+   ],
+   "scores": {
+    "move": 6,
+    "drive": 6,
+    "crowd": 5,
+    "food": 9,
+    "nature": 8,
+    "city": 6,
+    "walk": 6,
+    "stay": 8,
+    "weather": 6.5,
+    "value": 6,
+    "activity": 6
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 190,
+    "home": 170
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "김포–여수 항공 또는 KTX. 해상케이블카 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "suncheon",
+   "name": "순천",
+   "type": "domestic",
+   "region": "전남",
+   "tags": [
+    "순천만",
+    "정원"
+   ],
+   "scores": {
+    "move": 5,
+    "drive": 6,
+    "crowd": 6,
+    "food": 8,
+    "nature": 9,
+    "city": 5,
+    "walk": 6,
+    "stay": 6,
+    "weather": 6.5,
+    "value": 7,
+    "activity": 4
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 1
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 1
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "8": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "9": {
+     "weather": 1,
+     "crowd": -1
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -3
+    },
+    "11": {
+     "weather": 2,
+     "crowd": -2
+    },
+    "12": {
+     "weather": -1,
+     "crowd": 1
+    }
+   },
+   "travel_time": {
+    "work": 225,
+    "home": 210
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "순천만 습지(갈대 10~11월)·국가정원 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "damyang",
+   "name": "담양",
+   "type": "domestic",
+   "region": "전남",
+   "tags": [
+    "대나무숲",
+    "떡갈비"
+   ],
+   "scores": {
+    "move": 5.5,
+    "drive": 3,
+    "crowd": 7,
+    "food": 8,
+    "nature": 8,
+    "city": 4,
+    "walk": 7,
+    "stay": 5,
+    "weather": 6,
+    "value": 7,
+    "activity": 4
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 205,
+    "home": 190
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "죽녹원·메타세쿼이아길. 광주 경유 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "mokpo",
+   "name": "목포",
+   "type": "domestic",
+   "region": "전남",
+   "tags": [
+    "케이블카",
+    "낙지",
+    "근대거리"
+   ],
+   "scores": {
+    "move": 5.5,
+    "drive": 6,
+    "crowd": 7,
+    "food": 9,
+    "nature": 7,
+    "city": 5,
+    "walk": 7,
+    "stay": 6,
+    "weather": 6.5,
+    "value": 8,
+    "activity": 5
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 205,
+    "home": 190
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "KTX 목포역. 해상케이블카 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "namwon",
+   "name": "남원",
+   "type": "domestic",
+   "region": "전북",
+   "tags": [
+    "광한루",
+    "지리산"
+   ],
+   "scores": {
+    "move": 5.5,
+    "drive": 4,
+    "crowd": 8,
+    "food": 7,
+    "nature": 8,
+    "city": 4,
+    "walk": 7,
+    "stay": 5,
+    "weather": 6,
+    "value": 8,
+    "activity": 4
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 195,
+    "home": 180
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "광한루원·지리산 둘레길 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "gwangju",
+   "name": "광주",
+   "type": "domestic",
+   "region": "전남",
+   "tags": [
+    "맛집",
+    "예술",
+    "KTX"
+   ],
+   "scores": {
+    "move": 6.5,
+    "drive": 8,
+    "crowd": 7,
+    "food": 9,
+    "nature": 4,
+    "city": 7,
+    "walk": 7,
+    "stay": 7,
+    "weather": 6.5,
+    "value": 8,
+    "activity": 4
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -1
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": -1
+    }
+   },
+   "travel_time": {
+    "work": 165,
+    "home": 150
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "KTX 광주송정·김포–광주 항공 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "boseong",
+   "name": "보성",
+   "type": "domestic",
+   "region": "전남",
+   "tags": [
+    "녹차밭",
+    "바다"
+   ],
+   "scores": {
+    "move": 4,
+    "drive": 2,
+    "crowd": 8,
+    "food": 7,
+    "nature": 8,
+    "city": 2,
+    "walk": 7,
+    "stay": 5,
+    "weather": 6.5,
+    "value": 8,
+    "activity": 4
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 255,
+    "home": 240
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "대한다원·율포해수욕장 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "haenam",
+   "name": "해남·강진",
+   "type": "domestic",
+   "region": "전남",
+   "tags": [
+    "땅끝",
+    "사찰",
+    "한정식"
+   ],
+   "scores": {
+    "move": 3.5,
+    "drive": 2,
+    "crowd": 9,
+    "food": 8,
+    "nature": 9,
+    "city": 2,
+    "walk": 6,
+    "stay": 5,
+    "weather": 6.5,
+    "value": 8,
+    "activity": 4
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 1
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 1
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "8": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "9": {
+     "weather": 1,
+     "crowd": -1
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -3
+    },
+    "11": {
+     "weather": 2,
+     "crowd": -2
+    },
+    "12": {
+     "weather": -1,
+     "crowd": 1
+    }
+   },
+   "travel_time": {
+    "work": 285,
+    "home": 270
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "땅끝마을·대흥사·강진 한정식 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "gochang",
+   "name": "고창",
+   "type": "domestic",
+   "region": "전북",
+   "tags": [
+    "고인돌",
+    "선운사",
+    "장어"
+   ],
+   "scores": {
+    "move": 5.5,
+    "drive": 2,
+    "crowd": 8,
+    "food": 7,
+    "nature": 8,
+    "city": 3,
+    "walk": 7,
+    "stay": 5,
+    "weather": 6,
+    "value": 8,
+    "activity": 4
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 195,
+    "home": 180
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "선운사(꽃무릇 9월)·고인돌 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "gyeongju",
+   "name": "경주",
+   "type": "domestic",
+   "region": "경북",
+   "tags": [
+    "역사",
+    "황리단길",
+    "벚꽃"
+   ],
+   "scores": {
+    "move": 5.5,
+    "drive": 5,
+    "crowd": 4,
+    "food": 7,
+    "nature": 7,
+    "city": 8,
+    "walk": 6,
+    "stay": 8,
+    "weather": 6.5,
+    "value": 7,
+    "activity": 6
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 1,
+     "crowd": -1
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -3
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -1
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 200,
+    "home": 180
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "KTX 신경주. 대릉원·보문단지 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "andong",
+   "name": "안동",
+   "type": "domestic",
+   "region": "경북",
+   "tags": [
+    "하회마을",
+    "찜닭"
+   ],
+   "scores": {
+    "move": 5.5,
+    "drive": 4,
+    "crowd": 7,
+    "food": 8,
+    "nature": 7,
+    "city": 6,
+    "walk": 7,
+    "stay": 6,
+    "weather": 6,
+    "value": 8,
+    "activity": 4
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -2,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 200,
+    "home": 180
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "KTX-이음 안동역. 하회마을·월영교 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "busan_haeundae",
+   "name": "부산 해운대·기장",
+   "type": "domestic",
+   "region": "부산",
+   "tags": [
+    "바다",
+    "호텔",
+    "야경",
+    "항공"
+   ],
+   "scores": {
+    "move": 6,
+    "drive": 8,
+    "crowd": 4,
+    "food": 9,
+    "nature": 8,
+    "city": 8,
+    "walk": 7,
+    "stay": 9,
+    "weather": 6.5,
+    "value": 6,
+    "activity": 7
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 1
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 1
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 1
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "6": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -2
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -3
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 1
+    },
+    "12": {
+     "weather": -1,
+     "crowd": 1
+    }
+   },
+   "travel_time": {
+    "work": 185,
+    "home": 165
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 3,
+   "notes": "김포–김해 항공 또는 KTX. 해운대·광안리·기장 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "busan_old",
+   "name": "부산 원도심(남포·영도)",
+   "type": "domestic",
+   "region": "부산",
+   "tags": [
+    "시장",
+    "영도",
+    "문화마을"
+   ],
+   "scores": {
+    "move": 6,
+    "drive": 8,
+    "crowd": 4,
+    "food": 9,
+    "nature": 6,
+    "city": 9,
+    "walk": 5,
+    "stay": 7,
+    "weather": 6.5,
+    "value": 7,
+    "activity": 5
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -1
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": -1
+    }
+   },
+   "travel_time": {
+    "work": 180,
+    "home": 160
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "자갈치·국제시장·감천문화마을·흰여울 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "tongyeong",
+   "name": "통영",
+   "type": "domestic",
+   "region": "경남",
+   "tags": [
+    "섬",
+    "케이블카",
+    "해산물"
+   ],
+   "scores": {
+    "move": 4,
+    "drive": 4,
+    "crowd": 6,
+    "food": 9,
+    "nature": 9,
+    "city": 5,
+    "walk": 6,
+    "stay": 6,
+    "weather": 6.5,
+    "value": 7,
+    "activity": 6
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 255,
+    "home": 240
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "케이블카·동피랑·욕지도 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "geoje",
+   "name": "거제",
+   "type": "domestic",
+   "region": "경남",
+   "tags": [
+    "해안",
+    "섬"
+   ],
+   "scores": {
+    "move": 4.5,
+    "drive": 3,
+    "crowd": 6,
+    "food": 8,
+    "nature": 9,
+    "city": 4,
+    "walk": 6,
+    "stay": 7,
+    "weather": 6.5,
+    "value": 6,
+    "activity": 6
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 1
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 1
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 1
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "6": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -2
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -3
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 1
+    },
+    "12": {
+     "weather": -1,
+     "crowd": 1
+    }
+   },
+   "travel_time": {
+    "work": 235,
+    "home": 220
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "김해공항 경유. 바람의언덕·외도 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "namhae",
+   "name": "남해",
+   "type": "domestic",
+   "region": "경남",
+   "tags": [
+    "독일마을",
+    "다랭이마을"
+   ],
+   "scores": {
+    "move": 4.5,
+    "drive": 2,
+    "crowd": 7,
+    "food": 7,
+    "nature": 9,
+    "city": 3,
+    "walk": 6,
+    "stay": 7,
+    "weather": 6.5,
+    "value": 6,
+    "activity": 5
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 245,
+    "home": 230
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "자차 필수에 가까움. 독일마을·다랭이마을 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "jinju",
+   "name": "진주",
+   "type": "domestic",
+   "region": "경남",
+   "tags": [
+    "진주성",
+    "냉면"
+   ],
+   "scores": {
+    "move": 5,
+    "drive": 5,
+    "crowd": 8,
+    "food": 8,
+    "nature": 6,
+    "city": 5,
+    "walk": 7,
+    "stay": 6,
+    "weather": 6.5,
+    "value": 8,
+    "activity": 4
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 215,
+    "home": 200
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "김포–사천 항공 또는 KTX. 진주성 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "pohang",
+   "name": "포항",
+   "type": "domestic",
+   "region": "경북",
+   "tags": [
+    "바다",
+    "스페이스워크",
+    "과메기"
+   ],
+   "scores": {
+    "move": 6,
+    "drive": 5,
+    "crowd": 6,
+    "food": 8,
+    "nature": 8,
+    "city": 5,
+    "walk": 7,
+    "stay": 7,
+    "weather": 6,
+    "value": 7,
+    "activity": 6
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 1
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 1
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 1
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "6": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -2
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -3
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 1
+    },
+    "12": {
+     "weather": -1,
+     "crowd": 1
+    }
+   },
+   "travel_time": {
+    "work": 190,
+    "home": 170
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "KTX 포항역. 호미곶·스페이스워크 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "yeongdeok",
+   "name": "영덕",
+   "type": "domestic",
+   "region": "경북",
+   "tags": [
+    "대게",
+    "해안길"
+   ],
+   "scores": {
+    "move": 4,
+    "drive": 3,
+    "crowd": 7,
+    "food": 8,
+    "nature": 8,
+    "city": 2,
+    "walk": 7,
+    "stay": 5,
+    "weather": 6,
+    "value": 7,
+    "activity": 4
+   },
+   "monthly": {
+    "1": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -1,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -2,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 260,
+    "home": 240
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "강구항 대게(겨울~봄)·블루로드 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "uljin",
+   "name": "울진",
+   "type": "domestic",
+   "region": "경북",
+   "tags": [
+    "온천",
+    "대게",
+    "숲"
+   ],
+   "scores": {
+    "move": 4,
+    "drive": 2,
+    "crowd": 8,
+    "food": 7,
+    "nature": 8,
+    "city": 2,
+    "walk": 7,
+    "stay": 6,
+    "weather": 6,
+    "value": 7,
+    "activity": 5
+   },
+   "monthly": {
+    "1": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -1,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -2,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 260,
+    "home": 240
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "덕구·백암온천·금강송숲 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "daegu",
+   "name": "대구",
+   "type": "domestic",
+   "region": "대구",
+   "tags": [
+    "도심",
+    "막창",
+    "KTX"
+   ],
+   "scores": {
+    "move": 6.5,
+    "drive": 8,
+    "crowd": 6,
+    "food": 8,
+    "nature": 4,
+    "city": 7,
+    "walk": 7,
+    "stay": 7,
+    "weather": 5.5,
+    "value": 8,
+    "activity": 5
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -1
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": -1
+    }
+   },
+   "travel_time": {
+    "work": 170,
+    "home": 150
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "KTX 동대구. 근대골목·서문시장. 여름 매우 더움 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "ulsan",
+   "name": "울산",
+   "type": "domestic",
+   "region": "울산",
+   "tags": [
+    "바다",
+    "태화강"
+   ],
+   "scores": {
+    "move": 6,
+    "drive": 6,
+    "crowd": 7,
+    "food": 7,
+    "nature": 8,
+    "city": 5,
+    "walk": 7,
+    "stay": 7,
+    "weather": 6.5,
+    "value": 7,
+    "activity": 5
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 185,
+    "home": 165
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "김포–울산 항공. 대왕암·간절곶 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "mungyeong",
+   "name": "문경",
+   "type": "domestic",
+   "region": "경북",
+   "tags": [
+    "새재",
+    "레일바이크"
+   ],
+   "scores": {
+    "move": 6.5,
+    "drive": 3,
+    "crowd": 8,
+    "food": 6,
+    "nature": 8,
+    "city": 4,
+    "walk": 6,
+    "stay": 6,
+    "weather": 6,
+    "value": 7,
+    "activity": 6
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 1
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 1
+    },
+    "3": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 1,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "7": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "8": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "9": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -3
+    },
+    "11": {
+     "weather": 0,
+     "crowd": -2
+    },
+    "12": {
+     "weather": -3,
+     "crowd": 1
+    }
+   },
+   "travel_time": {
+    "work": 165,
+    "home": 150
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "문경새재·활공장 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "hadong",
+   "name": "하동",
+   "type": "domestic",
+   "region": "경남",
+   "tags": [
+    "녹차",
+    "섬진강",
+    "벚꽃"
+   ],
+   "scores": {
+    "move": 4.5,
+    "drive": 2,
+    "crowd": 8,
+    "food": 7,
+    "nature": 9,
+    "city": 3,
+    "walk": 6,
+    "stay": 6,
+    "weather": 6.5,
+    "value": 7,
+    "activity": 4
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 1,
+     "crowd": -1
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -3
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -1
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 245,
+    "home": 230
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "쌍계사 십리벚꽃길·화개장터 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "changwon",
+   "name": "창원·진해",
+   "type": "domestic",
+   "region": "경남",
+   "tags": [
+    "벚꽃",
+    "군항제"
+   ],
+   "scores": {
+    "move": 5,
+    "drive": 6,
+    "crowd": 6,
+    "food": 7,
+    "nature": 6,
+    "city": 5,
+    "walk": 7,
+    "stay": 6,
+    "weather": 6.5,
+    "value": 7,
+    "activity": 4
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 1,
+     "crowd": -1
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -3
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -1
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 225,
+    "home": 210
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "진해 군항제(4월초) (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "ulleung",
+   "name": "울릉도",
+   "type": "domestic",
+   "region": "경북",
+   "tags": [
+    "섬",
+    "트레킹",
+    "독도"
+   ],
+   "scores": {
+    "move": 1,
+    "drive": 2,
+    "crowd": 9,
+    "food": 7,
+    "nature": 10,
+    "city": 2,
+    "walk": 4,
+    "stay": 5,
+    "weather": 6,
+    "value": 5,
+    "activity": 7
+   },
+   "monthly": {
+    "1": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -1,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -2,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 440,
+    "home": 420
+   },
+   "min_nights": 2,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 3,
+   "notes": "포항·묵호·강릉 여객선. 결항 잦음, 공항 개항 일정 확인 필요 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "jeju_city",
+   "name": "제주시권(애월·한림)",
+   "type": "domestic",
+   "region": "제주",
+   "tags": [
+    "공항",
+    "시장",
+    "해안"
+   ],
+   "scores": {
+    "move": 6,
+    "drive": 3,
+    "crowd": 4,
+    "food": 8,
+    "nature": 8,
+    "city": 6,
+    "walk": 7,
+    "stay": 8,
+    "weather": 6.5,
+    "value": 5,
+    "activity": 6
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": -1
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -2,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 175,
+    "home": 155
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "김포–제주. 동문시장·애월·협재 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "seogwipo",
+   "name": "서귀포권(중문)",
+   "type": "domestic",
+   "region": "제주",
+   "tags": [
+    "리조트",
+    "올레",
+    "폭포"
+   ],
+   "scores": {
+    "move": 5,
+    "drive": 2,
+    "crowd": 5,
+    "food": 8,
+    "nature": 9,
+    "city": 5,
+    "walk": 6,
+    "stay": 9,
+    "weather": 7,
+    "value": 5,
+    "activity": 7
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": -1
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -2,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 220,
+    "home": 200
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 3,
+   "notes": "중문관광단지·올레시장·천지연 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "jeju_east",
+   "name": "제주 동부(성산·구좌)",
+   "type": "domestic",
+   "region": "제주",
+   "tags": [
+    "일출봉",
+    "우도",
+    "오름"
+   ],
+   "scores": {
+    "move": 5,
+    "drive": 2,
+    "crowd": 6,
+    "food": 8,
+    "nature": 10,
+    "city": 3,
+    "walk": 6,
+    "stay": 7,
+    "weather": 6.5,
+    "value": 6,
+    "activity": 7
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": -1
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -2,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 215,
+    "home": 195
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "성산일출봉·우도·월정리 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "yeongwol",
+   "name": "영월",
+   "type": "domestic",
+   "region": "강원",
+   "tags": [
+    "동강",
+    "래프팅",
+    "천문대"
+   ],
+   "scores": {
+    "move": 6,
+    "drive": 3,
+    "crowd": 8,
+    "food": 6,
+    "nature": 8,
+    "city": 3,
+    "walk": 7,
+    "stay": 5,
+    "weather": 6,
+    "value": 8,
+    "activity": 6
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "3": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 1,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "7": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "8": {
+     "weather": 0,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -3,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 180,
+    "home": 160
+   },
+   "min_nights": 1,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "동강 래프팅·별마로천문대·청령포 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "everland",
+   "name": "에버랜드",
+   "type": "spot",
+   "region": "경기 용인",
+   "tags": [
+    "테마파크"
+   ],
+   "scores": {
+    "move": 8,
+    "drive": 6,
+    "crowd": 2,
+    "food": 5,
+    "nature": 4,
+    "city": 9,
+    "walk": 3,
+    "stay": 5,
+    "weather": 6,
+    "value": 5,
+    "activity": 10
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -3
+    },
+    "6": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -2
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -2,
+     "crowd": -2
+    }
+   },
+   "travel_time": {
+    "work": 90,
+    "home": 75
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "평일 추천. 주말 매우 혼잡 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "caribbean",
+   "name": "캐리비안 베이",
+   "type": "spot",
+   "region": "경기 용인",
+   "tags": [
+    "워터파크"
+   ],
+   "scores": {
+    "move": 8,
+    "drive": 6,
+    "crowd": 2,
+    "food": 4,
+    "nature": 3,
+    "city": 7,
+    "walk": 4,
+    "stay": 5,
+    "weather": 6,
+    "value": 4,
+    "activity": 9
+   },
+   "monthly": {
+    "1": {
+     "weather": -4,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -4,
+     "crowd": 0
+    },
+    "3": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "4": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 0,
+     "crowd": -3
+    },
+    "6": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "7": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "8": {
+     "weather": 3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "10": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "11": {
+     "weather": -4,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -4,
+     "crowd": -2
+    }
+   },
+   "travel_time": {
+    "work": 90,
+    "home": 75
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "야외 시설은 여름 위주 운영 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "lotteworld",
+   "name": "롯데월드",
+   "type": "spot",
+   "region": "서울 잠실",
+   "tags": [
+    "테마파크",
+    "실내"
+   ],
+   "scores": {
+    "move": 8.5,
+    "drive": 9,
+    "crowd": 2,
+    "food": 5,
+    "nature": 1,
+    "city": 8,
+    "walk": 4,
+    "stay": 5,
+    "weather": 9,
+    "value": 5,
+    "activity": 9
+   },
+   "monthly": {
+    "1": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "2": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 0,
+     "crowd": -3
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "8": {
+     "weather": 0,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 0,
+     "crowd": -2
+    },
+    "11": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "12": {
+     "weather": 0,
+     "crowd": -2
+    }
+   },
+   "travel_time": {
+    "work": 80,
+    "home": 60
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "실내 위주라 날씨 영향 적음 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "seoulland",
+   "name": "서울랜드",
+   "type": "spot",
+   "region": "경기 과천",
+   "tags": [
+    "테마파크"
+   ],
+   "scores": {
+    "move": 9,
+    "drive": 8,
+    "crowd": 4,
+    "food": 5,
+    "nature": 4,
+    "city": 6,
+    "walk": 4,
+    "stay": 5,
+    "weather": 6,
+    "value": 7,
+    "activity": 7
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -3
+    },
+    "6": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -2
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -2,
+     "crowd": -2
+    }
+   },
+   "travel_time": {
+    "work": 65,
+    "home": 50
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "4호선 대공원역 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "legoland",
+   "name": "레고랜드 코리아",
+   "type": "spot",
+   "region": "강원 춘천",
+   "tags": [
+    "테마파크"
+   ],
+   "scores": {
+    "move": 7.5,
+    "drive": 6,
+    "crowd": 5,
+    "food": 4,
+    "nature": 5,
+    "city": 6,
+    "walk": 5,
+    "stay": 6,
+    "weather": 6,
+    "value": 4,
+    "activity": 7
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -3
+    },
+    "6": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -2
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -2,
+     "crowd": -2
+    }
+   },
+   "travel_time": {
+    "work": 120,
+    "home": 100
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "춘천역 셔틀 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "lotte_busan",
+   "name": "롯데월드 어드벤처 부산",
+   "type": "spot",
+   "region": "부산 기장",
+   "tags": [
+    "테마파크"
+   ],
+   "scores": {
+    "move": 5.5,
+    "drive": 5,
+    "crowd": 4,
+    "food": 5,
+    "nature": 4,
+    "city": 7,
+    "walk": 4,
+    "stay": 6,
+    "weather": 6.5,
+    "value": 5,
+    "activity": 9
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -3
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -2
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": -2
+    }
+   },
+   "travel_time": {
+    "work": 200,
+    "home": 180
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "당일로는 장거리 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "gyeongjuworld",
+   "name": "경주월드",
+   "type": "spot",
+   "region": "경북 경주",
+   "tags": [
+    "테마파크",
+    "스릴"
+   ],
+   "scores": {
+    "move": 5.5,
+    "drive": 5,
+    "crowd": 5,
+    "food": 5,
+    "nature": 5,
+    "city": 6,
+    "walk": 4,
+    "stay": 6,
+    "weather": 6.5,
+    "value": 6,
+    "activity": 9
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -3
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -2
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": -2
+    }
+   },
+   "travel_time": {
+    "work": 200,
+    "home": 180
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "스릴 기구 강세 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "eworld",
+   "name": "이월드",
+   "type": "spot",
+   "region": "대구",
+   "tags": [
+    "테마파크",
+    "야경"
+   ],
+   "scores": {
+    "move": 6.5,
+    "drive": 7,
+    "crowd": 5,
+    "food": 5,
+    "nature": 4,
+    "city": 6,
+    "walk": 5,
+    "stay": 6,
+    "weather": 5.5,
+    "value": 7,
+    "activity": 7
+   },
+   "monthly": {
+    "1": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -3
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -2
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": -2
+    }
+   },
+   "travel_time": {
+    "work": 170,
+    "home": 150
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "83타워. 지하철 2호선 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "folkvillage",
+   "name": "한국민속촌",
+   "type": "spot",
+   "region": "경기 용인",
+   "tags": [
+    "민속",
+    "체험"
+   ],
+   "scores": {
+    "move": 8.5,
+    "drive": 6,
+    "crowd": 6,
+    "food": 6,
+    "nature": 6,
+    "city": 6,
+    "walk": 5,
+    "stay": 5,
+    "weather": 6,
+    "value": 7,
+    "activity": 5
+   },
+   "monthly": {
+    "1": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -3
+    },
+    "6": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": -2
+    },
+    "11": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -2,
+     "crowd": -2
+    }
+   },
+   "travel_time": {
+    "work": 80,
+    "home": 65
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "야간 행사 시즌 확인 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "gm_cave",
+   "name": "광명동굴",
+   "type": "spot",
+   "region": "경기 광명",
+   "tags": [
+    "동굴",
+    "실내"
+   ],
+   "scores": {
+    "move": 9,
+    "drive": 7,
+    "crowd": 6,
+    "food": 4,
+    "nature": 6,
+    "city": 5,
+    "walk": 6,
+    "stay": 5,
+    "weather": 9,
+    "value": 8,
+    "activity": 4
+   },
+   "monthly": {
+    "1": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "2": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "5": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "8": {
+     "weather": 0,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "12": {
+     "weather": 0,
+     "crowd": 0
+    }
+   },
+   "travel_time": {
+    "work": 50,
+    "home": 35
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "KTX 광명역 인근 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "aqua_ilsan",
+   "name": "아쿠아플라넷 일산",
+   "type": "spot",
+   "region": "경기 고양",
+   "tags": [
+    "아쿠아리움",
+    "실내"
+   ],
+   "scores": {
+    "move": 9,
+    "drive": 8,
+    "crowd": 5,
+    "food": 5,
+    "nature": 3,
+    "city": 5,
+    "walk": 8,
+    "stay": 5,
+    "weather": 9,
+    "value": 6,
+    "activity": 4
+   },
+   "monthly": {
+    "1": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "2": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 0,
+     "crowd": -3
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "8": {
+     "weather": 0,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 0,
+     "crowd": -2
+    },
+    "11": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "12": {
+     "weather": 0,
+     "crowd": -2
+    }
+   },
+   "travel_time": {
+    "work": 40,
+    "home": 35
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "킨텍스 인근 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "cimer",
+   "name": "파라다이스시티 씨메르",
+   "type": "spot",
+   "region": "인천 영종",
+   "tags": [
+    "스파",
+    "호캉스",
+    "실내"
+   ],
+   "scores": {
+    "move": 9,
+    "drive": 7,
+    "crowd": 6,
+    "food": 6,
+    "nature": 4,
+    "city": 5,
+    "walk": 9,
+    "stay": 8,
+    "weather": 9,
+    "value": 5,
+    "activity": 5
+   },
+   "monthly": {
+    "1": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "2": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "8": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "9": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "12": {
+     "weather": 0,
+     "crowd": -1
+    }
+   },
+   "travel_time": {
+    "work": 35,
+    "home": 45
+   },
+   "min_nights": 0,
+   "day_trip_ok": true,
+   "long_off_tag": false,
+   "cost_level": 3,
+   "notes": "숙박 연계 시 1박 호캉스로도 가능 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "tokyo",
+   "name": "도쿄",
+   "type": "overseas",
+   "region": "일본",
+   "tags": [
+    "도시",
+    "쇼핑",
+    "맛집"
+   ],
+   "scores": {
+    "move": 8.5,
+    "drive": 9,
+    "crowd": 3,
+    "food": 9,
+    "nature": 4,
+    "city": 10,
+    "walk": 4,
+    "stay": 8,
+    "weather": 6,
+    "value": 5,
+    "activity": 6
+   },
+   "monthly": {
+    "1": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "3": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "4": {
+     "weather": 3,
+     "crowd": -2
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -3,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "11": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "12": {
+     "weather": -1,
+     "crowd": -1
+    }
+   },
+   "travel_time": {
+    "work": 300,
+    "home": 280
+   },
+   "min_nights": 2,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "김포–하네다. 도보량 많음 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "osaka",
+   "name": "오사카",
+   "type": "overseas",
+   "region": "일본",
+   "tags": [
+    "맛집",
+    "도시",
+    "USJ"
+   ],
+   "scores": {
+    "move": 9,
+    "drive": 9,
+    "crowd": 4,
+    "food": 10,
+    "nature": 4,
+    "city": 9,
+    "walk": 6,
+    "stay": 7,
+    "weather": 6,
+    "value": 6,
+    "activity": 6
+   },
+   "monthly": {
+    "1": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "3": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "4": {
+     "weather": 3,
+     "crowd": -2
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -3,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "11": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "12": {
+     "weather": -1,
+     "crowd": -1
+    }
+   },
+   "travel_time": {
+    "work": 270,
+    "home": 250
+   },
+   "min_nights": 2,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "김포–간사이 가능 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "kyoto",
+   "name": "교토",
+   "type": "overseas",
+   "region": "일본",
+   "tags": [
+    "사찰",
+    "정원",
+    "단풍"
+   ],
+   "scores": {
+    "move": 8,
+    "drive": 7,
+    "crowd": 3,
+    "food": 8,
+    "nature": 8,
+    "city": 9,
+    "walk": 3,
+    "stay": 8,
+    "weather": 6,
+    "value": 5,
+    "activity": 4
+   },
+   "monthly": {
+    "1": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "3": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "4": {
+     "weather": 3,
+     "crowd": -2
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -3,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "11": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "12": {
+     "weather": -1,
+     "crowd": -1
+    }
+   },
+   "travel_time": {
+    "work": 330,
+    "home": 310
+   },
+   "min_nights": 2,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "간사이공항 경유. 단풍·벚꽃철 매우 혼잡 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "fukuoka",
+   "name": "후쿠오카",
+   "type": "overseas",
+   "region": "일본",
+   "tags": [
+    "맛집",
+    "근거리",
+    "온천"
+   ],
+   "scores": {
+    "move": 9,
+    "drive": 9,
+    "crowd": 6,
+    "food": 9,
+    "nature": 5,
+    "city": 7,
+    "walk": 7,
+    "stay": 7,
+    "weather": 6.5,
+    "value": 8,
+    "activity": 4
+   },
+   "monthly": {
+    "1": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "2": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "3": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "4": {
+     "weather": 3,
+     "crowd": -2
+    },
+    "5": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "6": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -3,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "11": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "12": {
+     "weather": -1,
+     "crowd": -1
+    }
+   },
+   "travel_time": {
+    "work": 265,
+    "home": 275
+   },
+   "min_nights": 2,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "비행 1시간대. 유후인·다자이후 연계 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "sapporo",
+   "name": "삿포로",
+   "type": "overseas",
+   "region": "일본",
+   "tags": [
+    "설경",
+    "맛집",
+    "여름피서"
+   ],
+   "scores": {
+    "move": 6.5,
+    "drive": 6,
+    "crowd": 5,
+    "food": 9,
+    "nature": 9,
+    "city": 6,
+    "walk": 5,
+    "stay": 7,
+    "weather": 6,
+    "value": 5,
+    "activity": 7
+   },
+   "monthly": {
+    "1": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "2": {
+     "weather": -1,
+     "crowd": -2
+    },
+    "3": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "6": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "7": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "8": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "9": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "11": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -2,
+     "crowd": -1
+    }
+   },
+   "travel_time": {
+    "work": 395,
+    "home": 405
+   },
+   "min_nights": 3,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 3,
+   "notes": "2월 눈축제. 여름 선선 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "okinawa",
+   "name": "오키나와",
+   "type": "overseas",
+   "region": "일본",
+   "tags": [
+    "바다",
+    "리조트",
+    "렌터카"
+   ],
+   "scores": {
+    "move": 7.5,
+    "drive": 3,
+    "crowd": 5,
+    "food": 7,
+    "nature": 9,
+    "city": 4,
+    "walk": 7,
+    "stay": 8,
+    "weather": 6.5,
+    "value": 6,
+    "activity": 8
+   },
+   "monthly": {
+    "1": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "2": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "3": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "4": {
+     "weather": 3,
+     "crowd": -2
+    },
+    "5": {
+     "weather": 1,
+     "crowd": -1
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": 1,
+     "crowd": -1
+    },
+    "8": {
+     "weather": 0,
+     "crowd": -2
+    },
+    "9": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "11": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "12": {
+     "weather": 1,
+     "crowd": -1
+    }
+   },
+   "travel_time": {
+    "work": 350,
+    "home": 360
+   },
+   "min_nights": 3,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 2,
+   "notes": "렌터카 필요. 장마 5~6월, 태풍 8~9월 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "taipei",
+   "name": "타이베이",
+   "type": "overseas",
+   "region": "대만",
+   "tags": [
+    "야시장",
+    "근거리"
+   ],
+   "scores": {
+    "move": 8.5,
+    "drive": 9,
+    "crowd": 5,
+    "food": 9,
+    "nature": 6,
+    "city": 8,
+    "walk": 6,
+    "stay": 6,
+    "weather": 6,
+    "value": 8,
+    "activity": 5
+   },
+   "monthly": {
+    "1": {
+     "weather": 1,
+     "crowd": -1
+    },
+    "2": {
+     "weather": 1,
+     "crowd": -2
+    },
+    "3": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "6": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -3,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -1
+    },
+    "9": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "12": {
+     "weather": 2,
+     "crowd": -1
+    }
+   },
+   "travel_time": {
+    "work": 310,
+    "home": 290
+   },
+   "min_nights": 2,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "김포–쑹산. 여름 무더위·태풍 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "hongkong",
+   "name": "홍콩·마카오",
+   "type": "overseas",
+   "region": "홍콩",
+   "tags": [
+    "야경",
+    "도시",
+    "딤섬"
+   ],
+   "scores": {
+    "move": 6,
+    "drive": 9,
+    "crowd": 3,
+    "food": 9,
+    "nature": 5,
+    "city": 9,
+    "walk": 5,
+    "stay": 6,
+    "weather": 6,
+    "value": 4,
+    "activity": 5
+   },
+   "monthly": {
+    "1": {
+     "weather": 1,
+     "crowd": -1
+    },
+    "2": {
+     "weather": 1,
+     "crowd": -2
+    },
+    "3": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "6": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -3,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -3,
+     "crowd": -1
+    },
+    "9": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "11": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "12": {
+     "weather": 2,
+     "crowd": -1
+    }
+   },
+   "travel_time": {
+    "work": 430,
+    "home": 440
+   },
+   "min_nights": 2,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 3,
+   "notes": "숙박비 높음 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "danang",
+   "name": "다낭",
+   "type": "overseas",
+   "region": "베트남",
+   "tags": [
+    "리조트",
+    "바다",
+    "가성비"
+   ],
+   "scores": {
+    "move": 5,
+    "drive": 7,
+    "crowd": 5,
+    "food": 8,
+    "nature": 8,
+    "city": 5,
+    "walk": 8,
+    "stay": 8,
+    "weather": 6,
+    "value": 9,
+    "activity": 6
+   },
+   "monthly": {
+    "1": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "2": {
+     "weather": 2,
+     "crowd": -2
+    },
+    "3": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "6": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": 1,
+     "crowd": -1
+    },
+    "8": {
+     "weather": 0,
+     "crowd": -2
+    },
+    "9": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "11": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": -2
+    }
+   },
+   "travel_time": {
+    "work": 490,
+    "home": 500
+   },
+   "min_nights": 3,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "우기 9~12월 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "nhatrang",
+   "name": "나트랑",
+   "type": "overseas",
+   "region": "베트남",
+   "tags": [
+    "리조트",
+    "바다",
+    "액티비티"
+   ],
+   "scores": {
+    "move": 4.5,
+    "drive": 6,
+    "crowd": 5,
+    "food": 7,
+    "nature": 8,
+    "city": 4,
+    "walk": 8,
+    "stay": 8,
+    "weather": 6,
+    "value": 9,
+    "activity": 7
+   },
+   "monthly": {
+    "1": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "2": {
+     "weather": 2,
+     "crowd": -2
+    },
+    "3": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "6": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": 1,
+     "crowd": -1
+    },
+    "8": {
+     "weather": 0,
+     "crowd": -2
+    },
+    "9": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "11": {
+     "weather": -3,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": -2
+    }
+   },
+   "travel_time": {
+    "work": 535,
+    "home": 545
+   },
+   "min_nights": 3,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "캄란공항. 우기 10~12월 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "bangkok",
+   "name": "방콕",
+   "type": "overseas",
+   "region": "태국",
+   "tags": [
+    "맛집",
+    "도시",
+    "마사지"
+   ],
+   "scores": {
+    "move": 4,
+    "drive": 8,
+    "crowd": 3,
+    "food": 10,
+    "nature": 3,
+    "city": 9,
+    "walk": 5,
+    "stay": 8,
+    "weather": 5.5,
+    "value": 9,
+    "activity": 6
+   },
+   "monthly": {
+    "1": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "2": {
+     "weather": 2,
+     "crowd": -2
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "6": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -1,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -1,
+     "crowd": -2
+    },
+    "9": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "12": {
+     "weather": 3,
+     "crowd": -2
+    }
+   },
+   "travel_time": {
+    "work": 555,
+    "home": 565
+   },
+   "min_nights": 3,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 1,
+   "notes": "건기 11~2월 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "chiangmai",
+   "name": "치앙마이",
+   "type": "overseas",
+   "region": "태국",
+   "tags": [
+    "한달살기",
+    "카페",
+    "자연"
+   ],
+   "scores": {
+    "move": 4.5,
+    "drive": 6,
+    "crowd": 6,
+    "food": 9,
+    "nature": 8,
+    "city": 6,
+    "walk": 6,
+    "stay": 8,
+    "weather": 6,
+    "value": 10,
+    "activity": 6
+   },
+   "monthly": {
+    "1": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "2": {
+     "weather": 2,
+     "crowd": -2
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "6": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -1,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -1,
+     "crowd": -2
+    },
+    "9": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "12": {
+     "weather": 3,
+     "crowd": -2
+    }
+   },
+   "travel_time": {
+    "work": 530,
+    "home": 540
+   },
+   "min_nights": 4,
+   "day_trip_ok": false,
+   "long_off_tag": true,
+   "cost_level": 1,
+   "notes": "직항 있음. 3~4월 연무 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "phuket",
+   "name": "푸켓",
+   "type": "overseas",
+   "region": "태국",
+   "tags": [
+    "바다",
+    "리조트",
+    "호핑"
+   ],
+   "scores": {
+    "move": 3,
+    "drive": 4,
+    "crowd": 5,
+    "food": 8,
+    "nature": 9,
+    "city": 5,
+    "walk": 7,
+    "stay": 9,
+    "weather": 6,
+    "value": 7,
+    "activity": 9
+   },
+   "monthly": {
+    "1": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "2": {
+     "weather": 2,
+     "crowd": -2
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "6": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -1,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -1,
+     "crowd": -2
+    },
+    "9": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "11": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "12": {
+     "weather": 3,
+     "crowd": -2
+    }
+   },
+   "travel_time": {
+    "work": 605,
+    "home": 615
+   },
+   "min_nights": 4,
+   "day_trip_ok": false,
+   "long_off_tag": true,
+   "cost_level": 2,
+   "notes": "우기 5~10월 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "cebu",
+   "name": "세부",
+   "type": "overseas",
+   "region": "필리핀",
+   "tags": [
+    "바다",
+    "다이빙",
+    "리조트"
+   ],
+   "scores": {
+    "move": 5,
+    "drive": 5,
+    "crowd": 5,
+    "food": 6,
+    "nature": 9,
+    "city": 4,
+    "walk": 8,
+    "stay": 8,
+    "weather": 6,
+    "value": 7,
+    "activity": 9
+   },
+   "monthly": {
+    "1": {
+     "weather": 2,
+     "crowd": -1
+    },
+    "2": {
+     "weather": 3,
+     "crowd": -2
+    },
+    "3": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "6": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "7": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "8": {
+     "weather": -2,
+     "crowd": -2
+    },
+    "9": {
+     "weather": -2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "11": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "12": {
+     "weather": 1,
+     "crowd": -2
+    }
+   },
+   "travel_time": {
+    "work": 485,
+    "home": 495
+   },
+   "min_nights": 3,
+   "day_trip_ok": false,
+   "long_off_tag": true,
+   "cost_level": 2,
+   "notes": "막탄 리조트. 우기 6~10월 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "singapore",
+   "name": "싱가포르",
+   "type": "overseas",
+   "region": "싱가포르",
+   "tags": [
+    "도시",
+    "깔끔",
+    "야경"
+   ],
+   "scores": {
+    "move": 3.5,
+    "drive": 10,
+    "crowd": 4,
+    "food": 9,
+    "nature": 5,
+    "city": 9,
+    "walk": 6,
+    "stay": 9,
+    "weather": 6,
+    "value": 3,
+    "activity": 6
+   },
+   "monthly": {
+    "1": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "2": {
+     "weather": 0,
+     "crowd": -2
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "8": {
+     "weather": 0,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "11": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": -2
+    }
+   },
+   "travel_time": {
+    "work": 575,
+    "home": 585
+   },
+   "min_nights": 3,
+   "day_trip_ok": false,
+   "long_off_tag": false,
+   "cost_level": 3,
+   "notes": "대중교통 최상. 물가 높음 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "kotakinabalu",
+   "name": "코타키나발루",
+   "type": "overseas",
+   "region": "말레이시아",
+   "tags": [
+    "석양",
+    "섬",
+    "리조트"
+   ],
+   "scores": {
+    "move": 5,
+    "drive": 6,
+    "crowd": 6,
+    "food": 7,
+    "nature": 9,
+    "city": 4,
+    "walk": 8,
+    "stay": 8,
+    "weather": 6.5,
+    "value": 8,
+    "activity": 8
+   },
+   "monthly": {
+    "1": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "2": {
+     "weather": 0,
+     "crowd": -2
+    },
+    "3": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "6": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "7": {
+     "weather": 0,
+     "crowd": -1
+    },
+    "8": {
+     "weather": 0,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 0,
+     "crowd": 0
+    },
+    "11": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -1,
+     "crowd": -2
+    }
+   },
+   "travel_time": {
+    "work": 485,
+    "home": 495
+   },
+   "min_nights": 4,
+   "day_trip_ok": false,
+   "long_off_tag": true,
+   "cost_level": 2,
+   "notes": "반딧불·섬 투어 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  },
+  {
+   "id": "bali",
+   "name": "발리",
+   "type": "overseas",
+   "region": "인도네시아",
+   "tags": [
+    "리조트",
+    "자연",
+    "한달살기"
+   ],
+   "scores": {
+    "move": 2.5,
+    "drive": 4,
+    "crowd": 5,
+    "food": 8,
+    "nature": 10,
+    "city": 5,
+    "walk": 7,
+    "stay": 10,
+    "weather": 6,
+    "value": 7,
+    "activity": 8
+   },
+   "monthly": {
+    "1": {
+     "weather": -2,
+     "crowd": -1
+    },
+    "2": {
+     "weather": -2,
+     "crowd": -2
+    },
+    "3": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "4": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "5": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "6": {
+     "weather": 3,
+     "crowd": 0
+    },
+    "7": {
+     "weather": 3,
+     "crowd": -1
+    },
+    "8": {
+     "weather": 3,
+     "crowd": -2
+    },
+    "9": {
+     "weather": 2,
+     "crowd": 0
+    },
+    "10": {
+     "weather": 1,
+     "crowd": 0
+    },
+    "11": {
+     "weather": -1,
+     "crowd": 0
+    },
+    "12": {
+     "weather": -2,
+     "crowd": -2
+    }
+   },
+   "travel_time": {
+    "work": 650,
+    "home": 660
+   },
+   "min_nights": 5,
+   "day_trip_ok": false,
+   "long_off_tag": true,
+   "cost_level": 2,
+   "notes": "건기 4~10월. 지역 간 이동 시간 김 (점수·소요시간 초안 추정치)",
+   "source_date": "2026-11"
+  }
+ ]
+}

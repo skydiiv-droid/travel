@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f766e">
+<title>여행지 추천</title>
+<style>
+  :root{
+    --bg:#f5f3ee; --card:#ffffff; --ink:#1d2530; --muted:#6b7480; --line:#e7e3da;
+    --accent:#0f766e; --accent-soft:#d9efec; --warn:#b45309; --warn-soft:#fdf0dc;
+    --bad:#b91c1c; --bad-soft:#fde4e4; --bar:#9cc9c3; --bar-top:#0f766e;
+    --input:#fbfaf7;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#14181d; --card:#1d232a; --ink:#e7eaee; --muted:#9aa3ad; --line:#2d353e;
+      --accent:#2dd4bf; --accent-soft:#16332f; --warn:#f59e0b; --warn-soft:#3a2a10;
+      --bad:#f87171; --bad-soft:#3a1717; --bar:#2f5e58; --bar-top:#2dd4bf; --input:#171c22;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#14181d; --card:#1d232a; --ink:#e7eaee; --muted:#9aa3ad; --line:#2d353e;
+    --accent:#2dd4bf; --accent-soft:#16332f; --warn:#f59e0b; --warn-soft:#3a2a10;
+    --bad:#f87171; --bad-soft:#3a1717; --bar:#2f5e58; --bar-top:#2dd4bf; --input:#171c22;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.5 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
+    -webkit-text-size-adjust:100%}
+  header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);
+    padding:calc(8px + env(safe-area-inset-top)) 16px 0}
+  h1{font-size:17px;margin:0 0 6px}
+  nav{display:flex;gap:4px;overflow-x:auto}
+  nav button{flex:1;border:0;background:none;color:var(--muted);font:inherit;font-weight:600;
+    padding:8px 4px 10px;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap}
+  nav button.on{color:var(--accent);border-color:var(--accent)}
+  main{max-width:720px;margin:0 auto;padding:12px 16px calc(40px + env(safe-area-inset-bottom))}
+  section.tab{display:none} section.tab.on{display:block}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin:0 0 12px}
+  .card h2{font-size:15px;margin:0 0 10px}
+  .card h3{font-size:14px;margin:12px 0 6px}
+  label.f{display:block;font-size:13px;color:var(--muted);margin:8px 0 3px}
+  input,select,textarea{font:inherit;color:var(--ink);background:var(--input);border:1px solid var(--line);
+    border-radius:8px;padding:7px 9px;width:100%;min-width:0}
+  textarea{min-height:110px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px}
+  input[type=range]{padding:0;border:0;background:none;accent-color:var(--accent)}
+  input[type=checkbox]{width:auto;accent-color:var(--accent)}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .btn{display:inline-block;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;
+    font-weight:600;border-radius:8px;padding:8px 12px;cursor:pointer;margin:4px 4px 0 0}
+  .btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+  :root[data-theme="dark"] .btn.pri{color:#06201d}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.pri{color:#06201d}}
+  .btn.danger{color:var(--bad)}
+  .btn.sm{padding:4px 9px;font-size:13px}
+  .seg{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .seg button{flex:1;border:0;background:var(--input);color:var(--ink);font:inherit;padding:7px 0;cursor:pointer}
+  .seg button.on{background:var(--accent);color:#fff;font-weight:700}
+  .muted{color:var(--muted)} .small{font-size:13px}
+  .info{background:var(--accent-soft);border-radius:8px;padding:8px 10px;font-size:14px;margin-top:10px}
+  .info b{font-weight:700}
+  .warn{background:var(--warn-soft);color:var(--warn);border-radius:6px;padding:3px 8px;font-size:13px;margin:4px 4px 0 0;display:inline-block}
+  .err{background:var(--bad-soft);color:var(--bad);border-radius:8px;padding:8px 10px;font-size:14px;margin-top:8px}
+  .slider{display:grid;grid-template-columns:132px 1fr 24px;align-items:center;gap:8px;margin:2px 0}
+  .slider span:last-child{text-align:right;font-variant-numeric:tabular-nums;font-size:13px}
+  .mult{color:var(--warn);font-size:11px;font-weight:700}
+  .res{position:relative}
+  .res .top{display:flex;align-items:baseline;gap:8px}
+  .res .rank{font-weight:800;color:var(--accent);font-size:18px;min-width:20px}
+  .res .name{font-weight:700;font-size:16px;flex:1}
+  .res .score{font-weight:800;font-size:20px;font-variant-numeric:tabular-nums}
+  .res .meta{font-size:13px;color:var(--muted);margin:2px 0 0 28px}
+  .res .why{font-size:14px;margin:8px 0 0}
+  .tags{margin-top:4px}
+  .tag{display:inline-block;font-size:12px;border:1px solid var(--line);border-radius:999px;padding:0 8px;margin:2px 3px 0 0;color:var(--muted)}
+  .bars{margin-top:8px}
+  .bar{display:grid;grid-template-columns:86px 1fr 40px;gap:6px;align-items:center;font-size:12px;margin:2px 0}
+  .bar .tr{background:var(--input);border-radius:4px;height:10px;overflow:hidden}
+  .bar .fl{background:var(--bar);height:100%}
+  .bar.hl .fl{background:var(--bar-top)}
+  .bar span:last-child{text-align:right;font-variant-numeric:tabular-nums}
+  details summary{cursor:pointer;color:var(--accent);font-size:13px;font-weight:600;margin-top:6px}
+  .divider{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;margin:18px 0 10px}
+  .divider::before,.divider::after{content:"";flex:1;border-top:1px solid var(--line)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:5px 4px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-weight:600}
+  td.num{text-align:right;font-variant-numeric:tabular-nums}
+  .axgrid{display:grid;grid-template-columns:1fr 74px 64px 78px;gap:4px 6px;align-items:center;font-size:13px}
+  .axgrid select{padding:5px 4px;font-size:13px}
+  .axgrid .h{color:var(--muted);font-size:12px}
+  .trip{border-top:1px solid var(--line);padding:8px 0}
+  .trip:first-child{border-top:0}
+  .pill{display:inline-block;font-size:12px;border-radius:999px;padding:0 7px;margin:2px 3px 0 0}
+  .pill.like{background:var(--accent-soft);color:var(--accent)}
+  .pill.pain{background:var(--bad-soft);color:var(--bad)}
+  .pill.dim{background:var(--input);color:var(--muted)}
+  .diff li{margin:2px 0}
+  .ok{color:var(--accent)} .no{color:var(--bad)}
+  .switch{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:14px}
+  @media (max-width:380px){ .row3{grid-template-columns:1fr 1fr} .axgrid{grid-template-columns:1fr 64px 56px 70px} }
+</style>
+</head>
+<body>
+<header>
+  <h1>여행지 추천</h1>
+  <nav id="nav">
+    <button data-tab="rec" class="on">추천</button>
+    <button data-tab="hist">기록</button>
+    <button data-tab="data">데이터</button>
+    <button data-tab="set">설정</button>
+  </nav>
+</header>
+<main>
+
+<!-- ============ 추천 ============ -->
+<section class="tab on" id="tab-rec">
+  <div class="card">
+    <h2>출발</h2>
+    <label class="f">출발일</label>
+    <input type="date" id="c-date">
+    <div class="row">
+      <div>
+        <label class="f">정우 · 출발 전 마지막 근무</label>
+        <select id="c-jw"></select>
+        <input type="datetime-local" id="c-jw-t" style="display:none;margin-top:6px">
+      </div>
+      <div>
+        <label class="f">여자친구 · 출발 전 마지막 근무</label>
+        <select id="c-gf"></select>
+        <input type="datetime-local" id="c-gf-t" style="display:none;margin-top:6px">
+      </div>
+    </div>
+    <div class="info" id="c-dep-info"></div>
+  </div>
+
+  <div class="card">
+    <h2>복귀</h2>
+    <div class="row">
+      <div>
+        <label class="f">복귀 후 첫 근무일</label>
+        <input type="date" id="c-rdate">
+      </div>
+      <div>
+        <label class="f">첫 근무</label>
+        <select id="c-rkind">
+          <option value="D">D</option><option value="E">E</option><option value="N">N</option>
+          <option value="O">O (마감 없음)</option><option value="custom">귀가 마감 직접 입력</option>
+        </select>
+      </div>
+    </div>
+    <input type="datetime-local" id="c-rt" style="display:none;margin-top:6px">
+    <div class="info" id="c-ret-info"></div>
+  </div>
+
+  <div class="card">
+    <h2>조건</h2>
+    <div class="row">
+      <div>
+        <label class="f">박수 <span class="muted" id="c-nights-auto"></span></label>
+        <input type="number" id="c-nights" min="0" max="30" inputmode="numeric" placeholder="자동">
+      </div>
+      <div>
+        <label class="f">출발 월</label>
+        <select id="c-month"></select>
+      </div>
+    </div>
+    <label class="f">예산</label>
+    <div class="seg" id="c-budget">
+      <button data-v="1">저</button><button data-v="2">중</button><button data-v="3">고</button>
+    </div>
+    <label class="f">이동 허용 상한 (편도) · <b id="c-cap-v"></b> <span class="small">· 해외 슬롯은 적용 안 함</span></label>
+    <input type="range" id="c-cap" min="30" max="600" step="10">
+    <label class="switch"><input type="checkbox" id="c-visited"> 이미 가본 곳 제외</label>
+  </div>
+
+  <div class="card">
+    <h2>이번 여행 테마</h2>
+    <div id="presets"></div>
+    <div id="sliders" style="margin-top:8px"></div>
+    <div class="small muted" style="margin-top:6px">주황 ×값 = 과거 기록 배수(m). 슬라이더 값에 곱해진 뒤 합계가 원래대로 정규화됩니다.</div>
+  </div>
+
+  <div id="results"></div>
+</section>
+
+<!-- ============ 기록 ============ -->
+<section class="tab" id="tab-hist">
+  <div class="card">
+    <h2>과거 기록 배수 (정우 기준)</h2>
+    <div id="mult-table"></div>
+  </div>
+  <div class="card">
+    <h2 id="h-form-title">여행 기록 추가</h2>
+    <label class="f">여행지</label>
+    <select id="h-dest"></select>
+    <div class="row3">
+      <div><label class="f">날짜</label><input type="date" id="h-date"></div>
+      <div><label class="f">박수</label><input type="number" id="h-nights" min="0" inputmode="numeric" value="1"></div>
+      <div><label class="f">전체 만족</label>
+        <select id="h-overall"><option>5</option><option>4</option><option selected>3</option><option>2</option><option>1</option></select></div>
+    </div>
+    <h3>축별 평가</h3>
+    <div class="axgrid" id="h-axes"></div>
+    <div class="small muted" style="margin-top:6px">좋았음: ✓(강도 미입력) 또는 1~3 · 불편: 강도 1~3 + 원인. 배수에는 <b>원인=장소</b> 불편만 반영.</div>
+    <label class="f">메모</label>
+    <textarea id="h-note" style="min-height:60px;font-family:inherit;font-size:14px"></textarea>
+    <div>
+      <button class="btn pri" id="h-save">저장</button>
+      <button class="btn" id="h-cancel" style="display:none">편집 취소</button>
+    </div>
+    <div id="h-msg"></div>
+  </div>
+  <div class="card">
+    <h2>기록 목록 <span class="muted small" id="h-count"></span></h2>
+    <div id="h-list"></div>
+  </div>
+</section>
+
+<!-- ============ 데이터 ============ -->
+<section class="tab" id="tab-data">
+  <div class="card">
+    <h2>내보내기 (export)</h2>
+    <div class="small muted">여행지·기록·설정 전체를 JSON으로. 정기적으로 내보내 두세요.</div>
+    <button class="btn pri" id="d-dl">JSON 파일 저장</button>
+    <button class="btn" id="d-copy">클립보드 복사</button>
+    <div id="d-exp-msg" class="small"></div>
+  </div>
+  <div class="card">
+    <h2>가져오기 (import)</h2>
+    <div class="small muted">파일 선택 또는 붙여넣기 → 검토 → 적용. 들어있는 층(destinations / history / settings)만 교체되고, 적용 직전 상태는 자동 백업됩니다.</div>
+    <label class="f">파일</label>
+    <input type="file" id="d-file" accept=".json,application/json">
+    <label class="f">또는 붙여넣기</label>
+    <textarea id="d-paste" placeholder='{"schema_version":1, ...}'></textarea>
+    <button class="btn" id="d-check">검토</button>
+    <div id="d-preview"></div>
+  </div>
+  <div class="card">
+    <h2>백업 · 초기화</h2>
+    <div class="small" id="d-backup-info"></div>
+    <button class="btn" id="d-restore">백업으로 되돌리기</button>
+    <button class="btn" id="d-reseed">여행지만 시드로 초기화</button>
+    <button class="btn danger" id="d-wipe">전체 초기화</button>
+  </div>
+  <div class="card">
+    <h2>여행지 목록 <span class="muted small" id="d-dcount"></span></h2>
+    <input type="search" id="d-search" placeholder="이름·지역·태그 검색">
+    <div id="d-dlist" style="margin-top:8px"></div>
+  </div>
+</section>
+
+<!-- ============ 설정 ============ -->
+<section class="tab" id="tab-set">
+  <div class="card">
+    <h2>근무 시각</h2>
+    <table>
+      <tr><th></th><th>시작</th><th>종료</th></tr>
+      <tr><td>D</td><td><input type="time" data-s="shift_start.D"></td><td><input type="time" data-s="shift_end.D"></td></tr>
+      <tr><td>E</td><td><input type="time" data-s="shift_start.E"></td><td><input type="time" data-s="shift_end.E"></td></tr>
+      <tr><td>N</td><td><input type="time" data-s="shift_start.N"></td><td><input type="time" data-s="shift_end.N"></td></tr>
+    </table>
+    <div class="small muted" style="margin-top:6px">N 종료는 다음날 아침 기준(“전날 N 끝나고” = 출발일 아침 퇴근).</div>
+  </div>
+  <div class="card">
+    <h2>출발 · 복귀</h2>
+    <div class="row">
+      <div><label class="f">합류 버퍼 (분, 직장↔집)</label><input type="number" data-s="join_buffer_min"></div>
+      <div><label class="f">복귀 버퍼 (시간)</label><input type="number" step="0.5" data-s="return_buffer_h"></div>
+      <div><label class="f">둘 다 O일 때 출발</label><input type="time" data-s="off_depart_time"></div>
+      <div><label class="f">마감 없을 때 귀가 시각</label><input type="time" data-s="default_return_time"></div>
+      <div><label class="f">늦은 도착 경고 (시)</label><input type="number" data-s="late_arrival_hour"></div>
+      <div><label class="f">나이트 후 장거리 경고 (분)</label><input type="number" data-s="night_long_travel_warn_min"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>유효 활동 시간</h2>
+    <div class="row3">
+      <div><label class="f">필터 (시간 미만 제외)</label><input type="number" step="0.5" data-s="active_filter_h"></div>
+      <div><label class="f">감점 시작 (시간 미만)</label><input type="number" step="0.5" data-s="active_penalty_h"></div>
+      <div><label class="f">최대 감점 (점)</label><input type="number" step="0.1" data-s="active_penalty_max"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>과거 기록 배수 상수</h2>
+    <div class="row">
+      <div><label class="f">불편 계수 (m_pain 상한 = 1 + 이 값)</label><input type="number" step="0.05" data-s="pain_gain"></div>
+      <div><label class="f">좋음 계수 (m_like 상한 = 1 + 이 값)</label><input type="number" step="0.05" data-s="like_gain"></div>
+      <div><label class="f">보정상수 (분모 = 여행 수 + 이 값)</label><input type="number" step="0.5" data-s="smoothing"></div>
+      <div><label class="f">m 최대 (clamp)</label><input type="number" step="0.05" data-s="m_max"></div>
+      <div><label class="f">좋음 강도 미입력 시 값 (1~3)</label><input type="number" min="1" max="3" data-s="like_default_severity"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>출력</h2>
+    <div class="row">
+      <div><label class="f">국내 추천 수</label><input type="number" data-s="top_n"></div>
+      <div><label class="f">해외 슬롯 수</label><input type="number" data-s="overseas_n"></div>
+      <div><label class="f">해외 노출 최소 박수</label><input type="number" data-s="overseas_min_nights"></div>
+      <div><label class="f">장기오프 우선 박수</label><input type="number" data-s="long_off_nights"></div>
+      <div><label class="f">거점 포함 최대 박수</label><input type="number" data-s="spot_max_nights"></div>
+    </div>
+    <button class="btn" id="s-reset">설정 기본값으로</button>
+  </div>
+  <div class="card">
+    <h2>자체 테스트</h2>
+    <button class="btn" id="s-test">테스트 실행</button>
+    <div id="s-test-out" class="small"></div>
+  </div>
+  <div class="card">
+    <h2>화면</h2>
+    <div class="seg" id="s-theme"><button data-v="auto">자동</button><button data-v="light">라이트</button><button data-v="dark">다크</button></div>
+  </div>
+</section>
+</main>
+
+<script type="application/json" id="seed-data">{"schema_version":1,"exported_at":"2026-11-21T10:20:55.853Z","destinations":[{"id":"gangneung","name":"강릉","type":"domestic","region":"강원","tags":["바다","카페","KTX"],"scores":{"move":5.5,"drive":6,"crowd":5,"food":8,"nature":8,"city":6,"walk":7,"stay":8,"weather":6,"value":6,"activity":6},"monthly":{"1":{"weather":-2,"crowd":1},"2":{"weather":-1,"crowd":1},"3":{"weather":0,"crowd":1},"4":{"weather":2,"crowd":0},"5":{"weather":3,"crowd":0},"6":{"weather":1,"crowd":-1},"7":{"weather":0,"crowd":-2},"8":{"weather":-1,"crowd":-3},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":0},"11":{"weather":1,"crowd":1},"12":{"weather":-2,"crowd":1}},"travel_time":{"work":200,"home":180},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":2,"notes":"KTX 강릉선. 경포·안목 커피거리·주문진 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"sokcho","name":"속초","type":"domestic","region":"강원","tags":["바다","설악산","시장"],"scores":{"move":5.5,"drive":4,"crowd":5,"food":8,"nature":9,"city":5,"walk":6,"stay":8,"weather":6,"value":6,"activity":7},"monthly":{"1":{"weather":-2,"crowd":1},"2":{"weather":-1,"crowd":1},"3":{"weather":0,"crowd":1},"4":{"weather":2,"crowd":0},"5":{"weather":3,"crowd":0},"6":{"weather":1,"crowd":-1},"7":{"weather":0,"crowd":-2},"8":{"weather":-1,"crowd":-3},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":0},"11":{"weather":1,"crowd":1},"12":{"weather":-2,"crowd":1}},"travel_time":{"work":200,"home":180},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":2,"notes":"동서울 버스 2시간대. 설악산·중앙시장 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"yangyang","name":"양양","type":"domestic","region":"강원","tags":["서핑","바다"],"scores":{"move":6,"drive":3,"crowd":5,"food":6,"nature":8,"city":3,"walk":7,"stay":7,"weather":6,"value":6,"activity":8},"monthly":{"1":{"weather":-2,"crowd":1},"2":{"weather":-1,"crowd":1},"3":{"weather":0,"crowd":1},"4":{"weather":2,"crowd":0},"5":{"weather":3,"crowd":0},"6":{"weather":1,"crowd":-1},"7":{"weather":0,"crowd":-2},"8":{"weather":-1,"crowd":-3},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":0},"11":{"weather":1,"crowd":1},"12":{"weather":-2,"crowd":1}},"travel_time":{"work":190,"home":170},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":2,"notes":"서핑·낙산사. 차량 이동 위주 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"chuncheon","name":"춘천","type":"domestic","region":"강원","tags":["호수","닭갈비","ITX"],"scores":{"move":7.5,"drive":7,"crowd":6,"food":7,"nature":7,"city":5,"walk":7,"stay":6,"weather":6,"value":7,"activity":6},"monthly":{"1":{"weather":-3,"crowd":0},"2":{"weather":-2,"crowd":0},"3":{"weather":0,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":1,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":2,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":1,"crowd":0},"12":{"weather":-2,"crowd":0}},"travel_time":{"work":120,"home":100},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":1,"notes":"ITX-청춘·경춘선. 남이섬·소양강 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"pyeongchang","name":"평창","type":"domestic","region":"강원","tags":["스키","목장","KTX"],"scores":{"move":6,"drive":3,"crowd":6,"food":6,"nature":9,"city":3,"walk":6,"stay":8,"weather":6,"value":5,"activity":8},"monthly":{"1":{"weather":-3,"crowd":-2},"2":{"weather":-2,"crowd":-2},"3":{"weather":-1,"crowd":0},"4":{"weather":1,"crowd":1},"5":{"weather":3,"crowd":0},"6":{"weather":2,"crowd":0},"7":{"weather":0,"crowd":-1},"8":{"weather":0,"crowd":-1},"9":{"weather":2,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":0,"crowd":0},"12":{"weather":-3,"crowd":-1}},"travel_time":{"work":175,"home":160},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":2,"notes":"KTX 진부·평창역. 대관령 목장·리조트 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"jeongseon","name":"정선","type":"domestic","region":"강원","tags":["오일장","레일바이크","하이원"],"scores":{"move":5,"drive":2,"crowd":7,"food":6,"nature":9,"city":3,"walk":5,"stay":6,"weather":6,"value":6,"activity":7},"monthly":{"1":{"weather":-3,"crowd":0},"2":{"weather":-2,"crowd":0},"3":{"weather":-1,"crowd":0},"4":{"weather":1,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":2,"crowd":0},"7":{"weather":0,"crowd":-1},"8":{"weather":0,"crowd":-2},"9":{"weather":2,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":0,"crowd":0},"12":{"weather":-3,"crowd":0}},"travel_time":{"work":220,"home":200},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"정선 5일장(2·7일), 하이원 리조트 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"samcheok","name":"삼척","type":"domestic","region":"강원","tags":["동굴","해상케이블카","바다"],"scores":{"move":4,"drive":3,"crowd":7,"food":6,"nature":9,"city":3,"walk":6,"stay":6,"weather":6,"value":7,"activity":6},"monthly":{"1":{"weather":-2,"crowd":1},"2":{"weather":-1,"crowd":1},"3":{"weather":0,"crowd":1},"4":{"weather":2,"crowd":0},"5":{"weather":3,"crowd":0},"6":{"weather":1,"crowd":-1},"7":{"weather":0,"crowd":-2},"8":{"weather":-1,"crowd":-3},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":0},"11":{"weather":1,"crowd":1},"12":{"weather":-2,"crowd":1}},"travel_time":{"work":260,"home":240},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"환선굴·장호항·해상케이블카 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"donghae","name":"동해","type":"domestic","region":"강원","tags":["바다","계곡"],"scores":{"move":4.5,"drive":4,"crowd":7,"food":6,"nature":8,"city":3,"walk":7,"stay":6,"weather":6,"value":7,"activity":5},"monthly":{"1":{"weather":-2,"crowd":1},"2":{"weather":-1,"crowd":1},"3":{"weather":0,"crowd":1},"4":{"weather":2,"crowd":0},"5":{"weather":3,"crowd":0},"6":{"weather":1,"crowd":-1},"7":{"weather":0,"crowd":-2},"8":{"weather":-1,"crowd":-3},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":0},"11":{"weather":1,"crowd":1},"12":{"weather":-2,"crowd":1}},"travel_time":{"work":240,"home":220},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"무릉계곡·묵호 논골담길. KTX 동해역 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"hongcheon","name":"홍천","type":"domestic","region":"강원","tags":["리조트","워터파크"],"scores":{"move":7.5,"drive":2,"crowd":7,"food":5,"nature":8,"city":2,"walk":7,"stay":7,"weather":6,"value":6,"activity":7},"monthly":{"1":{"weather":-3,"crowd":-2},"2":{"weather":-2,"crowd":-2},"3":{"weather":-1,"crowd":0},"4":{"weather":1,"crowd":1},"5":{"weather":3,"crowd":0},"6":{"weather":2,"crowd":0},"7":{"weather":0,"crowd":-1},"8":{"weather":0,"crowd":-1},"9":{"weather":2,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":0,"crowd":0},"12":{"weather":-3,"crowd":-1}},"travel_time":{"work":130,"home":110},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":2,"notes":"비발디파크·오션월드 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"inje","name":"인제","type":"domestic","region":"강원","tags":["래프팅","숲"],"scores":{"move":6.5,"drive":2,"crowd":7,"food":5,"nature":9,"city":2,"walk":5,"stay":5,"weather":6,"value":7,"activity":8},"monthly":{"1":{"weather":-3,"crowd":1},"2":{"weather":-2,"crowd":1},"3":{"weather":-1,"crowd":0},"4":{"weather":1,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":2,"crowd":0},"7":{"weather":0,"crowd":0},"8":{"weather":0,"crowd":0},"9":{"weather":2,"crowd":-1},"10":{"weather":3,"crowd":-3},"11":{"weather":0,"crowd":-2},"12":{"weather":-3,"crowd":1}},"travel_time":{"work":170,"home":150},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"내린천 래프팅·원대리 자작나무숲 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"cheorwon","name":"철원","type":"domestic","region":"강원","tags":["협곡","트레킹"],"scores":{"move":7,"drive":2,"crowd":8,"food":5,"nature":8,"city":3,"walk":7,"stay":4,"weather":5,"value":7,"activity":5},"monthly":{"1":{"weather":-3,"crowd":1},"2":{"weather":-2,"crowd":1},"3":{"weather":0,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":1,"crowd":0},"7":{"weather":-2,"crowd":0},"8":{"weather":-3,"crowd":0},"9":{"weather":2,"crowd":-1},"10":{"weather":3,"crowd":-3},"11":{"weather":1,"crowd":-2},"12":{"weather":-2,"crowd":1}},"travel_time":{"work":120,"home":120},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":1,"notes":"한탄강 주상절리길·고석정 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"gapyeong","name":"가평","type":"domestic","region":"경기","tags":["펜션","수상레저","ITX"],"scores":{"move":8,"drive":5,"crowd":5,"food":6,"nature":8,"city":3,"walk":7,"stay":7,"weather":6,"value":6,"activity":8},"monthly":{"1":{"weather":-3,"crowd":0},"2":{"weather":-2,"crowd":0},"3":{"weather":0,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":1,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":2,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":1,"crowd":0},"12":{"weather":-2,"crowd":0}},"travel_time":{"work":95,"home":85},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":2,"notes":"ITX-청춘 가평역. 쁘띠프랑스·자라섬 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"yangpyeong","name":"양평","type":"domestic","region":"경기","tags":["카페","강","전철"],"scores":{"move":8,"drive":5,"crowd":6,"food":7,"nature":8,"city":3,"walk":8,"stay":6,"weather":6,"value":6,"activity":5},"monthly":{"1":{"weather":-3,"crowd":0},"2":{"weather":-2,"crowd":0},"3":{"weather":0,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":1,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":2,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":1,"crowd":0},"12":{"weather":-2,"crowd":0}},"travel_time":{"work":90,"home":75},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":2,"notes":"경의중앙선. 두물머리·세미원 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"ganghwa","name":"강화도","type":"domestic","region":"인천","tags":["섬","역사","해산물"],"scores":{"move":8.5,"drive":3,"crowd":7,"food":7,"nature":7,"city":5,"walk":7,"stay":5,"weather":6,"value":7,"activity":5},"monthly":{"1":{"weather":-3,"crowd":0},"2":{"weather":-2,"crowd":0},"3":{"weather":0,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":1,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":2,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":1,"crowd":0},"12":{"weather":-2,"crowd":0}},"travel_time":{"work":35,"home":60},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":1,"notes":"완정에서 가까움. 전등사·조양방직·석모도 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"yeongjong","name":"영종·무의도","type":"domestic","region":"인천","tags":["바다","호캉스"],"scores":{"move":9,"drive":6,"crowd":6,"food":6,"nature":7,"city":4,"walk":8,"stay":8,"weather":6,"value":6,"activity":5},"monthly":{"1":{"weather":-3,"crowd":1},"2":{"weather":-2,"crowd":1},"3":{"weather":0,"crowd":1},"4":{"weather":2,"crowd":0},"5":{"weather":3,"crowd":0},"6":{"weather":1,"crowd":-1},"7":{"weather":-2,"crowd":-2},"8":{"weather":-3,"crowd":-3},"9":{"weather":2,"crowd":0},"10":{"weather":3,"crowd":0},"11":{"weather":1,"crowd":1},"12":{"weather":-2,"crowd":1}},"travel_time":{"work":35,"home":45},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":2,"notes":"을왕리·무의도. 공항철도 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"suwon","name":"수원","type":"domestic","region":"경기","tags":["성곽","행궁동","갈비"],"scores":{"move":8.5,"drive":8,"crowd":5,"food":7,"nature":4,"city":7,"walk":6,"stay":7,"weather":6,"value":7,"activity":4},"monthly":{"1":{"weather":-3,"crowd":0},"2":{"weather":-2,"crowd":0},"3":{"weather":0,"crowd":0},"4":{"weather":2,"crowd":0},"5":{"weather":3,"crowd":-1},"6":{"weather":1,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-1},"9":{"weather":2,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":1,"crowd":0},"12":{"weather":-2,"crowd":-1}},"travel_time":{"work":75,"home":60},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":2,"notes":"수원화성·행궁동. 전철·버스 편리 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"paju","name":"파주","type":"domestic","region":"경기","tags":["출판단지","DMZ","카페"],"scores":{"move":9,"drive":4,"crowd":6,"food":6,"nature":6,"city":6,"walk":7,"stay":6,"weather":6,"value":7,"activity":5},"monthly":{"1":{"weather":-3,"crowd":0},"2":{"weather":-2,"crowd":0},"3":{"weather":0,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":1,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":2,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":1,"crowd":0},"12":{"weather":-2,"crowd":0}},"travel_time":{"work":40,"home":45},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":1,"notes":"헤이리·출판도시·임진각 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"pocheon","name":"포천","type":"domestic","region":"경기","tags":["호수","아트밸리","온천"],"scores":{"move":8,"drive":2,"crowd":7,"food":6,"nature":8,"city":3,"walk":6,"stay":6,"weather":6,"value":7,"activity":6},"monthly":{"1":{"weather":-3,"crowd":1},"2":{"weather":-2,"crowd":1},"3":{"weather":0,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":1,"crowd":0},"7":{"weather":-2,"crowd":0},"8":{"weather":-3,"crowd":0},"9":{"weather":2,"crowd":-1},"10":{"weather":3,"crowd":-3},"11":{"weather":1,"crowd":-2},"12":{"weather":-2,"crowd":1}},"travel_time":{"work":95,"home":90},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":1,"notes":"산정호수·포천아트밸리 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"daebudo","name":"대부도","type":"domestic","region":"경기","tags":["갯벌","칼국수","섬"],"scores":{"move":8,"drive":3,"crowd":6,"food":7,"nature":6,"city":3,"walk":8,"stay":5,"weather":6,"value":7,"activity":5},"monthly":{"1":{"weather":-3,"crowd":0},"2":{"weather":-2,"crowd":0},"3":{"weather":0,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":1,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":2,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":1,"crowd":0},"12":{"weather":-2,"crowd":0}},"travel_time":{"work":80,"home":75},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":1,"notes":"제부도·궁평항, 바지락칼국수 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"danyang","name":"단양","type":"domestic","region":"충북","tags":["패러글라이딩","강","동굴"],"scores":{"move":6,"drive":4,"crowd":6,"food":6,"nature":9,"city":4,"walk":6,"stay":6,"weather":6,"value":7,"activity":8},"monthly":{"1":{"weather":-3,"crowd":1},"2":{"weather":-2,"crowd":1},"3":{"weather":-1,"crowd":0},"4":{"weather":1,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":2,"crowd":0},"7":{"weather":0,"crowd":0},"8":{"weather":0,"crowd":0},"9":{"weather":2,"crowd":-1},"10":{"weather":3,"crowd":-3},"11":{"weather":0,"crowd":-2},"12":{"weather":-3,"crowd":1}},"travel_time":{"work":180,"home":160},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"도담삼봉·패러글라이딩·고수동굴 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"jecheon","name":"제천","type":"domestic","region":"충북","tags":["호수","케이블카","리조트"],"scores":{"move":6.5,"drive":3,"crowd":7,"food":6,"nature":8,"city":3,"walk":7,"stay":7,"weather":6,"value":7,"activity":6},"monthly":{"1":{"weather":-3,"crowd":1},"2":{"weather":-2,"crowd":1},"3":{"weather":-1,"crowd":0},"4":{"weather":1,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":2,"crowd":0},"7":{"weather":0,"crowd":0},"8":{"weather":0,"crowd":0},"9":{"weather":2,"crowd":-1},"10":{"weather":3,"crowd":-3},"11":{"weather":0,"crowd":-2},"12":{"weather":-3,"crowd":1}},"travel_time":{"work":160,"home":140},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"청풍호 케이블카·의림지 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"chungju","name":"충주","type":"domestic","region":"충북","tags":["호수","동굴","온천"],"scores":{"move":7,"drive":4,"crowd":7,"food":6,"nature":8,"city":3,"walk":7,"stay":6,"weather":6,"value":7,"activity":6},"monthly":{"1":{"weather":-3,"crowd":1},"2":{"weather":-2,"crowd":1},"3":{"weather":0,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":1,"crowd":0},"7":{"weather":-2,"crowd":0},"8":{"weather":-3,"crowd":0},"9":{"weather":2,"crowd":-1},"10":{"weather":3,"crowd":-3},"11":{"weather":1,"crowd":-2},"12":{"weather":-2,"crowd":1}},"travel_time":{"work":140,"home":120},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":1,"notes":"충주호·활옥동굴·수안보온천 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"gongju","name":"공주","type":"domestic","region":"충남","tags":["백제","성곽"],"scores":{"move":7,"drive":4,"crowd":8,"food":6,"nature":6,"city":6,"walk":7,"stay":5,"weather":6,"value":8,"activity":4},"monthly":{"1":{"weather":-3,"crowd":0},"2":{"weather":-2,"crowd":0},"3":{"weather":0,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":1,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":2,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":1,"crowd":0},"12":{"weather":-2,"crowd":0}},"travel_time":{"work":135,"home":120},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":1,"notes":"공산성·무령왕릉 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"buyeo","name":"부여","type":"domestic","region":"충남","tags":["백제","연못"],"scores":{"move":6.5,"drive":4,"crowd":8,"food":6,"nature":7,"city":6,"walk":7,"stay":5,"weather":6,"value":8,"activity":4},"monthly":{"1":{"weather":-3,"crowd":0},"2":{"weather":-2,"crowd":0},"3":{"weather":0,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":1,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":2,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":1,"crowd":0},"12":{"weather":-2,"crowd":0}},"travel_time":{"work":155,"home":140},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"궁남지·부소산성 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"taean","name":"태안","type":"domestic","region":"충남","tags":["해변","안면도","낙조"],"scores":{"move":6.5,"drive":2,"crowd":6,"food":7,"nature":8,"city":3,"walk":7,"stay":6,"weather":6,"value":7,"activity":6},"monthly":{"1":{"weather":-3,"crowd":1},"2":{"weather":-2,"crowd":1},"3":{"weather":0,"crowd":1},"4":{"weather":2,"crowd":0},"5":{"weather":3,"crowd":0},"6":{"weather":1,"crowd":-1},"7":{"weather":-2,"crowd":-2},"8":{"weather":-3,"crowd":-3},"9":{"weather":2,"crowd":0},"10":{"weather":3,"crowd":0},"11":{"weather":1,"crowd":1},"12":{"weather":-2,"crowd":1}},"travel_time":{"work":150,"home":140},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"안면도 꽃지·신두리 해안사구. 자차 권장 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"boryeong","name":"보령","type":"domestic","region":"충남","tags":["해수욕장","머드","해산물"],"scores":{"move":6.5,"drive":4,"crowd":5,"food":7,"nature":7,"city":4,"walk":8,"stay":6,"weather":6,"value":7,"activity":7},"monthly":{"1":{"weather":-3,"crowd":1},"2":{"weather":-2,"crowd":1},"3":{"weather":0,"crowd":1},"4":{"weather":2,"crowd":0},"5":{"weather":3,"crowd":0},"6":{"weather":1,"crowd":-1},"7":{"weather":-2,"crowd":-2},"8":{"weather":-3,"crowd":-3},"9":{"weather":2,"crowd":0},"10":{"weather":3,"crowd":0},"11":{"weather":1,"crowd":1},"12":{"weather":-2,"crowd":1}},"travel_time":{"work":145,"home":135},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"대천해수욕장·머드축제(7월) (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"asan","name":"아산","type":"domestic","region":"충남","tags":["온천","KTX"],"scores":{"move":8,"drive":7,"crowd":7,"food":6,"nature":5,"city":4,"walk":8,"stay":6,"weather":6,"value":7,"activity":5},"monthly":{"1":{"weather":-3,"crowd":0},"2":{"weather":-2,"crowd":0},"3":{"weather":0,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":1,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":2,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":1,"crowd":0},"12":{"weather":-2,"crowd":0}},"travel_time":{"work":95,"home":80},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":1,"notes":"온양온천·외암민속마을. 천안아산역 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"cheongju","name":"청주","type":"domestic","region":"충북","tags":["산성","도심"],"scores":{"move":7.5,"drive":6,"crowd":7,"food":6,"nature":6,"city":5,"walk":7,"stay":6,"weather":6,"value":8,"activity":4},"monthly":{"1":{"weather":-3,"crowd":0},"2":{"weather":-2,"crowd":0},"3":{"weather":0,"crowd":0},"4":{"weather":2,"crowd":0},"5":{"weather":3,"crowd":-1},"6":{"weather":1,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-1},"9":{"weather":2,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":1,"crowd":0},"12":{"weather":-2,"crowd":-1}},"travel_time":{"work":125,"home":110},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":1,"notes":"수암골·청남대·상당산성 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"jeonju","name":"전주","type":"domestic","region":"전북","tags":["한옥마을","맛집","KTX"],"scores":{"move":6.5,"drive":7,"crowd":4,"food":9,"nature":4,"city":7,"walk":6,"stay":7,"weather":6,"value":8,"activity":4},"monthly":{"1":{"weather":-1,"crowd":0},"2":{"weather":-1,"crowd":0},"3":{"weather":1,"crowd":0},"4":{"weather":2,"crowd":0},"5":{"weather":3,"crowd":-1},"6":{"weather":0,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-1},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":2,"crowd":0},"12":{"weather":-1,"crowd":-1}},"travel_time":{"work":165,"home":150},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"KTX 전라선. 한옥마을·남부시장 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"gunsan","name":"군산","type":"domestic","region":"전북","tags":["근대거리","섬","짬뽕"],"scores":{"move":6,"drive":6,"crowd":7,"food":8,"nature":5,"city":6,"walk":7,"stay":6,"weather":6,"value":8,"activity":4},"monthly":{"1":{"weather":-1,"crowd":0},"2":{"weather":-1,"crowd":0},"3":{"weather":1,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":0,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":2,"crowd":0},"12":{"weather":-1,"crowd":0}},"travel_time":{"work":175,"home":165},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"근대문화거리·선유도 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"yeosu","name":"여수","type":"domestic","region":"전남","tags":["밤바다","케이블카","해산물","항공"],"scores":{"move":6,"drive":6,"crowd":5,"food":9,"nature":8,"city":6,"walk":6,"stay":8,"weather":6.5,"value":6,"activity":6},"monthly":{"1":{"weather":-1,"crowd":0},"2":{"weather":-1,"crowd":0},"3":{"weather":1,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":0,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":2,"crowd":0},"12":{"weather":-1,"crowd":0}},"travel_time":{"work":190,"home":170},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":2,"notes":"김포–여수 항공 또는 KTX. 해상케이블카 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"suncheon","name":"순천","type":"domestic","region":"전남","tags":["순천만","정원"],"scores":{"move":5,"drive":6,"crowd":6,"food":8,"nature":9,"city":5,"walk":6,"stay":6,"weather":6.5,"value":7,"activity":4},"monthly":{"1":{"weather":-1,"crowd":1},"2":{"weather":-1,"crowd":1},"3":{"weather":1,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":0,"crowd":0},"7":{"weather":-2,"crowd":0},"8":{"weather":-3,"crowd":0},"9":{"weather":1,"crowd":-1},"10":{"weather":3,"crowd":-3},"11":{"weather":2,"crowd":-2},"12":{"weather":-1,"crowd":1}},"travel_time":{"work":225,"home":210},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"순천만 습지(갈대 10~11월)·국가정원 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"damyang","name":"담양","type":"domestic","region":"전남","tags":["대나무숲","떡갈비"],"scores":{"move":5.5,"drive":3,"crowd":7,"food":8,"nature":8,"city":4,"walk":7,"stay":5,"weather":6,"value":7,"activity":4},"monthly":{"1":{"weather":-1,"crowd":0},"2":{"weather":-1,"crowd":0},"3":{"weather":1,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":0,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":2,"crowd":0},"12":{"weather":-1,"crowd":0}},"travel_time":{"work":205,"home":190},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"죽녹원·메타세쿼이아길. 광주 경유 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"mokpo","name":"목포","type":"domestic","region":"전남","tags":["케이블카","낙지","근대거리"],"scores":{"move":5.5,"drive":6,"crowd":7,"food":9,"nature":7,"city":5,"walk":7,"stay":6,"weather":6.5,"value":8,"activity":5},"monthly":{"1":{"weather":-1,"crowd":0},"2":{"weather":-1,"crowd":0},"3":{"weather":1,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":0,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":2,"crowd":0},"12":{"weather":-1,"crowd":0}},"travel_time":{"work":205,"home":190},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"KTX 목포역. 해상케이블카 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"namwon","name":"남원","type":"domestic","region":"전북","tags":["광한루","지리산"],"scores":{"move":5.5,"drive":4,"crowd":8,"food":7,"nature":8,"city":4,"walk":7,"stay":5,"weather":6,"value":8,"activity":4},"monthly":{"1":{"weather":-1,"crowd":0},"2":{"weather":-1,"crowd":0},"3":{"weather":1,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":0,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":2,"crowd":0},"12":{"weather":-1,"crowd":0}},"travel_time":{"work":195,"home":180},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"광한루원·지리산 둘레길 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"gwangju","name":"광주","type":"domestic","region":"전남","tags":["맛집","예술","KTX"],"scores":{"move":6.5,"drive":8,"crowd":7,"food":9,"nature":4,"city":7,"walk":7,"stay":7,"weather":6.5,"value":8,"activity":4},"monthly":{"1":{"weather":-1,"crowd":0},"2":{"weather":-1,"crowd":0},"3":{"weather":1,"crowd":0},"4":{"weather":2,"crowd":0},"5":{"weather":3,"crowd":-1},"6":{"weather":0,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-1},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":2,"crowd":0},"12":{"weather":-1,"crowd":-1}},"travel_time":{"work":165,"home":150},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"KTX 광주송정·김포–광주 항공 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"boseong","name":"보성","type":"domestic","region":"전남","tags":["녹차밭","바다"],"scores":{"move":4,"drive":2,"crowd":8,"food":7,"nature":8,"city":2,"walk":7,"stay":5,"weather":6.5,"value":8,"activity":4},"monthly":{"1":{"weather":-1,"crowd":0},"2":{"weather":-1,"crowd":0},"3":{"weather":1,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":0,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":2,"crowd":0},"12":{"weather":-1,"crowd":0}},"travel_time":{"work":255,"home":240},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"대한다원·율포해수욕장 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"haenam","name":"해남·강진","type":"domestic","region":"전남","tags":["땅끝","사찰","한정식"],"scores":{"move":3.5,"drive":2,"crowd":9,"food":8,"nature":9,"city":2,"walk":6,"stay":5,"weather":6.5,"value":8,"activity":4},"monthly":{"1":{"weather":-1,"crowd":1},"2":{"weather":-1,"crowd":1},"3":{"weather":1,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":0,"crowd":0},"7":{"weather":-2,"crowd":0},"8":{"weather":-3,"crowd":0},"9":{"weather":1,"crowd":-1},"10":{"weather":3,"crowd":-3},"11":{"weather":2,"crowd":-2},"12":{"weather":-1,"crowd":1}},"travel_time":{"work":285,"home":270},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"땅끝마을·대흥사·강진 한정식 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"gochang","name":"고창","type":"domestic","region":"전북","tags":["고인돌","선운사","장어"],"scores":{"move":5.5,"drive":2,"crowd":8,"food":7,"nature":8,"city":3,"walk":7,"stay":5,"weather":6,"value":8,"activity":4},"monthly":{"1":{"weather":-1,"crowd":0},"2":{"weather":-1,"crowd":0},"3":{"weather":1,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":0,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":2,"crowd":0},"12":{"weather":-1,"crowd":0}},"travel_time":{"work":195,"home":180},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"선운사(꽃무릇 9월)·고인돌 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"gyeongju","name":"경주","type":"domestic","region":"경북","tags":["역사","황리단길","벚꽃"],"scores":{"move":5.5,"drive":5,"crowd":4,"food":7,"nature":7,"city":8,"walk":6,"stay":8,"weather":6.5,"value":7,"activity":6},"monthly":{"1":{"weather":-1,"crowd":0},"2":{"weather":-1,"crowd":0},"3":{"weather":1,"crowd":-1},"4":{"weather":2,"crowd":-3},"5":{"weather":3,"crowd":-1},"6":{"weather":0,"crowd":0},"7":{"weather":-2,"crowd":0},"8":{"weather":-3,"crowd":-1},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":2,"crowd":0},"12":{"weather":-1,"crowd":0}},"travel_time":{"work":200,"home":180},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"KTX 신경주. 대릉원·보문단지 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"andong","name":"안동","type":"domestic","region":"경북","tags":["하회마을","찜닭"],"scores":{"move":5.5,"drive":4,"crowd":7,"food":8,"nature":7,"city":6,"walk":7,"stay":6,"weather":6,"value":8,"activity":4},"monthly":{"1":{"weather":-3,"crowd":0},"2":{"weather":-2,"crowd":0},"3":{"weather":0,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":1,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":2,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":1,"crowd":0},"12":{"weather":-2,"crowd":0}},"travel_time":{"work":200,"home":180},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"KTX-이음 안동역. 하회마을·월영교 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"busan_haeundae","name":"부산 해운대·기장","type":"domestic","region":"부산","tags":["바다","호텔","야경","항공"],"scores":{"move":6,"drive":8,"crowd":4,"food":9,"nature":8,"city":8,"walk":7,"stay":9,"weather":6.5,"value":6,"activity":7},"monthly":{"1":{"weather":-1,"crowd":1},"2":{"weather":-1,"crowd":1},"3":{"weather":1,"crowd":1},"4":{"weather":2,"crowd":0},"5":{"weather":3,"crowd":0},"6":{"weather":0,"crowd":-1},"7":{"weather":-2,"crowd":-2},"8":{"weather":-3,"crowd":-3},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":0},"11":{"weather":2,"crowd":1},"12":{"weather":-1,"crowd":1}},"travel_time":{"work":185,"home":165},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":3,"notes":"김포–김해 항공 또는 KTX. 해운대·광안리·기장 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"busan_old","name":"부산 원도심(남포·영도)","type":"domestic","region":"부산","tags":["시장","영도","문화마을"],"scores":{"move":6,"drive":8,"crowd":4,"food":9,"nature":6,"city":9,"walk":5,"stay":7,"weather":6.5,"value":7,"activity":5},"monthly":{"1":{"weather":-1,"crowd":0},"2":{"weather":-1,"crowd":0},"3":{"weather":1,"crowd":0},"4":{"weather":2,"crowd":0},"5":{"weather":3,"crowd":-1},"6":{"weather":0,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-1},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":2,"crowd":0},"12":{"weather":-1,"crowd":-1}},"travel_time":{"work":180,"home":160},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":2,"notes":"자갈치·국제시장·감천문화마을·흰여울 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"tongyeong","name":"통영","type":"domestic","region":"경남","tags":["섬","케이블카","해산물"],"scores":{"move":4,"drive":4,"crowd":6,"food":9,"nature":9,"city":5,"walk":6,"stay":6,"weather":6.5,"value":7,"activity":6},"monthly":{"1":{"weather":-1,"crowd":0},"2":{"weather":-1,"crowd":0},"3":{"weather":1,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":0,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":2,"crowd":0},"12":{"weather":-1,"crowd":0}},"travel_time":{"work":255,"home":240},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":2,"notes":"케이블카·동피랑·욕지도 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"geoje","name":"거제","type":"domestic","region":"경남","tags":["해안","섬"],"scores":{"move":4.5,"drive":3,"crowd":6,"food":8,"nature":9,"city":4,"walk":6,"stay":7,"weather":6.5,"value":6,"activity":6},"monthly":{"1":{"weather":-1,"crowd":1},"2":{"weather":-1,"crowd":1},"3":{"weather":1,"crowd":1},"4":{"weather":2,"crowd":0},"5":{"weather":3,"crowd":0},"6":{"weather":0,"crowd":-1},"7":{"weather":-2,"crowd":-2},"8":{"weather":-3,"crowd":-3},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":0},"11":{"weather":2,"crowd":1},"12":{"weather":-1,"crowd":1}},"travel_time":{"work":235,"home":220},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":2,"notes":"김해공항 경유. 바람의언덕·외도 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"namhae","name":"남해","type":"domestic","region":"경남","tags":["독일마을","다랭이마을"],"scores":{"move":4.5,"drive":2,"crowd":7,"food":7,"nature":9,"city":3,"walk":6,"stay":7,"weather":6.5,"value":6,"activity":5},"monthly":{"1":{"weather":-1,"crowd":0},"2":{"weather":-1,"crowd":0},"3":{"weather":1,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":0,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":2,"crowd":0},"12":{"weather":-1,"crowd":0}},"travel_time":{"work":245,"home":230},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":2,"notes":"자차 필수에 가까움. 독일마을·다랭이마을 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"jinju","name":"진주","type":"domestic","region":"경남","tags":["진주성","냉면"],"scores":{"move":5,"drive":5,"crowd":8,"food":8,"nature":6,"city":5,"walk":7,"stay":6,"weather":6.5,"value":8,"activity":4},"monthly":{"1":{"weather":-1,"crowd":0},"2":{"weather":-1,"crowd":0},"3":{"weather":1,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":0,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":2,"crowd":0},"12":{"weather":-1,"crowd":0}},"travel_time":{"work":215,"home":200},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"김포–사천 항공 또는 KTX. 진주성 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"pohang","name":"포항","type":"domestic","region":"경북","tags":["바다","스페이스워크","과메기"],"scores":{"move":6,"drive":5,"crowd":6,"food":8,"nature":8,"city":5,"walk":7,"stay":7,"weather":6,"value":7,"activity":6},"monthly":{"1":{"weather":-1,"crowd":1},"2":{"weather":-1,"crowd":1},"3":{"weather":1,"crowd":1},"4":{"weather":2,"crowd":0},"5":{"weather":3,"crowd":0},"6":{"weather":0,"crowd":-1},"7":{"weather":-2,"crowd":-2},"8":{"weather":-3,"crowd":-3},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":0},"11":{"weather":2,"crowd":1},"12":{"weather":-1,"crowd":1}},"travel_time":{"work":190,"home":170},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":2,"notes":"KTX 포항역. 호미곶·스페이스워크 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"yeongdeok","name":"영덕","type":"domestic","region":"경북","tags":["대게","해안길"],"scores":{"move":4,"drive":3,"crowd":7,"food":8,"nature":8,"city":2,"walk":7,"stay":5,"weather":6,"value":7,"activity":4},"monthly":{"1":{"weather":-2,"crowd":0},"2":{"weather":-1,"crowd":0},"3":{"weather":0,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":1,"crowd":0},"7":{"weather":0,"crowd":-1},"8":{"weather":-1,"crowd":-2},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":1,"crowd":0},"12":{"weather":-2,"crowd":0}},"travel_time":{"work":260,"home":240},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"강구항 대게(겨울~봄)·블루로드 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"uljin","name":"울진","type":"domestic","region":"경북","tags":["온천","대게","숲"],"scores":{"move":4,"drive":2,"crowd":8,"food":7,"nature":8,"city":2,"walk":7,"stay":6,"weather":6,"value":7,"activity":5},"monthly":{"1":{"weather":-2,"crowd":0},"2":{"weather":-1,"crowd":0},"3":{"weather":0,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":1,"crowd":0},"7":{"weather":0,"crowd":-1},"8":{"weather":-1,"crowd":-2},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":1,"crowd":0},"12":{"weather":-2,"crowd":0}},"travel_time":{"work":260,"home":240},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"덕구·백암온천·금강송숲 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"daegu","name":"대구","type":"domestic","region":"대구","tags":["도심","막창","KTX"],"scores":{"move":6.5,"drive":8,"crowd":6,"food":8,"nature":4,"city":7,"walk":7,"stay":7,"weather":5.5,"value":8,"activity":5},"monthly":{"1":{"weather":-1,"crowd":0},"2":{"weather":-1,"crowd":0},"3":{"weather":1,"crowd":0},"4":{"weather":2,"crowd":0},"5":{"weather":3,"crowd":-1},"6":{"weather":0,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-1},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":2,"crowd":0},"12":{"weather":-1,"crowd":-1}},"travel_time":{"work":170,"home":150},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"KTX 동대구. 근대골목·서문시장. 여름 매우 더움 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"ulsan","name":"울산","type":"domestic","region":"울산","tags":["바다","태화강"],"scores":{"move":6,"drive":6,"crowd":7,"food":7,"nature":8,"city":5,"walk":7,"stay":7,"weather":6.5,"value":7,"activity":5},"monthly":{"1":{"weather":-1,"crowd":0},"2":{"weather":-1,"crowd":0},"3":{"weather":1,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":0,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":2,"crowd":0},"12":{"weather":-1,"crowd":0}},"travel_time":{"work":185,"home":165},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":2,"notes":"김포–울산 항공. 대왕암·간절곶 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"mungyeong","name":"문경","type":"domestic","region":"경북","tags":["새재","레일바이크"],"scores":{"move":6.5,"drive":3,"crowd":8,"food":6,"nature":8,"city":4,"walk":6,"stay":6,"weather":6,"value":7,"activity":6},"monthly":{"1":{"weather":-3,"crowd":1},"2":{"weather":-2,"crowd":1},"3":{"weather":-1,"crowd":0},"4":{"weather":1,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":2,"crowd":0},"7":{"weather":0,"crowd":0},"8":{"weather":0,"crowd":0},"9":{"weather":2,"crowd":-1},"10":{"weather":3,"crowd":-3},"11":{"weather":0,"crowd":-2},"12":{"weather":-3,"crowd":1}},"travel_time":{"work":165,"home":150},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"문경새재·활공장 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"hadong","name":"하동","type":"domestic","region":"경남","tags":["녹차","섬진강","벚꽃"],"scores":{"move":4.5,"drive":2,"crowd":8,"food":7,"nature":9,"city":3,"walk":6,"stay":6,"weather":6.5,"value":7,"activity":4},"monthly":{"1":{"weather":-1,"crowd":0},"2":{"weather":-1,"crowd":0},"3":{"weather":1,"crowd":-1},"4":{"weather":2,"crowd":-3},"5":{"weather":3,"crowd":-1},"6":{"weather":0,"crowd":0},"7":{"weather":-2,"crowd":0},"8":{"weather":-3,"crowd":-1},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":2,"crowd":0},"12":{"weather":-1,"crowd":0}},"travel_time":{"work":245,"home":230},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"쌍계사 십리벚꽃길·화개장터 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"changwon","name":"창원·진해","type":"domestic","region":"경남","tags":["벚꽃","군항제"],"scores":{"move":5,"drive":6,"crowd":6,"food":7,"nature":6,"city":5,"walk":7,"stay":6,"weather":6.5,"value":7,"activity":4},"monthly":{"1":{"weather":-1,"crowd":0},"2":{"weather":-1,"crowd":0},"3":{"weather":1,"crowd":-1},"4":{"weather":2,"crowd":-3},"5":{"weather":3,"crowd":-1},"6":{"weather":0,"crowd":0},"7":{"weather":-2,"crowd":0},"8":{"weather":-3,"crowd":-1},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":2,"crowd":0},"12":{"weather":-1,"crowd":0}},"travel_time":{"work":225,"home":210},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":2,"notes":"진해 군항제(4월초) (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"ulleung","name":"울릉도","type":"domestic","region":"경북","tags":["섬","트레킹","독도"],"scores":{"move":1,"drive":2,"crowd":9,"food":7,"nature":10,"city":2,"walk":4,"stay":5,"weather":6,"value":5,"activity":7},"monthly":{"1":{"weather":-2,"crowd":0},"2":{"weather":-1,"crowd":0},"3":{"weather":0,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":1,"crowd":0},"7":{"weather":0,"crowd":-1},"8":{"weather":-1,"crowd":-2},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":1,"crowd":0},"12":{"weather":-2,"crowd":0}},"travel_time":{"work":440,"home":420},"min_nights":2,"day_trip_ok":false,"long_off_tag":false,"cost_level":3,"notes":"포항·묵호·강릉 여객선. 결항 잦음, 공항 개항 일정 확인 필요 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"jeju_city","name":"제주시권(애월·한림)","type":"domestic","region":"제주","tags":["공항","시장","해안"],"scores":{"move":6,"drive":3,"crowd":4,"food":8,"nature":8,"city":6,"walk":7,"stay":8,"weather":6.5,"value":5,"activity":6},"monthly":{"1":{"weather":-1,"crowd":0},"2":{"weather":-1,"crowd":-1},"3":{"weather":1,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":-1,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-2,"crowd":-2},"9":{"weather":0,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":1,"crowd":0},"12":{"weather":-1,"crowd":0}},"travel_time":{"work":175,"home":155},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":2,"notes":"김포–제주. 동문시장·애월·협재 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"seogwipo","name":"서귀포권(중문)","type":"domestic","region":"제주","tags":["리조트","올레","폭포"],"scores":{"move":5,"drive":2,"crowd":5,"food":8,"nature":9,"city":5,"walk":6,"stay":9,"weather":7,"value":5,"activity":7},"monthly":{"1":{"weather":-1,"crowd":0},"2":{"weather":-1,"crowd":-1},"3":{"weather":1,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":-1,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-2,"crowd":-2},"9":{"weather":0,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":1,"crowd":0},"12":{"weather":-1,"crowd":0}},"travel_time":{"work":220,"home":200},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":3,"notes":"중문관광단지·올레시장·천지연 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"jeju_east","name":"제주 동부(성산·구좌)","type":"domestic","region":"제주","tags":["일출봉","우도","오름"],"scores":{"move":5,"drive":2,"crowd":6,"food":8,"nature":10,"city":3,"walk":6,"stay":7,"weather":6.5,"value":6,"activity":7},"monthly":{"1":{"weather":-1,"crowd":0},"2":{"weather":-1,"crowd":-1},"3":{"weather":1,"crowd":0},"4":{"weather":2,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":-1,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-2,"crowd":-2},"9":{"weather":0,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":1,"crowd":0},"12":{"weather":-1,"crowd":0}},"travel_time":{"work":215,"home":195},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":2,"notes":"성산일출봉·우도·월정리 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"yeongwol","name":"영월","type":"domestic","region":"강원","tags":["동강","래프팅","천문대"],"scores":{"move":6,"drive":3,"crowd":8,"food":6,"nature":8,"city":3,"walk":7,"stay":5,"weather":6,"value":8,"activity":6},"monthly":{"1":{"weather":-3,"crowd":0},"2":{"weather":-2,"crowd":0},"3":{"weather":-1,"crowd":0},"4":{"weather":1,"crowd":-1},"5":{"weather":3,"crowd":-1},"6":{"weather":2,"crowd":0},"7":{"weather":0,"crowd":-1},"8":{"weather":0,"crowd":-2},"9":{"weather":2,"crowd":0},"10":{"weather":3,"crowd":-1},"11":{"weather":0,"crowd":0},"12":{"weather":-3,"crowd":0}},"travel_time":{"work":180,"home":160},"min_nights":1,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"동강 래프팅·별마로천문대·청령포 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"everland","name":"에버랜드","type":"spot","region":"경기 용인","tags":["테마파크"],"scores":{"move":8,"drive":6,"crowd":2,"food":5,"nature":4,"city":9,"walk":3,"stay":5,"weather":6,"value":5,"activity":10},"monthly":{"1":{"weather":-3,"crowd":0},"2":{"weather":-2,"crowd":0},"3":{"weather":0,"crowd":0},"4":{"weather":2,"crowd":0},"5":{"weather":3,"crowd":-3},"6":{"weather":1,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":2,"crowd":0},"10":{"weather":3,"crowd":-2},"11":{"weather":1,"crowd":0},"12":{"weather":-2,"crowd":-2}},"travel_time":{"work":90,"home":75},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":2,"notes":"평일 추천. 주말 매우 혼잡 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"caribbean","name":"캐리비안 베이","type":"spot","region":"경기 용인","tags":["워터파크"],"scores":{"move":8,"drive":6,"crowd":2,"food":4,"nature":3,"city":7,"walk":4,"stay":5,"weather":6,"value":4,"activity":9},"monthly":{"1":{"weather":-4,"crowd":0},"2":{"weather":-4,"crowd":0},"3":{"weather":-3,"crowd":0},"4":{"weather":-1,"crowd":0},"5":{"weather":0,"crowd":-3},"6":{"weather":2,"crowd":0},"7":{"weather":3,"crowd":-1},"8":{"weather":3,"crowd":-2},"9":{"weather":0,"crowd":0},"10":{"weather":-3,"crowd":-2},"11":{"weather":-4,"crowd":0},"12":{"weather":-4,"crowd":-2}},"travel_time":{"work":90,"home":75},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":2,"notes":"야외 시설은 여름 위주 운영 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"lotteworld","name":"롯데월드","type":"spot","region":"서울 잠실","tags":["테마파크","실내"],"scores":{"move":8.5,"drive":9,"crowd":2,"food":5,"nature":1,"city":8,"walk":4,"stay":5,"weather":9,"value":5,"activity":9},"monthly":{"1":{"weather":0,"crowd":0},"2":{"weather":0,"crowd":0},"3":{"weather":0,"crowd":0},"4":{"weather":0,"crowd":0},"5":{"weather":0,"crowd":-3},"6":{"weather":0,"crowd":0},"7":{"weather":0,"crowd":-1},"8":{"weather":0,"crowd":-2},"9":{"weather":0,"crowd":0},"10":{"weather":0,"crowd":-2},"11":{"weather":0,"crowd":0},"12":{"weather":0,"crowd":-2}},"travel_time":{"work":80,"home":60},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":2,"notes":"실내 위주라 날씨 영향 적음 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"seoulland","name":"서울랜드","type":"spot","region":"경기 과천","tags":["테마파크"],"scores":{"move":9,"drive":8,"crowd":4,"food":5,"nature":4,"city":6,"walk":4,"stay":5,"weather":6,"value":7,"activity":7},"monthly":{"1":{"weather":-3,"crowd":0},"2":{"weather":-2,"crowd":0},"3":{"weather":0,"crowd":0},"4":{"weather":2,"crowd":0},"5":{"weather":3,"crowd":-3},"6":{"weather":1,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":2,"crowd":0},"10":{"weather":3,"crowd":-2},"11":{"weather":1,"crowd":0},"12":{"weather":-2,"crowd":-2}},"travel_time":{"work":65,"home":50},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":1,"notes":"4호선 대공원역 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"legoland","name":"레고랜드 코리아","type":"spot","region":"강원 춘천","tags":["테마파크"],"scores":{"move":7.5,"drive":6,"crowd":5,"food":4,"nature":5,"city":6,"walk":5,"stay":6,"weather":6,"value":4,"activity":7},"monthly":{"1":{"weather":-3,"crowd":0},"2":{"weather":-2,"crowd":0},"3":{"weather":0,"crowd":0},"4":{"weather":2,"crowd":0},"5":{"weather":3,"crowd":-3},"6":{"weather":1,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":2,"crowd":0},"10":{"weather":3,"crowd":-2},"11":{"weather":1,"crowd":0},"12":{"weather":-2,"crowd":-2}},"travel_time":{"work":120,"home":100},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":2,"notes":"춘천역 셔틀 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"lotte_busan","name":"롯데월드 어드벤처 부산","type":"spot","region":"부산 기장","tags":["테마파크"],"scores":{"move":5.5,"drive":5,"crowd":4,"food":5,"nature":4,"city":7,"walk":4,"stay":6,"weather":6.5,"value":5,"activity":9},"monthly":{"1":{"weather":-1,"crowd":0},"2":{"weather":-1,"crowd":0},"3":{"weather":1,"crowd":0},"4":{"weather":2,"crowd":0},"5":{"weather":3,"crowd":-3},"6":{"weather":0,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":-2},"11":{"weather":2,"crowd":0},"12":{"weather":-1,"crowd":-2}},"travel_time":{"work":200,"home":180},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":2,"notes":"당일로는 장거리 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"gyeongjuworld","name":"경주월드","type":"spot","region":"경북 경주","tags":["테마파크","스릴"],"scores":{"move":5.5,"drive":5,"crowd":5,"food":5,"nature":5,"city":6,"walk":4,"stay":6,"weather":6.5,"value":6,"activity":9},"monthly":{"1":{"weather":-1,"crowd":0},"2":{"weather":-1,"crowd":0},"3":{"weather":1,"crowd":0},"4":{"weather":2,"crowd":0},"5":{"weather":3,"crowd":-3},"6":{"weather":0,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":-2},"11":{"weather":2,"crowd":0},"12":{"weather":-1,"crowd":-2}},"travel_time":{"work":200,"home":180},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":1,"notes":"스릴 기구 강세 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"eworld","name":"이월드","type":"spot","region":"대구","tags":["테마파크","야경"],"scores":{"move":6.5,"drive":7,"crowd":5,"food":5,"nature":4,"city":6,"walk":5,"stay":6,"weather":5.5,"value":7,"activity":7},"monthly":{"1":{"weather":-1,"crowd":0},"2":{"weather":-1,"crowd":0},"3":{"weather":1,"crowd":0},"4":{"weather":2,"crowd":0},"5":{"weather":3,"crowd":-3},"6":{"weather":0,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":1,"crowd":0},"10":{"weather":3,"crowd":-2},"11":{"weather":2,"crowd":0},"12":{"weather":-1,"crowd":-2}},"travel_time":{"work":170,"home":150},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":1,"notes":"83타워. 지하철 2호선 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"folkvillage","name":"한국민속촌","type":"spot","region":"경기 용인","tags":["민속","체험"],"scores":{"move":8.5,"drive":6,"crowd":6,"food":6,"nature":6,"city":6,"walk":5,"stay":5,"weather":6,"value":7,"activity":5},"monthly":{"1":{"weather":-3,"crowd":0},"2":{"weather":-2,"crowd":0},"3":{"weather":0,"crowd":0},"4":{"weather":2,"crowd":0},"5":{"weather":3,"crowd":-3},"6":{"weather":1,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":2,"crowd":0},"10":{"weather":3,"crowd":-2},"11":{"weather":1,"crowd":0},"12":{"weather":-2,"crowd":-2}},"travel_time":{"work":80,"home":65},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":1,"notes":"야간 행사 시즌 확인 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"gm_cave","name":"광명동굴","type":"spot","region":"경기 광명","tags":["동굴","실내"],"scores":{"move":9,"drive":7,"crowd":6,"food":4,"nature":6,"city":5,"walk":6,"stay":5,"weather":9,"value":8,"activity":4},"monthly":{"1":{"weather":0,"crowd":0},"2":{"weather":0,"crowd":0},"3":{"weather":0,"crowd":0},"4":{"weather":0,"crowd":-1},"5":{"weather":0,"crowd":-1},"6":{"weather":0,"crowd":0},"7":{"weather":0,"crowd":-1},"8":{"weather":0,"crowd":-2},"9":{"weather":0,"crowd":0},"10":{"weather":0,"crowd":-1},"11":{"weather":0,"crowd":0},"12":{"weather":0,"crowd":0}},"travel_time":{"work":50,"home":35},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":1,"notes":"KTX 광명역 인근 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"aqua_ilsan","name":"아쿠아플라넷 일산","type":"spot","region":"경기 고양","tags":["아쿠아리움","실내"],"scores":{"move":9,"drive":8,"crowd":5,"food":5,"nature":3,"city":5,"walk":8,"stay":5,"weather":9,"value":6,"activity":4},"monthly":{"1":{"weather":0,"crowd":0},"2":{"weather":0,"crowd":0},"3":{"weather":0,"crowd":0},"4":{"weather":0,"crowd":0},"5":{"weather":0,"crowd":-3},"6":{"weather":0,"crowd":0},"7":{"weather":0,"crowd":-1},"8":{"weather":0,"crowd":-2},"9":{"weather":0,"crowd":0},"10":{"weather":0,"crowd":-2},"11":{"weather":0,"crowd":0},"12":{"weather":0,"crowd":-2}},"travel_time":{"work":40,"home":35},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":1,"notes":"킨텍스 인근 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"cimer","name":"파라다이스시티 씨메르","type":"spot","region":"인천 영종","tags":["스파","호캉스","실내"],"scores":{"move":9,"drive":7,"crowd":6,"food":6,"nature":4,"city":5,"walk":9,"stay":8,"weather":9,"value":5,"activity":5},"monthly":{"1":{"weather":0,"crowd":0},"2":{"weather":0,"crowd":0},"3":{"weather":0,"crowd":0},"4":{"weather":0,"crowd":0},"5":{"weather":0,"crowd":-1},"6":{"weather":0,"crowd":0},"7":{"weather":0,"crowd":-1},"8":{"weather":0,"crowd":-1},"9":{"weather":0,"crowd":0},"10":{"weather":0,"crowd":-1},"11":{"weather":0,"crowd":0},"12":{"weather":0,"crowd":-1}},"travel_time":{"work":35,"home":45},"min_nights":0,"day_trip_ok":true,"long_off_tag":false,"cost_level":3,"notes":"숙박 연계 시 1박 호캉스로도 가능 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"tokyo","name":"도쿄","type":"overseas","region":"일본","tags":["도시","쇼핑","맛집"],"scores":{"move":8.5,"drive":9,"crowd":3,"food":9,"nature":4,"city":10,"walk":4,"stay":8,"weather":6,"value":5,"activity":6},"monthly":{"1":{"weather":-2,"crowd":0},"2":{"weather":-2,"crowd":-1},"3":{"weather":0,"crowd":-1},"4":{"weather":3,"crowd":-2},"5":{"weather":3,"crowd":-1},"6":{"weather":-1,"crowd":0},"7":{"weather":-3,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":0,"crowd":0},"10":{"weather":3,"crowd":0},"11":{"weather":3,"crowd":-1},"12":{"weather":-1,"crowd":-1}},"travel_time":{"work":300,"home":280},"min_nights":2,"day_trip_ok":false,"long_off_tag":false,"cost_level":2,"notes":"김포–하네다. 도보량 많음 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"osaka","name":"오사카","type":"overseas","region":"일본","tags":["맛집","도시","USJ"],"scores":{"move":9,"drive":9,"crowd":4,"food":10,"nature":4,"city":9,"walk":6,"stay":7,"weather":6,"value":6,"activity":6},"monthly":{"1":{"weather":-2,"crowd":0},"2":{"weather":-2,"crowd":-1},"3":{"weather":0,"crowd":-1},"4":{"weather":3,"crowd":-2},"5":{"weather":3,"crowd":-1},"6":{"weather":-1,"crowd":0},"7":{"weather":-3,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":0,"crowd":0},"10":{"weather":3,"crowd":0},"11":{"weather":3,"crowd":-1},"12":{"weather":-1,"crowd":-1}},"travel_time":{"work":270,"home":250},"min_nights":2,"day_trip_ok":false,"long_off_tag":false,"cost_level":2,"notes":"김포–간사이 가능 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"kyoto","name":"교토","type":"overseas","region":"일본","tags":["사찰","정원","단풍"],"scores":{"move":8,"drive":7,"crowd":3,"food":8,"nature":8,"city":9,"walk":3,"stay":8,"weather":6,"value":5,"activity":4},"monthly":{"1":{"weather":-2,"crowd":0},"2":{"weather":-2,"crowd":-1},"3":{"weather":0,"crowd":-1},"4":{"weather":3,"crowd":-2},"5":{"weather":3,"crowd":-1},"6":{"weather":-1,"crowd":0},"7":{"weather":-3,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":0,"crowd":0},"10":{"weather":3,"crowd":0},"11":{"weather":3,"crowd":-1},"12":{"weather":-1,"crowd":-1}},"travel_time":{"work":330,"home":310},"min_nights":2,"day_trip_ok":false,"long_off_tag":false,"cost_level":2,"notes":"간사이공항 경유. 단풍·벚꽃철 매우 혼잡 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"fukuoka","name":"후쿠오카","type":"overseas","region":"일본","tags":["맛집","근거리","온천"],"scores":{"move":9,"drive":9,"crowd":6,"food":9,"nature":5,"city":7,"walk":7,"stay":7,"weather":6.5,"value":8,"activity":4},"monthly":{"1":{"weather":-2,"crowd":0},"2":{"weather":-2,"crowd":-1},"3":{"weather":0,"crowd":-1},"4":{"weather":3,"crowd":-2},"5":{"weather":3,"crowd":-1},"6":{"weather":-1,"crowd":0},"7":{"weather":-3,"crowd":-1},"8":{"weather":-3,"crowd":-2},"9":{"weather":0,"crowd":0},"10":{"weather":3,"crowd":0},"11":{"weather":3,"crowd":-1},"12":{"weather":-1,"crowd":-1}},"travel_time":{"work":265,"home":275},"min_nights":2,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"비행 1시간대. 유후인·다자이후 연계 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"sapporo","name":"삿포로","type":"overseas","region":"일본","tags":["설경","맛집","여름피서"],"scores":{"move":6.5,"drive":6,"crowd":5,"food":9,"nature":9,"city":6,"walk":5,"stay":7,"weather":6,"value":5,"activity":7},"monthly":{"1":{"weather":-2,"crowd":-1},"2":{"weather":-1,"crowd":-2},"3":{"weather":-2,"crowd":0},"4":{"weather":0,"crowd":0},"5":{"weather":2,"crowd":0},"6":{"weather":3,"crowd":0},"7":{"weather":3,"crowd":-1},"8":{"weather":2,"crowd":-1},"9":{"weather":2,"crowd":0},"10":{"weather":1,"crowd":0},"11":{"weather":-1,"crowd":0},"12":{"weather":-2,"crowd":-1}},"travel_time":{"work":395,"home":405},"min_nights":3,"day_trip_ok":false,"long_off_tag":false,"cost_level":3,"notes":"2월 눈축제. 여름 선선 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"okinawa","name":"오키나와","type":"overseas","region":"일본","tags":["바다","리조트","렌터카"],"scores":{"move":7.5,"drive":3,"crowd":5,"food":7,"nature":9,"city":4,"walk":7,"stay":8,"weather":6.5,"value":6,"activity":8},"monthly":{"1":{"weather":0,"crowd":0},"2":{"weather":0,"crowd":-1},"3":{"weather":2,"crowd":-1},"4":{"weather":3,"crowd":-2},"5":{"weather":1,"crowd":-1},"6":{"weather":0,"crowd":0},"7":{"weather":1,"crowd":-1},"8":{"weather":0,"crowd":-2},"9":{"weather":-1,"crowd":0},"10":{"weather":2,"crowd":0},"11":{"weather":2,"crowd":-1},"12":{"weather":1,"crowd":-1}},"travel_time":{"work":350,"home":360},"min_nights":3,"day_trip_ok":false,"long_off_tag":false,"cost_level":2,"notes":"렌터카 필요. 장마 5~6월, 태풍 8~9월 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"taipei","name":"타이베이","type":"overseas","region":"대만","tags":["야시장","근거리"],"scores":{"move":8.5,"drive":9,"crowd":5,"food":9,"nature":6,"city":8,"walk":6,"stay":6,"weather":6,"value":8,"activity":5},"monthly":{"1":{"weather":1,"crowd":-1},"2":{"weather":1,"crowd":-2},"3":{"weather":2,"crowd":0},"4":{"weather":2,"crowd":0},"5":{"weather":0,"crowd":0},"6":{"weather":-2,"crowd":0},"7":{"weather":-3,"crowd":-1},"8":{"weather":-3,"crowd":-1},"9":{"weather":-2,"crowd":0},"10":{"weather":2,"crowd":-1},"11":{"weather":3,"crowd":0},"12":{"weather":2,"crowd":-1}},"travel_time":{"work":310,"home":290},"min_nights":2,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"김포–쑹산. 여름 무더위·태풍 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"hongkong","name":"홍콩·마카오","type":"overseas","region":"홍콩","tags":["야경","도시","딤섬"],"scores":{"move":6,"drive":9,"crowd":3,"food":9,"nature":5,"city":9,"walk":5,"stay":6,"weather":6,"value":4,"activity":5},"monthly":{"1":{"weather":1,"crowd":-1},"2":{"weather":1,"crowd":-2},"3":{"weather":2,"crowd":0},"4":{"weather":2,"crowd":0},"5":{"weather":0,"crowd":0},"6":{"weather":-2,"crowd":0},"7":{"weather":-3,"crowd":-1},"8":{"weather":-3,"crowd":-1},"9":{"weather":-2,"crowd":0},"10":{"weather":2,"crowd":-1},"11":{"weather":3,"crowd":0},"12":{"weather":2,"crowd":-1}},"travel_time":{"work":430,"home":440},"min_nights":2,"day_trip_ok":false,"long_off_tag":false,"cost_level":3,"notes":"숙박비 높음 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"danang","name":"다낭","type":"overseas","region":"베트남","tags":["리조트","바다","가성비"],"scores":{"move":5,"drive":7,"crowd":5,"food":8,"nature":8,"city":5,"walk":8,"stay":8,"weather":6,"value":9,"activity":6},"monthly":{"1":{"weather":0,"crowd":-1},"2":{"weather":2,"crowd":-2},"3":{"weather":3,"crowd":0},"4":{"weather":3,"crowd":0},"5":{"weather":2,"crowd":0},"6":{"weather":1,"crowd":0},"7":{"weather":1,"crowd":-1},"8":{"weather":0,"crowd":-2},"9":{"weather":-2,"crowd":0},"10":{"weather":-3,"crowd":0},"11":{"weather":-3,"crowd":0},"12":{"weather":-1,"crowd":-2}},"travel_time":{"work":490,"home":500},"min_nights":3,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"우기 9~12월 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"nhatrang","name":"나트랑","type":"overseas","region":"베트남","tags":["리조트","바다","액티비티"],"scores":{"move":4.5,"drive":6,"crowd":5,"food":7,"nature":8,"city":4,"walk":8,"stay":8,"weather":6,"value":9,"activity":7},"monthly":{"1":{"weather":0,"crowd":-1},"2":{"weather":2,"crowd":-2},"3":{"weather":3,"crowd":0},"4":{"weather":3,"crowd":0},"5":{"weather":2,"crowd":0},"6":{"weather":1,"crowd":0},"7":{"weather":1,"crowd":-1},"8":{"weather":0,"crowd":-2},"9":{"weather":-2,"crowd":0},"10":{"weather":-3,"crowd":0},"11":{"weather":-3,"crowd":0},"12":{"weather":-1,"crowd":-2}},"travel_time":{"work":535,"home":545},"min_nights":3,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"캄란공항. 우기 10~12월 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"bangkok","name":"방콕","type":"overseas","region":"태국","tags":["맛집","도시","마사지"],"scores":{"move":4,"drive":8,"crowd":3,"food":10,"nature":3,"city":9,"walk":5,"stay":8,"weather":5.5,"value":9,"activity":6},"monthly":{"1":{"weather":3,"crowd":-1},"2":{"weather":2,"crowd":-2},"3":{"weather":0,"crowd":0},"4":{"weather":-2,"crowd":0},"5":{"weather":-2,"crowd":0},"6":{"weather":-1,"crowd":0},"7":{"weather":-1,"crowd":-1},"8":{"weather":-1,"crowd":-2},"9":{"weather":-2,"crowd":0},"10":{"weather":-1,"crowd":0},"11":{"weather":2,"crowd":0},"12":{"weather":3,"crowd":-2}},"travel_time":{"work":555,"home":565},"min_nights":3,"day_trip_ok":false,"long_off_tag":false,"cost_level":1,"notes":"건기 11~2월 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"chiangmai","name":"치앙마이","type":"overseas","region":"태국","tags":["한달살기","카페","자연"],"scores":{"move":4.5,"drive":6,"crowd":6,"food":9,"nature":8,"city":6,"walk":6,"stay":8,"weather":6,"value":10,"activity":6},"monthly":{"1":{"weather":3,"crowd":-1},"2":{"weather":2,"crowd":-2},"3":{"weather":0,"crowd":0},"4":{"weather":-2,"crowd":0},"5":{"weather":-2,"crowd":0},"6":{"weather":-1,"crowd":0},"7":{"weather":-1,"crowd":-1},"8":{"weather":-1,"crowd":-2},"9":{"weather":-2,"crowd":0},"10":{"weather":-1,"crowd":0},"11":{"weather":2,"crowd":0},"12":{"weather":3,"crowd":-2}},"travel_time":{"work":530,"home":540},"min_nights":4,"day_trip_ok":false,"long_off_tag":true,"cost_level":1,"notes":"직항 있음. 3~4월 연무 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"phuket","name":"푸켓","type":"overseas","region":"태국","tags":["바다","리조트","호핑"],"scores":{"move":3,"drive":4,"crowd":5,"food":8,"nature":9,"city":5,"walk":7,"stay":9,"weather":6,"value":7,"activity":9},"monthly":{"1":{"weather":3,"crowd":-1},"2":{"weather":2,"crowd":-2},"3":{"weather":0,"crowd":0},"4":{"weather":-2,"crowd":0},"5":{"weather":-2,"crowd":0},"6":{"weather":-1,"crowd":0},"7":{"weather":-1,"crowd":-1},"8":{"weather":-1,"crowd":-2},"9":{"weather":-2,"crowd":0},"10":{"weather":-1,"crowd":0},"11":{"weather":2,"crowd":0},"12":{"weather":3,"crowd":-2}},"travel_time":{"work":605,"home":615},"min_nights":4,"day_trip_ok":false,"long_off_tag":true,"cost_level":2,"notes":"우기 5~10월 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"cebu","name":"세부","type":"overseas","region":"필리핀","tags":["바다","다이빙","리조트"],"scores":{"move":5,"drive":5,"crowd":5,"food":6,"nature":9,"city":4,"walk":8,"stay":8,"weather":6,"value":7,"activity":9},"monthly":{"1":{"weather":2,"crowd":-1},"2":{"weather":3,"crowd":-2},"3":{"weather":3,"crowd":0},"4":{"weather":2,"crowd":0},"5":{"weather":1,"crowd":0},"6":{"weather":-1,"crowd":0},"7":{"weather":-2,"crowd":-1},"8":{"weather":-2,"crowd":-2},"9":{"weather":-2,"crowd":0},"10":{"weather":-1,"crowd":0},"11":{"weather":0,"crowd":0},"12":{"weather":1,"crowd":-2}},"travel_time":{"work":485,"home":495},"min_nights":3,"day_trip_ok":false,"long_off_tag":true,"cost_level":2,"notes":"막탄 리조트. 우기 6~10월 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"singapore","name":"싱가포르","type":"overseas","region":"싱가포르","tags":["도시","깔끔","야경"],"scores":{"move":3.5,"drive":10,"crowd":4,"food":9,"nature":5,"city":9,"walk":6,"stay":9,"weather":6,"value":3,"activity":6},"monthly":{"1":{"weather":0,"crowd":-1},"2":{"weather":0,"crowd":-2},"3":{"weather":0,"crowd":0},"4":{"weather":0,"crowd":0},"5":{"weather":0,"crowd":0},"6":{"weather":0,"crowd":0},"7":{"weather":0,"crowd":-1},"8":{"weather":0,"crowd":-2},"9":{"weather":0,"crowd":0},"10":{"weather":0,"crowd":0},"11":{"weather":-1,"crowd":0},"12":{"weather":-1,"crowd":-2}},"travel_time":{"work":575,"home":585},"min_nights":3,"day_trip_ok":false,"long_off_tag":false,"cost_level":3,"notes":"대중교통 최상. 물가 높음 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"kotakinabalu","name":"코타키나발루","type":"overseas","region":"말레이시아","tags":["석양","섬","리조트"],"scores":{"move":5,"drive":6,"crowd":6,"food":7,"nature":9,"city":4,"walk":8,"stay":8,"weather":6.5,"value":8,"activity":8},"monthly":{"1":{"weather":0,"crowd":-1},"2":{"weather":0,"crowd":-2},"3":{"weather":0,"crowd":0},"4":{"weather":0,"crowd":0},"5":{"weather":0,"crowd":0},"6":{"weather":0,"crowd":0},"7":{"weather":0,"crowd":-1},"8":{"weather":0,"crowd":-2},"9":{"weather":0,"crowd":0},"10":{"weather":0,"crowd":0},"11":{"weather":-1,"crowd":0},"12":{"weather":-1,"crowd":-2}},"travel_time":{"work":485,"home":495},"min_nights":4,"day_trip_ok":false,"long_off_tag":true,"cost_level":2,"notes":"반딧불·섬 투어 (점수·소요시간 초안 추정치)","source_date":"2026-11"},{"id":"bali","name":"발리","type":"overseas","region":"인도네시아","tags":["리조트","자연","한달살기"],"scores":{"move":2.5,"drive":4,"crowd":5,"food":8,"nature":10,"city":5,"walk":7,"stay":10,"weather":6,"value":7,"activity":8},"monthly":{"1":{"weather":-2,"crowd":-1},"2":{"weather":-2,"crowd":-2},"3":{"weather":-1,"crowd":0},"4":{"weather":1,"crowd":0},"5":{"weather":2,"crowd":0},"6":{"weather":3,"crowd":0},"7":{"weather":3,"crowd":-1},"8":{"weather":3,"crowd":-2},"9":{"weather":2,"crowd":0},"10":{"weather":1,"crowd":0},"11":{"weather":-1,"crowd":0},"12":{"weather":-2,"crowd":-2}},"travel_time":{"work":650,"home":660},"min_nights":5,"day_trip_ok":false,"long_off_tag":true,"cost_level":2,"notes":"건기 4~10월. 지역 간 이동 시간 김 (점수·소요시간 초안 추정치)","source_date":"2026-11"}]}</script>
+
+<!-- ============ 계산 코어 (순수 함수, tests/core.test.js 에서도 사용) ============ -->
+<script id="core">
+(function (root) {
+  'use strict';
+  var SCHEMA_VERSION = 1;
+  var AXES = [
+    { key: 'move', label: '이동 피로', hint: '편함' },
+    { key: 'drive', label: '운전 부담', hint: '적음' },
+    { key: 'crowd', label: '혼잡도', hint: '한산함' },
+    { key: 'food', label: '음식' },
+    { key: 'nature', label: '자연·풍경' },
+    { key: 'city', label: '도시·볼거리' },
+    { key: 'walk', label: '걷기 부담', hint: '낮음' },
+    { key: 'stay', label: '숙소' },
+    { key: 'weather', label: '날씨 쾌적도' },
+    { key: 'value', label: '가성비' },
+    { key: 'activity', label: '액티비티' }
+  ];
+  var AXIS_KEYS = AXES.map(function (a) { return a.key; });
+  var AXIS_LABEL = {}; AXES.forEach(function (a) { AXIS_LABEL[a.key] = a.label; });
+  var TYPES = ['domestic', 'spot', 'overseas'];
+  var CAUSES = ['place', 'schedule', 'condition'];
+  var ORIGIN_LABEL = { work: '직장(완정역)', home: '집(발산역)' };
+
+  var DEFAULT_SETTINGS = {
+    shift_start: { D: '07:00', E: '15:00', N: '23:00' },
+    shift_end: { D: '15:00', E: '23:00', N: '07:00' },
+    join_buffer_min: 60,
+    return_buffer_h: 6,
+    off_depart_time: '09:00',
+    default_return_time: '21:00',
+    late_arrival_hour: 23,
+    night_long_travel_warn_min: 180,
+    active_filter_h: 3,
+    active_penalty_h: 8,
+    active_penalty_max: 1.0,
+    pain_gain: 0.5,
+    like_gain: 0.3,
+    smoothing: 1,
+    m_max: 1.5,
+    like_default_severity: 1,
+    top_n: 5,
+    overseas_n: 2,
+    overseas_min_nights: 3,
+    long_off_nights: 7,
+    spot_max_nights: 1
+  };
+
+  function clone(o) { return JSON.parse(JSON.stringify(o)); }
+  function clamp(x, lo, hi) { return Math.max(lo, Math.min(hi, x)); }
+  function mergeSettings(s) {
+    var out = clone(DEFAULT_SETTINGS);
+    if (!s || typeof s !== 'object') return out;
+    Object.keys(s).forEach(function (k) {
+      if (!(k in out)) return;
+      if (k === 'shift_start' || k === 'shift_end') {
+        ['D', 'E', 'N'].forEach(function (x) { if (s[k] && typeof s[k][x] === 'string') out[k][x] = s[k][x]; });
+      } else if (typeof s[k] === typeof out[k]) out[k] = s[k];
+    });
+    return out;
+  }
+
+  // ---------- 날짜 ----------
+  function at(dateStr, timeStr, addDays) {
+    var d = dateStr.split('-').map(Number), t = (timeStr || '00:00').split(':').map(Number);
+    return new Date(d[0], d[1] - 1, d[2] + (addDays || 0), t[0], t[1] || 0);
+  }
+  function parseLocal(dt) { // 'YYYY-MM-DDTHH:MM'
+    if (!dt) return null;
+    var p = String(dt).split('T');
+    return p.length === 2 ? at(p[0], p[1]) : null;
+  }
+  function dayIndex(d) { return Math.round(new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime() / 86400000); }
+  function addMin(d, m) { return new Date(d.getTime() + m * 60000); }
+
+  // ---------- 5-1 출발지·출발시각 ----------
+  // person = { kind: 'N_prev'|'D'|'E'|'O'|'custom', time: 'YYYY-MM-DDTHH:MM' }
+  function shiftEnd(date, p, s) {
+    if (!p || p.kind === 'O') return null;
+    if (p.kind === 'N_prev') return at(date, s.shift_end.N);
+    if (p.kind === 'D') return at(date, s.shift_end.D);
+    if (p.kind === 'E') return at(date, s.shift_end.E);
+    if (p.kind === 'custom') return parseLocal(p.time);
+    return null;
+  }
+  function resolveDeparture(input, settings) {
+    var s = mergeSettings(settings);
+    var jwEnd = shiftEnd(input.date, input.jw, s), gfEnd = shiftEnd(input.date, input.gf, s);
+    var worked = input.jw && (input.jw.kind === 'N_prev' || input.jw.kind === 'D' || input.jw.kind === 'E');
+    var origin = worked ? 'work' : 'home';
+    var departure, later = null;
+    if (!jwEnd && !gfEnd) {
+      departure = at(input.date, s.off_depart_time);
+    } else {
+      var last;
+      if (jwEnd && (!gfEnd || jwEnd >= gfEnd)) { last = jwEnd; later = 'jw'; } else { last = gfEnd; later = 'gf'; }
+      departure = addMin(last, s.join_buffer_min);
+    }
+    return { origin: origin, departure: departure, later: later, jwEnd: jwEnd, gfEnd: gfEnd };
+  }
+
+  // ---------- 5-2 귀가 마감 ----------
+  // ret = { date, kind: 'D'|'E'|'N'|'O'|'custom', time }
+  function resolveDeadline(ret, settings) {
+    var s = mergeSettings(settings);
+    if (!ret || ret.kind === 'O') return null;
+    if (ret.kind === 'custom') return parseLocal(ret.time);
+    if (!ret.date || !s.shift_start[ret.kind]) return null;
+    return addMin(at(ret.date, s.shift_start[ret.kind]), -s.return_buffer_h * 60);
+  }
+  function autoNights(departure, deadline) {
+    if (!departure || !deadline) return null;
+    var n = dayIndex(deadline) - dayIndex(departure) - (deadline.getHours() < 12 ? 1 : 0);
+    return Math.max(0, n);
+  }
+  function returnBy(departure, deadline, nights, settings) {
+    if (deadline) return deadline;
+    var s = mergeSettings(settings);
+    var d = departure;
+    var ds = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+    return at(ds, s.default_return_time, nights || 0);
+  }
+
+  // ---------- 4 과거 기록 배수 ----------
+  function computeMultipliers(history, settings) {
+    var s = mergeSettings(settings);
+    var n = (history || []).length;
+    var sumPain = {}, sumLike = {}, cntPain = {}, cntLike = {};
+    AXIS_KEYS.forEach(function (k) { sumPain[k] = 0; sumLike[k] = 0; cntPain[k] = 0; cntLike[k] = 0; });
+    (history || []).forEach(function (trip) {
+      var p = {}, l = {};
+      (trip.pains || []).forEach(function (x) {
+        if (x.cause !== 'place' || !(x.axis in sumPain)) return;
+        var sev = clamp(Number(x.severity) || 1, 1, 3);
+        p[x.axis] = Math.max(p[x.axis] || 0, sev); // 한 여행에서 같은 축은 1회만
+      });
+      (trip.likes || []).forEach(function (x) {
+        if (!(x.axis in sumLike)) return;
+        var sev = x.severity == null || x.severity === '' ? s.like_default_severity : Number(x.severity);
+        l[x.axis] = Math.max(l[x.axis] || 0, clamp(sev, 1, 3));
+      });
+      Object.keys(p).forEach(function (k) { sumPain[k] += p[k] / 3; cntPain[k]++; });
+      Object.keys(l).forEach(function (k) { sumLike[k] += l[k] / 3; cntLike[k]++; });
+    });
+    var out = {};
+    AXIS_KEYS.forEach(function (k) {
+      var fp = sumPain[k] / (n + s.smoothing), fl = sumLike[k] / (n + s.smoothing);
+      var mp = 1 + s.pain_gain * fp, ml = 1 + s.like_gain * fl;
+      out[k] = { m: clamp(mp * ml, 1, s.m_max), m_pain: mp, m_like: ml, f_pain: fp, f_like: fl,
+        pain_count: cntPain[k], like_count: cntLike[k] };
+    });
+    return out;
+  }
+  function effectiveWeights(base, mult) {
+    var sumW = 0, sumWp = 0, wp = {};
+    AXIS_KEYS.forEach(function (k) {
+      var w = Math.max(0, Number(base[k]) || 0);
+      sumW += w; wp[k] = w * (mult && mult[k] ? mult[k].m : 1); sumWp += wp[k];
+    });
+    var out = {};
+    AXIS_KEYS.forEach(function (k) { out[k] = sumWp > 0 ? wp[k] * sumW / sumWp : 0; });
+    return out;
+  }
+  function adjustedScores(dest, month) {
+    var sc = {};
+    AXIS_KEYS.forEach(function (k) { sc[k] = Number(dest.scores && dest.scores[k]) || 0; });
+    var mo = dest.monthly && dest.monthly[String(month)];
+    if (mo) {
+      if (typeof mo.weather === 'number') sc.weather += mo.weather;
+      if (typeof mo.crowd === 'number') sc.crowd += mo.crowd;
+    }
+    AXIS_KEYS.forEach(function (k) { sc[k] = clamp(sc[k], 0, 10); });
+    return sc;
+  }
+  function scoreDestination(dest, weights, month) {
+    var sc = adjustedScores(dest, month), sumW = 0, tot = 0, contrib = {};
+    AXIS_KEYS.forEach(function (k) { sumW += weights[k]; });
+    AXIS_KEYS.forEach(function (k) {
+      contrib[k] = sumW > 0 ? weights[k] * sc[k] / sumW : 0; tot += contrib[k];
+    });
+    return { total: tot, contrib: contrib, scores: sc };
+  }
+
+  // ---------- 추천 ----------
+  // cond = { departure, origin, deadline, nights, month, budget, travel_cap, exclude_visited, base_weights, after_night }
+  function recommend(data, cond) {
+    var s = mergeSettings(data.settings);
+    var mult = computeMultipliers(data.history, s);
+    var w = effectiveWeights(cond.base_weights, mult);
+    var visited = {}; (data.history || []).forEach(function (h) { visited[h.destination_id] = true; });
+    var retAt = returnBy(cond.departure, cond.deadline, cond.nights, s);
+    var excluded = {}, dom = [], ovs = [];
+    var showOverseas = cond.nights >= s.overseas_min_nights;
+    function ex(r) { excluded[r] = (excluded[r] || 0) + 1; }
+    (data.destinations || []).forEach(function (d) {
+      if (d.type === 'overseas' && !showOverseas) return;
+      if (d.type === 'spot' && cond.nights > s.spot_max_nights) return;
+      if (cond.nights === 0 && !d.day_trip_ok) return ex('daytrip');
+      if (cond.nights < (d.min_nights || 0)) return ex('min_nights');
+      if ((d.cost_level || 1) > cond.budget) return ex('budget');
+      var go = d.travel_time[cond.origin], back = d.travel_time.home;
+      if (d.type !== 'overseas' && go > cond.travel_cap) return ex('travel_cap');
+      if (cond.exclude_visited && visited[d.id]) return ex('visited');
+      var activeH = (retAt - cond.departure) / 3600000 - (go + back) / 60;
+      if (activeH < s.active_filter_h) return ex('active');
+      var r = scoreDestination(d, w, cond.month);
+      var pen = 0;
+      if (activeH < s.active_penalty_h && s.active_penalty_h > s.active_filter_h) {
+        pen = s.active_penalty_max * (s.active_penalty_h - activeH) / (s.active_penalty_h - s.active_filter_h);
+      }
+      var arrival = addMin(cond.departure, go), warnings = [];
+      var ah = arrival.getHours();
+      if (ah >= s.late_arrival_hour || ah < 5) warnings.push('늦은 도착 ' + pad(ah) + ':' + pad(arrival.getMinutes()));
+      if (cond.after_night && go >= s.night_long_travel_warn_min) warnings.push('나이트 직후 장거리 이동');
+      if (pen > 0) warnings.push('활동시간 짧음 −' + pen.toFixed(1));
+      if (d.type === 'overseas') warnings.push('항공편 시간 확인 필요');
+      var item = { dest: d, total: r.total, final: r.total - pen, penalty: pen, contrib: r.contrib, scores: r.scores,
+        go: go, back: back, arrival: arrival, leaveBy: cond.deadline ? addMin(cond.deadline, -back) : null,
+        activeH: activeH, warnings: warnings, visited: !!visited[d.id] };
+      item.reason = reasonLine(item, mult);
+      (d.type === 'overseas' ? ovs : dom).push(item);
+    });
+    dom.sort(function (a, b) { return b.final - a.final; });
+    var longFirst = cond.nights >= s.long_off_nights;
+    ovs.sort(function (a, b) {
+      if (longFirst && a.dest.long_off_tag !== b.dest.long_off_tag) return a.dest.long_off_tag ? -1 : 1;
+      return b.final - a.final;
+    });
+    return { domestic: dom.slice(0, s.top_n), domesticCount: dom.length, overseas: ovs.slice(0, s.overseas_n),
+      overseasShown: showOverseas, longFirst: longFirst, excluded: excluded, weights: w, mult: mult, returnAt: retAt };
+  }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function reasonLine(item, mult) {
+    var top = AXIS_KEYS.slice().sort(function (a, b) { return item.contrib[b] - item.contrib[a]; }).slice(0, 2);
+    var txt = top.map(function (k) { return AXIS_LABEL[k] + ' ' + item.scores[k].toFixed(1); }).join(' · ') + ' 이 가장 크게 기여';
+    var boosted = top.filter(function (k) { return mult[k] && mult[k].m > 1.0001; });
+    if (boosted.length) txt += ' (' + boosted.map(function (k) { return AXIS_LABEL[k] + ' 과거 기록 ×' + mult[k].m.toFixed(2); }).join(', ') + ')';
+    return txt;
+  }
+
+  // ---------- import 검증 · diff ----------
+  function isNum(x) { return typeof x === 'number' && isFinite(x); }
+  function validateData(obj, current) {
+    var errors = [], warnings = [], layers = {};
+    if (!obj || typeof obj !== 'object' || Array.isArray(obj)) return { ok: false, errors: ['최상위가 JSON 객체가 아닙니다'], warnings: warnings, layers: layers };
+    if (!isNum(obj.schema_version)) errors.push('schema_version 이 없습니다');
+    else if (obj.schema_version > SCHEMA_VERSION) errors.push('schema_version ' + obj.schema_version + ' 은 이 툴(' + SCHEMA_VERSION + ')보다 새 버전입니다');
+    if (!obj.exported_at) warnings.push('exported_at 이 없습니다');
+    var has = ['destinations', 'history', 'settings'].filter(function (k) { return k in obj; });
+    if (!has.length) errors.push('destinations / history / settings 중 하나 이상이 필요합니다');
+
+    if ('destinations' in obj) {
+      if (!Array.isArray(obj.destinations)) errors.push('destinations 가 배열이 아닙니다');
+      else {
+        var seen = {};
+        obj.destinations.forEach(function (d, i) {
+          var tag = 'destinations[' + i + ']' + (d && d.id ? '(' + d.id + ')' : '');
+          if (!d || typeof d !== 'object') return errors.push(tag + ': 객체 아님');
+          if (!d.id || typeof d.id !== 'string') errors.push(tag + ': id 없음');
+          else if (seen[d.id]) errors.push(tag + ': id 중복'); else seen[d.id] = true;
+          if (!d.name) errors.push(tag + ': name 없음');
+          if (TYPES.indexOf(d.type) < 0) errors.push(tag + ': type 은 domestic|spot|overseas');
+          if (!d.scores || typeof d.scores !== 'object') errors.push(tag + ': scores 없음');
+          else AXIS_KEYS.forEach(function (k) {
+            if (!isNum(d.scores[k]) || d.scores[k] < 0 || d.scores[k] > 10) errors.push(tag + ': scores.' + k + ' 은 0~10 숫자');
+          });
+          if (!d.travel_time || !isNum(d.travel_time.work) || !isNum(d.travel_time.home)) errors.push(tag + ': travel_time.work/home 숫자 필요');
+          if (!isNum(d.min_nights) || d.min_nights < 0) errors.push(tag + ': min_nights 0 이상 숫자');
+          if ([1, 2, 3].indexOf(d.cost_level) < 0) errors.push(tag + ': cost_level 은 1~3');
+          if (typeof d.day_trip_ok !== 'boolean') warnings.push(tag + ': day_trip_ok 없음(false 취급)');
+          if (!d.monthly) warnings.push(tag + ': monthly 없음(월 보정 0)');
+          else for (var m = 1; m <= 12; m++) {
+            var mo = d.monthly[String(m)];
+            if (!mo) { warnings.push(tag + ': monthly.' + m + ' 없음'); continue; }
+            if ((mo.weather != null && !isNum(mo.weather)) || (mo.crowd != null && !isNum(mo.crowd))) errors.push(tag + ': monthly.' + m + ' 값이 숫자 아님');
+          }
+        });
+        layers.destinations = obj.destinations;
+      }
+    }
+    if ('history' in obj) {
+      if (!Array.isArray(obj.history)) errors.push('history 가 배열이 아닙니다');
+      else {
+        var destIds = {};
+        ((layers.destinations || (current && current.destinations)) || []).forEach(function (d) { destIds[d.id] = true; });
+        var hs = {};
+        obj.history.forEach(function (h, i) {
+          var tag = 'history[' + i + ']';
+          if (!h || typeof h !== 'object') return errors.push(tag + ': 객체 아님');
+          if (!h.id) errors.push(tag + ': id 없음'); else if (hs[h.id]) errors.push(tag + ': id 중복'); else hs[h.id] = true;
+          if (!h.destination_id) errors.push(tag + ': destination_id 없음');
+          else if (!destIds[h.destination_id]) warnings.push(tag + ': 여행지 "' + h.destination_id + '" 가 목록에 없음');
+          if (!h.date || !/^\d{4}-\d{2}-\d{2}$/.test(h.date)) errors.push(tag + ': date 는 YYYY-MM-DD');
+          if (!isNum(h.nights) || h.nights < 0) errors.push(tag + ': nights 0 이상 숫자');
+          if (!isNum(h.overall) || h.overall < 1 || h.overall > 5) errors.push(tag + ': overall 1~5');
+          (h.likes || []).forEach(function (l, j) {
+            if (AXIS_KEYS.indexOf(l.axis) < 0) errors.push(tag + '.likes[' + j + ']: 축 이름 오류 "' + l.axis + '"');
+            if (l.severity != null && [1, 2, 3].indexOf(l.severity) < 0) errors.push(tag + '.likes[' + j + ']: severity 1~3');
+          });
+          (h.pains || []).forEach(function (p, j) {
+            if (AXIS_KEYS.indexOf(p.axis) < 0) errors.push(tag + '.pains[' + j + ']: 축 이름 오류 "' + p.axis + '"');
+            if ([1, 2, 3].indexOf(p.severity) < 0) errors.push(tag + '.pains[' + j + ']: severity 1~3 필수');
+            if (CAUSES.indexOf(p.cause) < 0) errors.push(tag + '.pains[' + j + ']: cause 는 place|schedule|condition');
+          });
+        });
+        layers.history = obj.history;
+      }
+    }
+    if ('settings' in obj) {
+      if (!obj.settings || typeof obj.settings !== 'object') errors.push('settings 가 객체가 아닙니다');
+      else {
+        Object.keys(obj.settings).forEach(function (k) {
+          if (!(k in DEFAULT_SETTINGS)) warnings.push('settings.' + k + ': 알 수 없는 항목(무시)');
+          else if (typeof obj.settings[k] !== typeof DEFAULT_SETTINGS[k]) errors.push('settings.' + k + ': 타입 불일치');
+        });
+        layers.settings = obj.settings;
+      }
+    }
+    return { ok: errors.length === 0, errors: errors, warnings: warnings, layers: layers };
+  }
+  function diffList(cur, inc, labelOf) {
+    var a = {}, b = {}, out = { added: [], removed: [], changed: [] };
+    (cur || []).forEach(function (x) { a[x.id] = x; });
+    (inc || []).forEach(function (x) { b[x.id] = x; });
+    Object.keys(b).forEach(function (id) {
+      if (!a[id]) return out.added.push(labelOf(b[id]));
+      var fields = [];
+      Object.keys(Object.assign({}, a[id], b[id])).forEach(function (f) {
+        if (JSON.stringify(a[id][f]) !== JSON.stringify(b[id][f])) fields.push(f);
+      });
+      if (fields.length) out.changed.push({ label: labelOf(b[id]), fields: fields, before: a[id], after: b[id] });
+    });
+    Object.keys(a).forEach(function (id) { if (!b[id]) out.removed.push(labelOf(a[id])); });
+    return out;
+  }
+  function diffData(current, layers) {
+    var r = {};
+    if (layers.destinations) r.destinations = diffList(current.destinations, layers.destinations, function (d) { return d.name + ' (' + d.id + ')'; });
+    if (layers.history) r.history = diffList(current.history, layers.history, function (h) { return h.date + ' ' + h.destination_id; });
+    if (layers.settings) {
+      var a = mergeSettings(current.settings), b = mergeSettings(layers.settings), ch = [];
+      Object.keys(DEFAULT_SETTINGS).forEach(function (k) {
+        if (JSON.stringify(a[k]) !== JSON.stringify(b[k])) ch.push(k + ': ' + JSON.stringify(a[k]) + ' → ' + JSON.stringify(b[k]));
+      });
+      r.settings = ch;
+    }
+    return r;
+  }
+
+  // ---------- 자체 테스트 (사양서 9절) ----------
+  function selfTest() {
+    var res = [];
+    function t(name, cond, detail) { res.push({ name: name, pass: !!cond, detail: detail || '' }); }
+    function near(a, b) { return Math.abs(a - b) < 1e-9; }
+    function trips(n, painTrips) {
+      var h = [];
+      for (var i = 0; i < n; i++) h.push({ id: 't' + i, destination_id: 'x', date: '2026-01-01', nights: 1, overall: 3, likes: [],
+        pains: i < painTrips ? [{ axis: 'crowd', severity: 3, cause: 'place' }] : [] });
+      return h;
+    }
+    var m;
+    m = computeMultipliers(trips(1, 1)).crowd.m; t('불편 1/1회 → 1.25', near(m, 1.25), m);
+    m = computeMultipliers(trips(3, 1)).crowd.m; t('불편 1/3회 → 1.125', near(m, 1.125), m);
+    m = computeMultipliers(trips(3, 3)).crowd.m; t('불편 3/3회 → 1.375', near(m, 1.375), m);
+    var dup = [{ id: 'a', pains: [{ axis: 'crowd', severity: 3, cause: 'place' }, { axis: 'crowd', severity: 3, cause: 'place' }] }];
+    m = computeMultipliers(dup).crowd.m; t('한 여행 같은 축 중복은 1회만', near(m, 1.25), m);
+    var sch = [{ id: 'a', pains: [{ axis: 'crowd', severity: 3, cause: 'schedule' }] }];
+    m = computeMultipliers(sch).crowd.m; t('cause=schedule 은 미반영', near(m, 1), m);
+    var big = trips(50, 50); big.forEach(function (h) { h.likes = [{ axis: 'crowd', severity: 3 }]; });
+    m = computeMultipliers(big).crowd.m; t('m 상한 clamp 1.5', near(m, 1.5), m);
+    var base = {}; AXIS_KEYS.forEach(function (k) { base[k] = 5; });
+    var ew = effectiveWeights(base, computeMultipliers(trips(1, 1))), sum = 0;
+    AXIS_KEYS.forEach(function (k) { sum += ew[k]; });
+    t('정규화 후 Σw\' = Σw', near(sum, 55), sum.toFixed(6));
+    var d1 = resolveDeparture({ date: '2026-11-22', jw: { kind: 'N_prev' }, gf: { kind: 'O' } });
+    t('예) 정우 21일 N + 여친 22일 O → 직장 출발', d1.origin === 'work', d1.origin + ' ' + d1.departure.toString().slice(0, 21));
+    var d2 = resolveDeparture({ date: '2026-11-21', jw: { kind: 'O' }, gf: { kind: 'D' } });
+    t('예) 정우 21일 O + 여친 21일 D → 집 출발', d2.origin === 'home', d2.origin + ' ' + d2.departure.toString().slice(0, 21));
+    var d3 = resolveDeparture({ date: '2026-11-21', jw: { kind: 'custom', time: '2026-11-21T10:00' }, gf: { kind: 'O' } });
+    t('시간 지정 → 집 출발', d3.origin === 'home');
+    var dl = resolveDeadline({ date: '2026-11-24', kind: 'D' });
+    t('복귀 첫 근무 D → 마감 = 07:00 − 6h', dl.getDate() === 24 && dl.getHours() === 1, dl.toString().slice(0, 21));
+    t('자동 박수(22일 08시 출발, 24일 D) = 1박', autoNights(at('2026-11-22', '08:00'), dl) === 1);
+    return res;
+  }
+
+  var api = { SCHEMA_VERSION: SCHEMA_VERSION, AXES: AXES, AXIS_KEYS: AXIS_KEYS, AXIS_LABEL: AXIS_LABEL, ORIGIN_LABEL: ORIGIN_LABEL,
+    DEFAULT_SETTINGS: DEFAULT_SETTINGS, mergeSettings: mergeSettings, at: at, parseLocal: parseLocal, addMin: addMin,
+    resolveDeparture: resolveDeparture, resolveDeadline: resolveDeadline, autoNights: autoNights, returnBy: returnBy,
+    computeMultipliers: computeMultipliers, effectiveWeights: effectiveWeights, adjustedScores: adjustedScores,
+    scoreDestination: scoreDestination, recommend: recommend, validateData: validateData, diffData: diffData, selfTest: selfTest };
+  root.TravelCore = api;
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+
+<!-- ============ UI ============ -->
+<script>
+(function () {
+  'use strict';
+  var C = window.TravelCore;
+  var KEY = 'travel.data.v1', BKEY = 'travel.backup.v1', UIKEY = 'travel.ui.v1', THEMEKEY = 'travel.theme';
+  var $ = function (id) { return document.getElementById(id); };
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, v); return true; } catch (e) { return false; } }
+  function lsDel(k) { try { localStorage.removeItem(k); } catch (e) {} }
+
+  var SEED = JSON.parse($('seed-data').textContent || '{}');
+  function seedDestinations() { return JSON.parse(JSON.stringify(SEED.destinations || [])); }
+
+  // ---------- 상태 ----------
+  var data = (function () {
+    try { var d = JSON.parse(lsGet(KEY)); if (d && Array.isArray(d.destinations)) return d; } catch (e) {}
+    return { schema_version: C.SCHEMA_VERSION, destinations: seedDestinations(), history: [], settings: {} };
+  })();
+  data.history = data.history || [];
+  data.settings = C.mergeSettings(data.settings);
+  function save() { if (!lsSet(KEY, JSON.stringify(data))) toastStorage(); }
+  var storageWarned = false;
+  function toastStorage() { if (storageWarned) return; storageWarned = true; alert('브라우저 저장소에 저장하지 못했습니다. 내보내기로 백업하세요.'); }
+
+  var WD = ['일', '월', '화', '수', '목', '금', '토'];
+  function ymd(d) { return d.getFullYear() + '-' + p2(d.getMonth() + 1) + '-' + p2(d.getDate()); }
+  function p2(n) { return (n < 10 ? '0' : '') + n; }
+  function fmtDT(d) { return (d.getMonth() + 1) + '/' + d.getDate() + '(' + WD[d.getDay()] + ') ' + p2(d.getHours()) + ':' + p2(d.getMinutes()); }
+  function fmtDur(min) { min = Math.round(min); var h = Math.floor(min / 60), m = min % 60; return (h ? h + '시간' : '') + (h && m ? ' ' : '') + (m || !h ? m + '분' : ''); }
+
+  var today = new Date();
+  var ui = (function () {
+    var def = { date: ymd(today), jw: 'O', jwT: '', gf: 'O', gfT: '', rdate: ymd(C.addMin(today, 2 * 1440)), rkind: 'D', rt: '',
+      nights: '', month: '', budget: 2, cap: 240, visited: false, weights: {}, preset: 'balance', tab: 'rec' };
+    C.AXIS_KEYS.forEach(function (k) { def.weights[k] = 5; });
+    try { var u = JSON.parse(lsGet(UIKEY)); if (u) { Object.keys(u).forEach(function (k) { def[k] = u[k]; }); } } catch (e) {}
+    return def;
+  })();
+  function saveUi() { lsSet(UIKEY, JSON.stringify(ui)); }
+
+  // ---------- 탭 ----------
+  function setTab(t) {
+    ui.tab = t; saveUi();
+    document.querySelectorAll('#nav button').forEach(function (b) { b.classList.toggle('on', b.dataset.tab === t); });
+    document.querySelectorAll('section.tab').forEach(function (s) { s.classList.toggle('on', s.id === 'tab-' + t); });
+    if (t === 'hist') renderHistory();
+    if (t === 'data') renderData();
+    if (t === 'set') renderSettings();
+    window.scrollTo(0, 0);
+  }
+  $('nav').addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) setTab(b.dataset.tab); });
+
+  // ---------- 테마 ----------
+  function applyTheme(v) {
+    if (v === 'light' || v === 'dark') document.documentElement.setAttribute('data-theme', v);
+    else document.documentElement.removeAttribute('data-theme');
+    document.querySelectorAll('#s-theme button').forEach(function (b) { b.classList.toggle('on', b.dataset.v === (v || 'auto')); });
+  }
+  applyTheme(lsGet(THEMEKEY) || 'auto');
+  $('s-theme').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; lsSet(THEMEKEY, b.dataset.v); applyTheme(b.dataset.v); });
+
+  // ---------- 추천 입력 ----------
+  var SHIFT_OPTS = [['N_prev', '전날 N 끝나고'], ['D', '당일 D 끝나고'], ['E', '당일 E 끝나고'], ['O', 'O (휴무)'], ['custom', '시간 지정']];
+  ['c-jw', 'c-gf'].forEach(function (id) {
+    $(id).innerHTML = SHIFT_OPTS.map(function (o) { return '<option value="' + o[0] + '">' + o[1] + '</option>'; }).join('');
+  });
+  $('c-month').innerHTML = '<option value="">자동 (출발일)</option>' + [1,2,3,4,5,6,7,8,9,10,11,12].map(function (m) { return '<option value="' + m + '">' + m + '월</option>'; }).join('');
+
+  var PRESETS = {
+    balance: ['균형', {}],
+    heal: ['힐링', { nature: 8, crowd: 8, stay: 8, walk: 7, move: 7, activity: 2, city: 3 }],
+    food: ['먹방', { food: 10, city: 6, value: 6, nature: 3, activity: 2 }],
+    act: ['액티비티', { activity: 10, nature: 7, weather: 7, walk: 2, stay: 3 }],
+    city: ['도시', { city: 9, food: 8, drive: 8, nature: 3, activity: 3 }],
+    cheap: ['가성비', { value: 10, move: 7, stay: 3 }],
+    rest: ['나이트 후 쉬기', { move: 10, walk: 9, stay: 9, crowd: 7, activity: 1, city: 3 }]
+  };
+  $('presets').innerHTML = Object.keys(PRESETS).map(function (k) { return '<button class="btn sm" data-p="' + k + '">' + PRESETS[k][0] + '</button>'; }).join('');
+  $('presets').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    var ov = PRESETS[b.dataset.p][1];
+    C.AXIS_KEYS.forEach(function (k) { ui.weights[k] = k in ov ? ov[k] : 5; });
+    ui.preset = b.dataset.p; renderSliders(); update();
+  });
+
+  function renderSliders() {
+    var mult = C.computeMultipliers(data.history, data.settings);
+    $('sliders').innerHTML = C.AXES.map(function (a) {
+      var m = mult[a.key].m;
+      return '<div class="slider"><span>' + a.label + (a.hint ? ' <span class="muted small">(' + a.hint + ')</span>' : '') +
+        (m > 1.0001 ? ' <span class="mult">×' + m.toFixed(2) + '</span>' : '') + '</span>' +
+        '<input type="range" min="0" max="10" step="1" data-ax="' + a.key + '" value="' + ui.weights[a.key] + '">' +
+        '<span id="sv-' + a.key + '">' + ui.weights[a.key] + '</span></div>';
+    }).join('');
+  }
+  $('sliders').addEventListener('input', function (e) {
+    var k = e.target.dataset.ax; if (!k) return;
+    ui.weights[k] = Number(e.target.value); $('sv-' + k).textContent = e.target.value; update();
+  });
+
+  function bindInputs() {
+    $('c-date').value = ui.date; $('c-jw').value = ui.jw; $('c-gf').value = ui.gf; $('c-jw-t').value = ui.jwT; $('c-gf-t').value = ui.gfT;
+    $('c-rdate').value = ui.rdate; $('c-rkind').value = ui.rkind; $('c-rt').value = ui.rt;
+    $('c-nights').value = ui.nights; $('c-month').value = ui.month; $('c-cap').value = ui.cap; $('c-visited').checked = !!ui.visited;
+    setSeg('c-budget', ui.budget);
+  }
+  function setSeg(id, v) { document.querySelectorAll('#' + id + ' button').forEach(function (b) { b.classList.toggle('on', Number(b.dataset.v) === Number(v)); }); }
+  $('c-budget').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; ui.budget = Number(b.dataset.v); setSeg('c-budget', ui.budget); update(); });
+  [['c-date', 'date'], ['c-jw', 'jw'], ['c-gf', 'gf'], ['c-jw-t', 'jwT'], ['c-gf-t', 'gfT'], ['c-rdate', 'rdate'], ['c-rkind', 'rkind'],
+   ['c-rt', 'rt'], ['c-nights', 'nights'], ['c-month', 'month'], ['c-cap', 'cap']].forEach(function (p) {
+    $(p[0]).addEventListener('input', function () { ui[p[1]] = p[1] === 'cap' ? Number(this.value) : this.value; update(); });
+  });
+  $('c-visited').addEventListener('change', function () { ui.visited = this.checked; update(); });
+
+  var EX_LABEL = { daytrip: '당일치기 불가', min_nights: '최소 박수 미달', budget: '예산 초과', travel_cap: '이동시간 초과', visited: '가본 곳', active: '활동시간 부족' };
+
+  function update() {
+    saveUi();
+    var s = data.settings;
+    $('c-jw-t').style.display = ui.jw === 'custom' ? '' : 'none';
+    $('c-gf-t').style.display = ui.gf === 'custom' ? '' : 'none';
+    $('c-rt').style.display = ui.rkind === 'custom' ? '' : 'none';
+    $('c-rdate').disabled = ui.rkind === 'custom' || ui.rkind === 'O';
+    $('c-cap-v').textContent = fmtDur(ui.cap);
+    var out = $('results');
+    if (!ui.date) { out.innerHTML = '<div class="err">출발일을 입력하세요.</div>'; return; }
+    var dep = C.resolveDeparture({ date: ui.date, jw: { kind: ui.jw, time: ui.jwT }, gf: { kind: ui.gf, time: ui.gfT } }, s);
+    var missingT = (ui.jw === 'custom' && !ui.jwT) || (ui.gf === 'custom' && !ui.gfT);
+    var who = dep.later === 'jw' ? '정우' : dep.later === 'gf' ? '여자친구' : null;
+    $('c-dep-info').innerHTML = '출발지 <b>' + C.ORIGIN_LABEL[dep.origin] + '</b> · 출발 <b>' + fmtDT(dep.departure) + '</b>' +
+      '<div class="small muted">' + (who ? who + ' 종료 ' + fmtDT(dep.later === 'jw' ? dep.jwEnd : dep.gfEnd) + ' + 합류 버퍼 ' + s.join_buffer_min + '분'
+        : '둘 다 휴무 → 기본 출발 ' + s.off_depart_time) + (dep.origin === 'work' ? ' · 여자친구가 완정역으로 합류' : '') + '</div>' +
+      (missingT ? '<div class="warn">시간 지정 값을 입력하세요 (미입력은 휴무로 계산)</div>' : '');
+
+    var deadline = C.resolveDeadline({ date: ui.rdate, kind: ui.rkind, time: ui.rt }, s);
+    var auto = C.autoNights(dep.departure, deadline);
+    var nights = ui.nights !== '' && !isNaN(Number(ui.nights)) ? Math.max(0, Math.floor(Number(ui.nights))) : (auto == null ? 1 : auto);
+    $('c-nights-auto').textContent = auto == null ? '(마감 없음 · 기본 1박)' : '(자동 ' + auto + '박)';
+    $('c-nights').placeholder = '자동 ' + (auto == null ? 1 : auto) + '박';
+    if (deadline) {
+      var span = (deadline - dep.departure) / 3600000;
+      $('c-ret-info').innerHTML = '귀가 마감 <b>' + fmtDT(deadline) + '</b> (발산역 도착 기준)' +
+        '<div class="small muted">' + (ui.rkind === 'custom' ? '직접 입력' : ui.rkind + ' 시작 ' + s.shift_start[ui.rkind] + ' − 복귀 버퍼 ' + s.return_buffer_h + '시간') +
+        ' · 출발~마감 ' + fmtDur(span * 60) + '</div>';
+      if (span <= 0) { out.innerHTML = '<div class="err">귀가 마감이 출발시각보다 빠릅니다. 근무 입력을 확인하세요.</div>'; return; }
+    } else {
+      var ra = C.returnBy(dep.departure, null, nights, s);
+      $('c-ret-info').innerHTML = '마감 없음 · 계산용 귀가 <b>' + fmtDT(ra) + '</b> <span class="small muted">(' + nights + '박, 설정 귀가 시각 ' + s.default_return_time + ')</span>';
+    }
+    var month = ui.month ? Number(ui.month) : dep.departure.getMonth() + 1;
+    var r = C.recommend(data, { departure: dep.departure, origin: dep.origin, deadline: deadline, nights: nights, month: month,
+      budget: ui.budget, travel_cap: ui.cap, exclude_visited: ui.visited, base_weights: ui.weights, after_night: ui.jw === 'N_prev' });
+    renderResults(r, { nights: nights, month: month, origin: dep.origin });
+  }
+
+  function card(item, i, r, origin) {
+    var d = item.dest;
+    var order = C.AXIS_KEYS.slice().sort(function (a, b) { return item.contrib[b] - item.contrib[a]; });
+    var maxC = Math.max.apply(null, order.map(function (k) { return item.contrib[k]; })) || 1;
+    var bars = function (keys) {
+      return keys.map(function (k, j) {
+        var m = r.mult[k].m;
+        return '<div class="bar' + (j < 2 && keys === order ? ' hl' : '') + '"><span>' + C.AXIS_LABEL[k] + (m > 1.0001 ? ' <span class="mult">×' + m.toFixed(2) + '</span>' : '') +
+          '</span><div class="tr"><div class="fl" style="width:' + (item.contrib[k] / maxC * 100).toFixed(1) + '%"></div></div><span>' + item.contrib[k].toFixed(2) + '</span></div>';
+      }).join('');
+    };
+    var typeTag = d.type === 'spot' ? '<span class="tag">거점</span>' : d.long_off_tag ? '<span class="tag">장기오프</span>' : '';
+    var meta = C.ORIGIN_LABEL[origin].replace(/\(.+\)/, '') + '→ 편도 ' + fmtDur(item.go) + ' · 도착 ' + fmtDT(item.arrival).replace(/^.*\) /, '') +
+      ' · 활동 ' + fmtDur(item.activeH * 60) + ' · ' + ['', '저', '중', '고'][d.cost_level];
+    var detail = '<table><tr><th>축</th><th class="num">점수(월 보정)</th><th class="num">w\'</th><th class="num">기여</th></tr>' +
+      C.AXIS_KEYS.map(function (k) { return '<tr><td>' + C.AXIS_LABEL[k] + '</td><td class="num">' + item.scores[k].toFixed(1) + '</td><td class="num">' +
+        r.weights[k].toFixed(2) + '</td><td class="num">' + item.contrib[k].toFixed(2) + '</td></tr>'; }).join('') + '</table>' +
+      (item.leaveBy ? '<div class="small" style="margin-top:6px">현지 출발 마감 ' + fmtDT(item.leaveBy) + ' (귀가 ' + fmtDur(item.back) + ')</div>' : '') +
+      (d.notes ? '<div class="small muted" style="margin-top:4px">' + esc(d.notes) + ' · 기준 ' + esc(d.source_date || '') + '</div>' : '');
+    return '<div class="card res"><div class="top"><span class="rank">' + (i + 1) + '</span><span class="name">' + esc(d.name) +
+      ' <span class="muted small">' + esc(d.region) + '</span></span><span class="score">' + item.final.toFixed(2) + '</span></div>' +
+      '<div class="meta">' + meta + (item.visited ? ' · 가본 곳' : '') + '</div>' +
+      '<div class="tags">' + typeTag + (d.tags || []).map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join('') + '</div>' +
+      (item.warnings.length ? '<div>' + item.warnings.map(function (w) { return '<span class="warn">' + esc(w) + '</span>'; }).join('') + '</div>' : '') +
+      '<div class="why">' + esc(item.reason) + '</div>' +
+      '<div class="bars">' + bars(order.slice(0, 4)) + '</div>' +
+      '<details><summary>축별 상세</summary><div class="bars">' + bars(order) + '</div>' + detail + '</details></div>';
+  }
+
+  function renderResults(r, c) {
+    var exTxt = Object.keys(r.excluded).map(function (k) { return EX_LABEL[k] + ' ' + r.excluded[k]; }).join(' · ');
+    var h = '<div class="divider">국내 추천 · ' + c.nights + '박 · ' + c.month + '월</div>';
+    h += '<div class="small muted" style="margin:-4px 0 8px">후보 ' + r.domesticCount + '곳' + (exTxt ? ' · 제외: ' + exTxt : '') +
+      (c.nights > data.settings.spot_max_nights ? ' · 거점(테마파크 등)은 ' + data.settings.spot_max_nights + '박 이하일 때만' : '') + '</div>';
+    if (!r.domestic.length) h += '<div class="card muted">조건에 맞는 국내 후보가 없습니다. 이동 상한·예산·박수를 조정해 보세요.</div>';
+    h += r.domestic.map(function (it, i) { return card(it, i, r, c.origin); }).join('');
+    if (r.overseasShown) {
+      h += '<div class="divider">해외 슬롯' + (r.longFirst ? ' · 장기오프 우선' : '') + '</div>';
+      h += r.overseas.length ? r.overseas.map(function (it, i) { return card(it, i, r, c.origin); }).join('')
+        : '<div class="card muted">조건(예산·박수·활동시간)에 맞는 해외 후보가 없습니다.</div>';
+    } else {
+      h += '<div class="small muted" style="text-align:center;margin-top:10px">해외 슬롯은 ' + data.settings.overseas_min_nights + '박 이상일 때 표시됩니다.</div>';
+    }
+    $('results').innerHTML = h;
+  }
+
+  // ---------- 기록 ----------
+  var editingId = null;
+  var LIKE_OPTS = [['', '–'], ['x', '✓'], ['1', '1'], ['2', '2'], ['3', '3']];
+  var PAIN_OPTS = [['', '–'], ['1', '1'], ['2', '2'], ['3', '3']];
+  var CAUSE_OPTS = [['place', '장소'], ['schedule', '일정'], ['condition', '컨디션']];
+  var CAUSE_LABEL = { place: '장소', schedule: '일정', condition: '컨디션' };
+  function opts(list, v) { return list.map(function (o) { return '<option value="' + o[0] + '"' + (o[0] === v ? ' selected' : '') + '>' + o[1] + '</option>'; }).join(''); }
+  function destName(id) { var d = data.destinations.filter(function (x) { return x.id === id; })[0]; return d ? d.name : id + ' (목록에 없음)'; }
+
+  function renderHistForm(trip) {
+    var groups = { domestic: '국내', spot: '거점', overseas: '해외' };
+    $('h-dest').innerHTML = Object.keys(groups).map(function (g) {
+      return '<optgroup label="' + groups[g] + '">' + data.destinations.filter(function (d) { return d.type === g; })
+        .map(function (d) { return '<option value="' + esc(d.id) + '">' + esc(d.name) + '</option>'; }).join('') + '</optgroup>';
+    }).join('');
+    var likes = {}, pains = {};
+    (trip && trip.likes || []).forEach(function (l) { likes[l.axis] = l.severity == null ? 'x' : String(l.severity); });
+    (trip && trip.pains || []).forEach(function (p) { pains[p.axis] = p; });
+    $('h-axes').innerHTML = '<span class="h">축</span><span class="h">좋았음</span><span class="h">불편</span><span class="h">원인</span>' +
+      C.AXES.map(function (a) {
+        var p = pains[a.key];
+        return '<span>' + a.label + '</span><select data-like="' + a.key + '">' + opts(LIKE_OPTS, likes[a.key] || '') + '</select>' +
+          '<select data-pain="' + a.key + '">' + opts(PAIN_OPTS, p ? String(p.severity) : '') + '</select>' +
+          '<select data-cause="' + a.key + '">' + opts(CAUSE_OPTS, p ? p.cause : 'place') + '</select>';
+      }).join('');
+    if (trip) {
+      $('h-dest').value = trip.destination_id; $('h-date').value = trip.date; $('h-nights').value = trip.nights;
+      $('h-overall').value = String(trip.overall); $('h-note').value = trip.note || '';
+    } else {
+      $('h-date').value = ymd(today); $('h-nights').value = 1; $('h-overall').value = '3'; $('h-note').value = '';
+    }
+    $('h-form-title').textContent = trip ? '여행 기록 편집' : '여행 기록 추가';
+    $('h-cancel').style.display = trip ? '' : 'none';
+  }
+  $('h-save').addEventListener('click', function () {
+    var trip = { id: editingId || ('h' + Date.now().toString(36)), destination_id: $('h-dest').value, date: $('h-date').value,
+      nights: Math.max(0, Number($('h-nights').value) || 0), overall: Number($('h-overall').value), likes: [], pains: [], note: $('h-note').value.trim() };
+    if (!trip.destination_id || !trip.date) { $('h-msg').innerHTML = '<div class="err">여행지와 날짜를 입력하세요.</div>'; return; }
+    C.AXIS_KEYS.forEach(function (k) {
+      var l = document.querySelector('[data-like="' + k + '"]').value, p = document.querySelector('[data-pain="' + k + '"]').value;
+      if (l) trip.likes.push(l === 'x' ? { axis: k } : { axis: k, severity: Number(l) });
+      if (p) trip.pains.push({ axis: k, severity: Number(p), cause: document.querySelector('[data-cause="' + k + '"]').value });
+    });
+    if (editingId) data.history = data.history.map(function (h) { return h.id === editingId ? trip : h; });
+    else data.history.push(trip);
+    editingId = null; save();
+    $('h-msg').innerHTML = '<div class="info">저장했습니다.</div>';
+    renderHistory(); renderSliders(); update();
+  });
+  $('h-cancel').addEventListener('click', function () { editingId = null; renderHistForm(null); $('h-msg').innerHTML = ''; });
+  $('h-list').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    var id = b.dataset.id;
+    if (b.dataset.act === 'edit') {
+      editingId = id; renderHistForm(data.history.filter(function (h) { return h.id === id; })[0]);
+      $('h-msg').innerHTML = ''; $('h-form-title').scrollIntoView({ behavior: 'smooth' });
+    } else if (b.dataset.act === 'del' && confirm('이 기록을 삭제할까요?')) {
+      data.history = data.history.filter(function (h) { return h.id !== id; }); save(); renderHistory(); renderSliders(); update();
+    }
+  });
+
+  function renderHistory() {
+    var mult = C.computeMultipliers(data.history, data.settings);
+    $('mult-table').innerHTML = '<div class="small muted" style="margin-bottom:6px">여행 ' + data.history.length + '회 기준. m = clamp(m_pain × m_like, 1.0, ' + data.settings.m_max + ')</div>' +
+      '<table><tr><th>축</th><th class="num">불편(장소)</th><th class="num">좋음</th><th class="num">m_pain</th><th class="num">m_like</th><th class="num">m</th></tr>' +
+      C.AXES.map(function (a) { var x = mult[a.key];
+        return '<tr><td>' + a.label + '</td><td class="num">' + x.pain_count + '</td><td class="num">' + x.like_count + '</td><td class="num">' + x.m_pain.toFixed(3) +
+          '</td><td class="num">' + x.m_like.toFixed(3) + '</td><td class="num"><b>' + x.m.toFixed(3) + '</b></td></tr>'; }).join('') + '</table>';
+    if (!editingId) renderHistForm(null);
+    $('h-count').textContent = data.history.length + '건';
+    var list = data.history.slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+    $('h-list').innerHTML = list.length ? list.map(function (h) {
+      return '<div class="trip"><b>' + esc(destName(h.destination_id)) + '</b> <span class="muted small">' + esc(h.date) + ' · ' + h.nights + '박 · 만족 ' + h.overall + '/5</span>' +
+        '<div>' + (h.likes || []).map(function (l) { return '<span class="pill like">+' + C.AXIS_LABEL[l.axis] + (l.severity ? ' ' + l.severity : '') + '</span>'; }).join('') +
+        (h.pains || []).map(function (p) { return '<span class="pill ' + (p.cause === 'place' ? 'pain' : 'dim') + '">−' + C.AXIS_LABEL[p.axis] + ' ' + p.severity + ' · ' + CAUSE_LABEL[p.cause] + '</span>'; }).join('') + '</div>' +
+        (h.note ? '<div class="small muted">' + esc(h.note) + '</div>' : '') +
+        '<button class="btn sm" data-act="edit" data-id="' + esc(h.id) + '">편집</button><button class="btn sm danger" data-act="del" data-id="' + esc(h.id) + '">삭제</button></div>';
+    }).join('') : '<div class="muted small">아직 기록이 없습니다. 정리한 이력을 데이터 탭에서 import 해도 됩니다.</div>';
+  }
+
+  // ---------- 데이터 ----------
+  function exportObj() {
+    return { schema_version: C.SCHEMA_VERSION, exported_at: new Date().toISOString(), app: 'travel-recommender',
+      destinations: data.destinations, history: data.history, settings: data.settings };
+  }
+  $('d-dl').addEventListener('click', function () {
+    var blob = new Blob([JSON.stringify(exportObj(), null, 1)], { type: 'application/json' });
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = 'travel-export-' + ymd(new Date()) + '.json'; document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    $('d-exp-msg').textContent = '파일을 저장했습니다.';
+  });
+  $('d-copy').addEventListener('click', function () {
+    var txt = JSON.stringify(exportObj());
+    var done = function () { $('d-exp-msg').textContent = '복사했습니다 (' + Math.round(txt.length / 1024) + 'KB).'; };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, fallback); else fallback();
+    function fallback() { $('d-paste').value = txt; $('d-paste').select(); try { document.execCommand('copy'); done(); } catch (e) { $('d-exp-msg').textContent = '자동 복사가 안 돼서 아래 붙여넣기 칸에 넣었습니다. 직접 복사하세요.'; } }
+  });
+  $('d-file').addEventListener('change', function () {
+    var f = this.files[0]; if (!f) return;
+    var rd = new FileReader(); rd.onload = function () { $('d-paste').value = rd.result; checkImport(); }; rd.readAsText(f);
+  });
+  $('d-check').addEventListener('click', checkImport);
+  var pending = null;
+  function checkImport() {
+    pending = null;
+    var obj, out = $('d-preview');
+    try { obj = JSON.parse($('d-paste').value); } catch (e) { out.innerHTML = '<div class="err">JSON 파싱 실패: ' + esc(e.message) + '</div>'; return; }
+    var v = C.validateData(obj, data);
+    var h = '';
+    if (v.errors.length) h += '<div class="err"><b>오류 ' + v.errors.length + '건 — 적용 불가</b><ul>' + v.errors.slice(0, 30).map(function (e) { return '<li>' + esc(e) + '</li>'; }).join('') + '</ul></div>';
+    if (v.warnings.length) h += '<details><summary>경고 ' + v.warnings.length + '건</summary><ul class="small">' + v.warnings.slice(0, 60).map(function (e) { return '<li>' + esc(e) + '</li>'; }).join('') + '</ul></details>';
+    if (v.ok) {
+      var df = C.diffData(data, v.layers);
+      h += '<div class="info"><b>변경 미리보기</b>' + (obj.exported_at ? ' <span class="small muted">exported_at ' + esc(obj.exported_at) + '</span>' : '') + '</div><ul class="diff small">';
+      ['destinations', 'history'].forEach(function (k) {
+        if (!df[k]) return h += '<li>' + k + ': 변경 없음(파일에 없음, 유지)</li>';
+        var x = df[k];
+        h += '<li><b>' + k + '</b>: 추가 ' + x.added.length + ' · 삭제 ' + x.removed.length + ' · 수정 ' + x.changed.length;
+        if (x.added.length) h += '<div class="ok">+ ' + x.added.map(esc).join(', ') + '</div>';
+        if (x.removed.length) h += '<div class="no">− ' + x.removed.map(esc).join(', ') + '</div>';
+        if (x.changed.length) h += '<div>' + x.changed.map(function (c) { return '~ ' + esc(c.label) + ' [' + c.fields.map(function (f) {
+          if (f === 'scores') return 'scores: ' + C.AXIS_KEYS.filter(function (a) { return c.before.scores && c.after.scores && c.before.scores[a] !== c.after.scores[a]; })
+            .map(function (a) { return a + ' ' + c.before.scores[a] + '→' + c.after.scores[a]; }).join(', ');
+          return f; }).map(esc).join('; ') + ']'; }).join('<br>') + '</div>';
+        h += '</li>';
+      });
+      if (df.settings) h += '<li><b>settings</b>: ' + (df.settings.length ? df.settings.map(esc).join('<br>') : '변경 없음') + '</li>';
+      else h += '<li>settings: 변경 없음(파일에 없음, 유지)</li>';
+      h += '</ul><button class="btn pri" id="d-apply">적용 (현재 상태 자동 백업)</button><button class="btn" id="d-cancel">취소</button>';
+      pending = v.layers;
+    }
+    out.innerHTML = h;
+    if (pending) {
+      $('d-apply').onclick = applyImport;
+      $('d-cancel').onclick = function () { pending = null; out.innerHTML = ''; };
+    }
+  }
+  function backupNow(reason) {
+    lsSet(BKEY, JSON.stringify({ saved_at: new Date().toISOString(), reason: reason, data: data }));
+  }
+  function applyImport() {
+    if (!pending) return;
+    backupNow('import 직전');
+    if (pending.destinations) data.destinations = pending.destinations;
+    if (pending.history) data.history = pending.history;
+    if (pending.settings) data.settings = C.mergeSettings(pending.settings);
+    pending = null; save();
+    $('d-preview').innerHTML = '<div class="info">적용했습니다. 직전 상태는 백업에 저장됨.</div>';
+    $('d-paste').value = ''; $('d-file').value = '';
+    renderAll();
+  }
+  $('d-restore').addEventListener('click', function () {
+    var b; try { b = JSON.parse(lsGet(BKEY)); } catch (e) {}
+    if (!b || !b.data) return alert('백업이 없습니다.');
+    if (!confirm(b.saved_at.slice(0, 16).replace('T', ' ') + ' (' + b.reason + ') 백업으로 되돌릴까요? 현재 상태와 백업이 서로 바뀝니다.')) return;
+    var cur = data; data = b.data; data.settings = C.mergeSettings(data.settings); data.history = data.history || [];
+    lsSet(BKEY, JSON.stringify({ saved_at: new Date().toISOString(), reason: '되돌리기 직전', data: cur }));
+    save(); renderAll();
+  });
+  $('d-reseed').addEventListener('click', function () {
+    if (!confirm('여행지 목록을 내장 시드로 되돌릴까요? (기록·설정은 유지, 현재 상태는 백업)')) return;
+    backupNow('시드 초기화 직전'); data.destinations = seedDestinations(); save(); renderAll();
+  });
+  $('d-wipe').addEventListener('click', function () {
+    if (!confirm('여행지·기록·설정을 모두 초기화할까요? (현재 상태는 백업)')) return;
+    backupNow('전체 초기화 직전');
+    data = { schema_version: C.SCHEMA_VERSION, destinations: seedDestinations(), history: [], settings: C.mergeSettings({}) };
+    save(); renderAll();
+  });
+  $('d-search').addEventListener('input', renderDestList);
+  function renderDestList() {
+    var q = $('d-search').value.trim().toLowerCase();
+    var tl = { domestic: '국내', spot: '거점', overseas: '해외' };
+    var list = data.destinations.filter(function (d) {
+      return !q || (d.name + ' ' + d.region + ' ' + (d.tags || []).join(' ') + ' ' + d.id).toLowerCase().indexOf(q) >= 0;
+    });
+    $('d-dcount').textContent = data.destinations.length + '곳';
+    $('d-dlist').innerHTML = '<table><tr><th>이름</th><th>구분</th><th class="num">완정</th><th class="num">발산</th><th class="num">박</th><th class="num">비용</th></tr>' +
+      list.map(function (d) { return '<tr><td>' + esc(d.name) + '<div class="muted small">' + esc(d.region) + '</div></td><td>' + tl[d.type] + (d.long_off_tag ? '·장기' : '') + '</td><td class="num">' +
+        fmtDur(d.travel_time.work) + '</td><td class="num">' + fmtDur(d.travel_time.home) + '</td><td class="num">' + d.min_nights + (d.day_trip_ok ? '·당일' : '') + '</td><td class="num">' + d.cost_level + '</td></tr>'; }).join('') + '</table>';
+  }
+  function renderData() {
+    var b; try { b = JSON.parse(lsGet(BKEY)); } catch (e) {}
+    $('d-backup-info').textContent = b && b.saved_at ? '마지막 백업: ' + b.saved_at.slice(0, 16).replace('T', ' ') + ' (' + b.reason + ')' : '백업 없음';
+    renderDestList();
+  }
+
+  // ---------- 설정 ----------
+  function getPath(o, p) { return p.split('.').reduce(function (a, k) { return a && a[k]; }, o); }
+  function setPath(o, p, v) { var ks = p.split('.'), last = ks.pop(); ks.reduce(function (a, k) { return a[k]; }, o)[last] = v; }
+  function renderSettings() {
+    document.querySelectorAll('[data-s]').forEach(function (el) { el.value = getPath(data.settings, el.dataset.s); });
+  }
+  document.querySelectorAll('[data-s]').forEach(function (el) {
+    el.addEventListener('change', function () {
+      var p = el.dataset.s, cur = getPath(C.DEFAULT_SETTINGS, p);
+      var v = typeof cur === 'number' ? Number(el.value) : el.value;
+      if (typeof cur === 'number' && !isFinite(v)) return renderSettings();
+      setPath(data.settings, p, v); save(); renderSliders(); update();
+    });
+  });
+  $('s-reset').addEventListener('click', function () {
+    if (!confirm('설정을 기본값으로 되돌릴까요?')) return;
+    data.settings = C.mergeSettings({}); save(); renderSettings(); renderSliders(); update();
+  });
+  $('s-test').addEventListener('click', function () {
+    var res = C.selfTest(), pass = res.filter(function (r) { return r.pass; }).length;
+    $('s-test-out').innerHTML = '<p><b>' + pass + '/' + res.length + ' 통과</b></p>' + res.map(function (r) {
+      return '<div class="' + (r.pass ? 'ok' : 'no') + '">' + (r.pass ? '✓ ' : '✗ ') + esc(r.name) + (r.detail !== '' ? ' <span class="muted">(' + esc(r.detail) + ')</span>' : '') + '</div>';
+    }).join('');
+  });
+
+  function renderAll() { renderSliders(); bindInputs(); update(); if (ui.tab === 'hist') renderHistory(); if (ui.tab === 'data') renderData(); if (ui.tab === 'set') renderSettings(); }
+  renderAll();
+  setTab(ui.tab || 'rec');
+})();
+</script>
+</body>
+</html>
