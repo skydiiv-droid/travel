@@ -1002,10 +1002,21 @@
     return { schema_version: C.SCHEMA_VERSION, exported_at: new Date().toISOString(), app: 'travel-recommender',
       destinations: data.destinations, history: data.history, settings: data.settings };
   }
+  // claude.ai 페이지에서는 downloads 기능으로, 그 외(파일로 직접 열기 등)는 일반 다운로드로 저장
+  var dlApi = null;
+  if (window.claude && typeof window.claude.use === 'function') {
+    window.claude.use('downloads').then(function (d) { dlApi = d; }, function () {});
+  }
   $('d-dl').addEventListener('click', function () {
-    var blob = new Blob([JSON.stringify(exportObj(), null, 1)], { type: 'application/json' });
+    var txt = JSON.stringify(exportObj(), null, 1), name = 'travel-export-' + ymd(new Date()) + '.json';
+    if (dlApi) {
+      dlApi.save({ filename: name, data: txt }).then(function () { $('d-exp-msg').textContent = '파일을 저장했습니다.'; },
+        function (e) { $('d-exp-msg').textContent = e && e.code === 'declined' ? '저장을 취소했습니다.' : '파일 저장이 안 됩니다. "클립보드 복사"를 쓰세요.'; });
+      return;
+    }
+    var blob = new Blob([txt], { type: 'application/json' });
     var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-    a.download = 'travel-export-' + ymd(new Date()) + '.json'; document.body.appendChild(a); a.click();
+    a.download = name; document.body.appendChild(a); a.click();
     setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
     $('d-exp-msg').textContent = '파일을 저장했습니다.';
   });
