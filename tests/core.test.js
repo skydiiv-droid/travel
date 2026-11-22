@@ -58,5 +58,11 @@ check('총점 범위 0~10', r2.domestic.every(x => x.total >= 0 && x.total <= 10
 // 기여도 합 = 총점
 check('축별 기여도 합 = 총점', r2.domestic.every(x => Math.abs(Object.values(x.contrib).reduce((a, b) => a + b, 0) - x.total) < 1e-9));
 
+// 6) 해외 강제 표시 · 전체 목록
+const r1 = C.recommend(data, { departure: dep, origin: 'home', deadline: C.at('2026-11-22', '21:00'), nights: 1, month: 11,
+  budget: 3, travel_cap: 240, exclude_visited: false, base_weights: w, after_night: false, force_overseas: true });
+check('1박 + 해외 항상 보기: 해외 표시, 최소박수 경고', r1.overseasShown && r1.overseasAll.length > 0 && r1.overseasAll.every(x => x.warnings.some(t => t.indexOf('권장') >= 0)), r1.overseasAll.length + '곳');
+check('더 보기용 전체 목록 제공', r2.domesticAll.length === r2.domesticCount && r2.domesticAll.length > 5);
+
 console.log(fail ? `\n${fail} FAILED` : '\nALL PASSED');
 process.exit(fail ? 1 : 0);

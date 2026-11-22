@@ -174,6 +174,7 @@
     <label class="f">이동 허용 상한 (편도) · <b id="c-cap-v"></b> <span class="small">· 해외 슬롯은 적용 안 함</span></label>
     <input type="range" id="c-cap" min="30" max="600" step="10">
     <label class="switch"><input type="checkbox" id="c-visited"> 이미 가본 곳 제외</label>
+    <label class="switch"><input type="checkbox" id="c-ovs"> 해외도 항상 보기 <span class="small muted">(박수 부족해도 표시, 경고로 안내)</span></label>
   </div>
 
   <div class="card">
@@ -510,25 +511,28 @@
     var visited = {}; (data.history || []).forEach(function (h) { visited[h.destination_id] = true; });
     var retAt = returnBy(cond.departure, cond.deadline, cond.nights, s);
     var excluded = {}, dom = [], ovs = [];
-    var showOverseas = cond.nights >= s.overseas_min_nights;
+    var showOverseas = cond.nights >= s.overseas_min_nights || !!cond.force_overseas;
+    // 해외 강제 표시 시: 최소 박수·당일·활동시간은 제외 대신 경고로
+    var soft = !!cond.force_overseas;
     function ex(r) { excluded[r] = (excluded[r] || 0) + 1; }
     (data.destinations || []).forEach(function (d) {
       if (d.type === 'overseas' && !showOverseas) return;
       if (d.type === 'spot' && cond.nights > s.spot_max_nights) return;
-      if (cond.nights === 0 && !d.day_trip_ok) return ex('daytrip');
-      if (cond.nights < (d.min_nights || 0)) return ex('min_nights');
+      var softOv = soft && d.type === 'overseas', softWarn = [];
+      if (cond.nights === 0 && !d.day_trip_ok) { if (softOv) softWarn.push('당일치기 불가'); else return ex('daytrip'); }
+      if (cond.nights < (d.min_nights || 0)) { if (softOv) softWarn.push('최소 ' + d.min_nights + '박 권장'); else return ex('min_nights'); }
       if ((d.cost_level || 1) > cond.budget) return ex('budget');
       var go = d.travel_time[cond.origin], back = d.travel_time.home;
       if (d.type !== 'overseas' && go > cond.travel_cap) return ex('travel_cap');
       if (cond.exclude_visited && visited[d.id]) return ex('visited');
       var activeH = (retAt - cond.departure) / 3600000 - (go + back) / 60;
-      if (activeH < s.active_filter_h) return ex('active');
+      if (activeH < s.active_filter_h) { if (softOv) softWarn.push('활동시간 부족'); else return ex('active'); }
       var r = scoreDestination(d, w, cond.month);
       var pen = 0;
       if (activeH < s.active_penalty_h && s.active_penalty_h > s.active_filter_h) {
         pen = s.active_penalty_max * (s.active_penalty_h - activeH) / (s.active_penalty_h - s.active_filter_h);
       }
-      var arrival = addMin(cond.departure, go), warnings = [];
+      var arrival = addMin(cond.departure, go), warnings = softWarn;
       var ah = arrival.getHours();
       if (ah >= s.late_arrival_hour || ah < 5) warnings.push('늦은 도착 ' + pad(ah) + ':' + pad(arrival.getMinutes()));
       if (cond.after_night && go >= s.night_long_travel_warn_min) warnings.push('나이트 직후 장거리 이동');
@@ -546,7 +550,7 @@
       if (longFirst && a.dest.long_off_tag !== b.dest.long_off_tag) return a.dest.long_off_tag ? -1 : 1;
       return b.final - a.final;
     });
-    return { domestic: dom.slice(0, s.top_n), domesticCount: dom.length, overseas: ovs.slice(0, s.overseas_n),
+    return { domestic: dom.slice(0, s.top_n), domesticAll: dom, domesticCount: dom.length, overseas: ovs.slice(0, s.overseas_n), overseasAll: ovs,
       overseasShown: showOverseas, longFirst: longFirst, excluded: excluded, weights: w, mult: mult, returnAt: retAt };
   }
   function pad(n) { return (n < 10 ? '0' : '') + n; }
@@ -819,7 +823,7 @@
   function bindInputs() {
     $('c-date').value = ui.date; $('c-jw').value = ui.jw; $('c-gf').value = ui.gf; $('c-jw-t').value = ui.jwT; $('c-gf-t').value = ui.gfT;
     $('c-rdate').value = ui.rdate; $('c-rkind').value = ui.rkind; $('c-rt').value = ui.rt;
-    $('c-nights').value = ui.nights; $('c-month').value = ui.month; $('c-cap').value = ui.cap; $('c-visited').checked = !!ui.visited;
+    $('c-nights').value = ui.nights; $('c-month').value = ui.month; $('c-cap').value = ui.cap; $('c-visited').checked = !!ui.visited; $('c-ovs').checked = !!ui.forceOvs;
     setSeg('c-budget', ui.budget);
   }
   function setSeg(id, v) { document.querySelectorAll('#' + id + ' button').forEach(function (b) { b.classList.toggle('on', Number(b.dataset.v) === Number(v)); }); }
@@ -829,6 +833,15 @@
     $(p[0]).addEventListener('input', function () { ui[p[1]] = p[1] === 'cap' ? Number(this.value) : this.value; update(); });
   });
   $('c-visited').addEventListener('change', function () { ui.visited = this.checked; update(); });
+  $('c-ovs').addEventListener('change', function () { ui.forceOvs = this.checked; update(); });
+  // 더 보기: 화면에 보이는 개수(세션 동안만 유지)
+  var shown = { dom: 0, ovs: 0 }, lastR = null, lastC = null;
+  $('results').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-more]'); if (!b) return;
+    var k = b.dataset.more, base = k === 'dom' ? data.settings.top_n : data.settings.overseas_n;
+    if (b.dataset.act === 'less') shown[k] = base; else shown[k] = (shown[k] || base) + 5;
+    renderResults(lastR, lastC);
+  });
 
   var EX_LABEL = { daytrip: '당일치기 불가', min_nights: '최소 박수 미달', budget: '예산 초과', travel_cap: '이동시간 초과', visited: '가본 곳', active: '활동시간 부족' };
 
@@ -867,7 +880,7 @@
     }
     var month = ui.month ? Number(ui.month) : dep.departure.getMonth() + 1;
     var r = C.recommend(data, { departure: dep.departure, origin: dep.origin, deadline: deadline, nights: nights, month: month,
-      budget: ui.budget, travel_cap: ui.cap, exclude_visited: ui.visited, base_weights: ui.weights, after_night: ui.jw === 'N_prev' });
+      budget: ui.budget, travel_cap: ui.cap, exclude_visited: ui.visited, base_weights: ui.weights, after_night: ui.jw === 'N_prev', force_overseas: !!ui.forceOvs });
     renderResults(r, { nights: nights, month: month, origin: dep.origin });
   }
 
@@ -900,19 +913,30 @@
       '<details><summary>축별 상세</summary><div class="bars">' + bars(order) + '</div>' + detail + '</details></div>';
   }
 
+  function moreBtns(k, n, total, base) {
+    var h = '<div style="text-align:center">';
+    if (n < total) h += '<button class="btn" data-more="' + k + '">더 보기 (+' + Math.min(5, total - n) + ' · ' + n + '/' + total + ')</button>';
+    if (n > base) h += '<button class="btn" data-more="' + k + '" data-act="less">접기</button>';
+    return h + '</div>';
+  }
   function renderResults(r, c) {
+    lastR = r; lastC = c;
+    var nd = Math.min(Math.max(shown.dom || 0, data.settings.top_n), r.domesticAll.length);
+    var no = Math.min(Math.max(shown.ovs || 0, data.settings.overseas_n), r.overseasAll.length);
     var exTxt = Object.keys(r.excluded).map(function (k) { return EX_LABEL[k] + ' ' + r.excluded[k]; }).join(' · ');
     var h = '<div class="divider">국내 추천 · ' + c.nights + '박 · ' + c.month + '월</div>';
     h += '<div class="small muted" style="margin:-4px 0 8px">후보 ' + r.domesticCount + '곳' + (exTxt ? ' · 제외: ' + exTxt : '') +
       (c.nights > data.settings.spot_max_nights ? ' · 거점(테마파크 등)은 ' + data.settings.spot_max_nights + '박 이하일 때만' : '') + '</div>';
     if (!r.domestic.length) h += '<div class="card muted">조건에 맞는 국내 후보가 없습니다. 이동 상한·예산·박수를 조정해 보세요.</div>';
-    h += r.domestic.map(function (it, i) { return card(it, i, r, c.origin); }).join('');
+    h += r.domesticAll.slice(0, nd).map(function (it, i) { return card(it, i, r, c.origin); }).join('');
+    h += moreBtns('dom', nd, r.domesticAll.length, data.settings.top_n);
     if (r.overseasShown) {
       h += '<div class="divider">해외 슬롯' + (r.longFirst ? ' · 장기오프 우선' : '') + '</div>';
-      h += r.overseas.length ? r.overseas.map(function (it, i) { return card(it, i, r, c.origin); }).join('')
+      h += r.overseasAll.length ? r.overseasAll.slice(0, no).map(function (it, i) { return card(it, i, r, c.origin); }).join('') +
+          moreBtns('ovs', no, r.overseasAll.length, data.settings.overseas_n)
         : '<div class="card muted">조건(예산·박수·활동시간)에 맞는 해외 후보가 없습니다.</div>';
     } else {
-      h += '<div class="small muted" style="text-align:center;margin-top:10px">해외 슬롯은 ' + data.settings.overseas_min_nights + '박 이상일 때 표시됩니다.</div>';
+      h += '<div class="small muted" style="text-align:center;margin-top:10px">해외 슬롯은 ' + data.settings.overseas_min_nights + '박 이상일 때 표시됩니다. 위 "해외도 항상 보기"로 켤 수 있습니다.</div>';
     }
     $('results').innerHTML = h;
   }
