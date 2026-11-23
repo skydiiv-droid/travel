@@ -148,6 +148,41 @@ const OVERSEAS = [
   ['bali','발리','인도네시아',['리조트','자연','한달살기'],4,5,8,10,5,7,10,6,7,8,'bali','resort',660,650,2,5,true,'건기 4~10월. 지역 간 이동 시간 김'],
 ];
 
+
+// 여행지 속성 (과거 불편 체크 항목과 맞춰 감점에 쓰임). 초안 추정치.
+// [transfer_load 0~2, ticket_hard, car_needed 0~2, hilly, spread_out, content_nights, early_close, cancel_risk, waiting_heavy]
+const ATTR_KEYS = ['transfer_load','ticket_hard','car_needed','hilly','spread_out','content_nights','early_close','cancel_risk','waiting_heavy'];
+const ATTR_BOOL = { ticket_hard: 1, hilly: 1, spread_out: 1, early_close: 1, cancel_risk: 1, waiting_heavy: 1 };
+const ATTRS = {
+  gangneung:[1,1,1,0,1,2,0,0,1], sokcho:[1,1,1,0,0,2,0,0,0], yangyang:[1,0,2,0,1,2,1,0,0], chuncheon:[0,0,0,0,0,1,0,0,0],
+  pyeongchang:[1,0,1,0,1,2,1,0,0], jeongseon:[2,0,2,0,1,2,1,0,0], samcheok:[2,0,2,1,1,1,1,0,0], donghae:[1,0,1,0,0,1,1,0,0],
+  hongcheon:[1,0,2,0,0,2,1,0,0], inje:[2,0,2,1,1,1,1,0,0], cheorwon:[2,0,2,1,1,1,1,0,0], gapyeong:[0,0,1,0,1,2,0,0,0],
+  yangpyeong:[0,0,1,0,1,1,0,0,0], ganghwa:[1,0,1,0,1,1,1,0,0], yeongjong:[0,0,1,0,0,1,0,0,0], suwon:[0,0,0,0,0,1,0,0,1],
+  paju:[1,0,1,0,1,1,0,0,0], pocheon:[1,0,2,0,1,1,1,0,0], daebudo:[1,0,2,0,1,1,1,0,0], danyang:[1,0,1,0,0,1,1,0,0],
+  jecheon:[1,0,1,0,1,1,1,0,0], chungju:[1,0,1,0,1,1,1,0,0], gongju:[1,0,1,0,0,1,1,0,0], buyeo:[2,0,1,0,0,1,1,0,0],
+  taean:[2,0,2,0,1,2,1,0,0], boryeong:[1,0,1,0,0,1,0,0,0], asan:[1,0,1,0,1,1,0,0,0], cheongju:[1,0,1,0,1,1,0,0,0],
+  jeonju:[1,1,0,0,0,1,0,0,1], gunsan:[1,0,1,0,0,1,0,0,0], yeosu:[1,1,1,0,1,2,0,0,1], suncheon:[1,0,1,0,0,1,0,0,0],
+  damyang:[2,0,1,0,1,1,1,0,0], mokpo:[1,0,1,0,0,1,0,0,0], namwon:[1,0,1,0,0,1,1,0,0], gwangju:[0,0,0,0,0,1,0,0,0],
+  boseong:[2,0,2,0,1,1,1,0,0], haenam:[2,0,2,0,1,2,1,0,0], gochang:[2,0,2,0,1,1,1,0,0], gyeongju:[1,1,1,0,0,2,0,0,1],
+  andong:[1,0,1,0,1,1,1,0,0], busan_haeundae:[0,1,0,0,1,3,0,0,1], busan_old:[0,1,0,1,0,2,0,0,1], tongyeong:[2,0,1,1,0,2,0,0,0],
+  geoje:[2,0,2,1,1,2,1,0,0], namhae:[2,0,2,1,1,2,1,0,0], jinju:[1,0,1,0,0,1,0,0,0], pohang:[1,0,1,0,1,1,0,0,0],
+  yeongdeok:[2,0,2,0,1,1,1,0,0], uljin:[2,0,2,0,1,1,1,0,0], daegu:[1,0,0,0,0,1,0,0,0], ulsan:[1,0,1,0,1,1,0,0,0],
+  mungyeong:[2,0,2,0,0,1,1,0,0], hadong:[2,0,2,0,1,1,1,0,0], changwon:[1,0,1,0,1,1,0,0,1], ulleung:[2,1,1,1,1,3,1,1,0],
+  jeju_city:[0,1,1,0,1,3,0,1,1], seogwipo:[1,1,2,0,1,3,0,1,0], jeju_east:[1,1,2,0,1,3,1,1,0], yeongwol:[2,0,2,0,1,1,1,0,0],
+  everland:[1,0,0,1,0,1,0,0,1], caribbean:[1,0,0,0,0,1,0,0,1], lotteworld:[0,0,0,0,0,1,0,0,1], seoulland:[0,0,0,1,0,1,0,0,0],
+  legoland:[1,0,0,0,0,1,0,0,0], lotte_busan:[1,1,1,0,0,1,0,0,0], gyeongjuworld:[1,1,1,0,0,1,0,0,0], eworld:[1,0,0,1,0,1,0,0,0],
+  folkvillage:[1,0,1,0,0,1,0,0,0], gm_cave:[1,0,1,1,0,1,0,0,0], aqua_ilsan:[1,0,0,0,0,1,0,0,0], cimer:[0,0,0,0,0,1,0,0,0],
+  tokyo:[0,0,0,0,1,5,0,0,1], osaka:[0,0,0,0,0,4,0,0,1], kyoto:[1,0,0,1,1,3,1,0,1], fukuoka:[0,0,0,0,0,3,0,0,0],
+  sapporo:[0,1,1,0,1,4,0,1,0], okinawa:[0,0,2,0,1,4,0,1,0], taipei:[0,0,0,0,0,4,0,0,0], hongkong:[0,0,0,1,0,3,0,0,1],
+  danang:[0,0,0,0,0,5,0,0,0], nhatrang:[0,0,0,0,0,5,0,0,0], bangkok:[0,0,0,0,1,6,0,0,0], chiangmai:[0,0,0,0,0,10,0,0,0],
+  phuket:[0,0,1,1,1,7,0,0,0], cebu:[0,0,1,0,1,6,0,1,0], singapore:[0,0,0,0,0,4,0,0,0], kotakinabalu:[0,0,0,0,0,5,0,0,0],
+  bali:[1,0,1,0,1,10,0,0,0],
+};
+function attrsOf(id) {
+  const row = ATTRS[id]; if (!row) throw new Error('attrs missing: ' + id);
+  const o = {}; ATTR_KEYS.forEach((k, i) => { o[k] = ATTR_BOOL[k] ? !!row[i] : row[i]; }); return o;
+}
+
 const AXES_ORDER = ['drive','crowd','food','nature','city','walk','stay','weather','value','activity'];
 
 function monthly(wp, cp) {
@@ -175,6 +210,7 @@ function build(row, type) {
     id, name, type, region, tags,
     scores,
     monthly: monthly(wp, cp),
+    attrs: attrsOf(id),
     travel_time: { work, home },
     min_nights: minNights,
     day_trip_ok: dayTrip,
@@ -193,7 +229,7 @@ const destinations = [
 const ids = new Set();
 for (const d of destinations) { if (ids.has(d.id)) throw new Error('dup ' + d.id); ids.add(d.id); }
 
-const seed = { schema_version: 1, exported_at: new Date().toISOString(), destinations };
+const seed = { schema_version: 3, exported_at: new Date().toISOString(), destinations };
 const out = path.join(__dirname, '..', 'data', 'seed.json');
 fs.mkdirSync(path.dirname(out), { recursive: true });
 fs.writeFileSync(out, JSON.stringify(seed, null, 1) + '\n');

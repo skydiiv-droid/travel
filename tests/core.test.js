@@ -74,13 +74,30 @@ check('계절만 / 기억 안 남 기록 허용', v2.ok, v2.errors.join(' / '));
 check('시기 라벨', C.whenLabel(v2.layers.history[0]) === '여름' && C.whenLabel(v2.layers.history[1]) === '시기 모름' && C.whenLabel(legacy.layers.history[0]) === '2024년 10월');
 check('잘못된 계절 값 차단', !C.validateData({ schema_version: 2, history: [{ id: 'a', destination_id: 'x', season: 'rainy', nights: 1, overall: 3 }] }, { destinations: [] }).ok);
 
-// 8) 축별 세부 항목
-check('모든 축에 세부 항목 정의', C.AXIS_KEYS.every(k => C.DETAIL_OPTIONS[k] && C.DETAIL_OPTIONS[k].good.length && C.DETAIL_OPTIONS[k].bad.length));
-const dv = C.validateData({ schema_version: 2, history: [{ id: 'a', destination_id: 'gyeongju', nights: 1, overall: 3,
-  details: { move: { info: ['KTX·기차'], bad: ['환승 많음'], memo: '신경주역에서 버스' } } }] }, { destinations: seed.destinations });
-check('details 정상 기록 허용', dv.ok, dv.errors.join(' / '));
-const db = C.validateData({ schema_version: 2, history: [{ id: 'a', destination_id: 'gyeongju', nights: 1, overall: 3, details: { foo: {}, move: { bad: '환승' } } }] }, { destinations: seed.destinations });
-check('details 잘못된 축·형식 차단', !db.ok && db.errors.length === 2, db.errors.length + '건');
+// 8) 장면별 체크 · 여행지 속성 감점 · v2→v3 이전
+check('체크 항목 id 중복 없음 · 축/속성 이름 유효', new Set(C.CHECKS.map(c => c.id)).size === C.CHECKS.length &&
+  C.CHECKS.every(c => (c.axis == null || C.AXIS_KEYS.includes(c.axis)) && (c.attr == null || C.ATTRS.some(a => a.key === c.attr))));
+check('모든 장면에 항목 있음', C.SCENES.every(sc => C.CHECKS.some(c => c.scene === sc.key)));
+check('시드 전 여행지에 속성(attrs) 9개', seed.destinations.every(d => d.attrs && C.ATTRS.every(a => a.key in d.attrs)));
+const v2rec = C.validateData({ schema_version: 2, history: [{ id: 'a', destination_id: 'gyeongju', nights: 1, overall: 3,
+  likes: [{ axis: 'food' }], pains: [{ axis: 'crowd', severity: 3, cause: 'place' }],
+  details: { move: { info: ['KTX·기차'], bad: ['환승 많음', '이상한항목'], memo: '버스 대기' } } }] }, { destinations: seed.destinations });
+const mig = v2rec.layers.history[0];
+check('v2 기록 → v3: likes/pains 는 manual, details 는 체크로', v2rec.ok && mig.manual.pains[0].axis === 'crowd' && mig.checks.some(c => c.id === 'go_train') &&
+  mig.checks.some(c => c.id === 'go_transfer') && /이상한항목/.test(mig.note) && /버스 대기/.test(mig.note) && !('details' in mig), JSON.stringify(mig.checks));
+check('이전된 기록의 배수 유지 (혼잡도 1.25)', Math.abs(C.computeMultipliers([mig]).crowd.m - 1.25) < 1e-9);
+// 환승 많음 2번 경험 → 환승 부담 큰 곳 감점, 결과에 반영
+const hist = [{ id: 'a', checks: [{ id: 'go_transfer', sev: 3 }] }, { id: 'b', checks: [{ id: 'go_transfer', sev: 3 }] }];
+const rA = C.recommend({ destinations: seed.destinations, history: hist, settings: {} }, { departure: dep, origin: 'home', deadline: C.at('2026-11-23', '21:00'), nights: 2, month: 11,
+  budget: 3, travel_cap: 600, exclude_visited: false, base_weights: w, after_night: false });
+const all = rA.domesticAll, hi = all.filter(x => x.dest.attrs.transfer_load === 2), lo = all.filter(x => x.dest.attrs.transfer_load === 0);
+check('환승 부담 2 = 감점 0.67, 0 = 감점 없음', hi.length && hi.every(x => Math.abs(x.attrPenalty - 2 / 3) < 1e-9) && lo.every(x => x.attrPenalty === 0), hi[0] && hi[0].attrPenalty.toFixed(3));
+check('감점이 경고 문구로 표시', hi.every(x => x.warnings.some(t => t.indexOf('환승 많음') >= 0)));
+check('감점 상한 attr_pen_max', C.attrPenalty({ attrs: { transfer_load: 2, hilly: true, car_needed: 2 } },
+  { transfer_load: { f: 1, labels: [] }, hilly: { f: 1, labels: [] }, car_needed: { f: 1, labels: [] } }, 1).pen === 1);
+check('볼거리 대비 긴 박수 경고', C.recommend({ destinations: seed.destinations.filter(d => d.id === 'gongju'), history: [], settings: {} },
+  { departure: dep, origin: 'home', deadline: null, nights: 4, month: 5, budget: 3, travel_cap: 600, exclude_visited: false, base_weights: w })
+  .domesticAll[0].warnings.some(t => t.indexOf('볼거리 대비') >= 0));
 
 console.log(fail ? `\n${fail} FAILED` : '\nALL PASSED');
 process.exit(fail ? 1 : 0);
