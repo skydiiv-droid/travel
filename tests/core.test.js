@@ -74,5 +74,13 @@ check('계절만 / 기억 안 남 기록 허용', v2.ok, v2.errors.join(' / '));
 check('시기 라벨', C.whenLabel(v2.layers.history[0]) === '여름' && C.whenLabel(v2.layers.history[1]) === '시기 모름' && C.whenLabel(legacy.layers.history[0]) === '2024년 10월');
 check('잘못된 계절 값 차단', !C.validateData({ schema_version: 2, history: [{ id: 'a', destination_id: 'x', season: 'rainy', nights: 1, overall: 3 }] }, { destinations: [] }).ok);
 
+// 8) 축별 세부 항목
+check('모든 축에 세부 항목 정의', C.AXIS_KEYS.every(k => C.DETAIL_OPTIONS[k] && C.DETAIL_OPTIONS[k].good.length && C.DETAIL_OPTIONS[k].bad.length));
+const dv = C.validateData({ schema_version: 2, history: [{ id: 'a', destination_id: 'gyeongju', nights: 1, overall: 3,
+  details: { move: { info: ['KTX·기차'], bad: ['환승 많음'], memo: '신경주역에서 버스' } } }] }, { destinations: seed.destinations });
+check('details 정상 기록 허용', dv.ok, dv.errors.join(' / '));
+const db = C.validateData({ schema_version: 2, history: [{ id: 'a', destination_id: 'gyeongju', nights: 1, overall: 3, details: { foo: {}, move: { bad: '환승' } } }] }, { destinations: seed.destinations });
+check('details 잘못된 축·형식 차단', !db.ok && db.errors.length === 2, db.errors.length + '건');
+
 console.log(fail ? `\n${fail} FAILED` : '\nALL PASSED');
 process.exit(fail ? 1 : 0);

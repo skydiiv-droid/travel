@@ -88,9 +88,6 @@
   th,td{text-align:left;padding:5px 4px;border-bottom:1px solid var(--line);vertical-align:top}
   th{color:var(--muted);font-weight:600}
   td.num{text-align:right;font-variant-numeric:tabular-nums}
-  .axgrid{display:grid;grid-template-columns:1fr 74px 64px 78px;gap:4px 6px;align-items:center;font-size:13px}
-  .axgrid select{padding:5px 4px;font-size:13px}
-  .axgrid .h{color:var(--muted);font-size:12px}
   .trip{border-top:1px solid var(--line);padding:8px 0}
   .trip:first-child{border-top:0}
   .pill{display:inline-block;font-size:12px;border-radius:999px;padding:0 7px;margin:2px 3px 0 0}
@@ -98,9 +95,26 @@
   .pill.pain{background:var(--bad-soft);color:var(--bad)}
   .pill.dim{background:var(--input);color:var(--muted)}
   .diff li{margin:2px 0}
+  details.ax{border:1px solid var(--line);border-radius:10px;padding:0 10px;margin:6px 0;background:var(--input)}
+  details.ax[open]{padding-bottom:10px}
+  details.ax > summary{list-style:none;display:flex;align-items:center;gap:6px;padding:9px 0;color:var(--ink);font-size:14px;margin:0}
+  details.ax > summary::-webkit-details-marker{display:none}
+  details.ax > summary::after{content:"▾";margin-left:auto;color:var(--muted)}
+  details.ax[open] > summary::after{content:"▴"}
+  .ax .st{font-size:12px;font-weight:600}
+  .ax .sel3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+  .ax .sel3 select{padding:5px 4px;font-size:13px;background:var(--card)}
+  .ax .grp{font-size:12px;color:var(--muted);margin:8px 0 2px}
+  .chip{border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:13px;border-radius:999px;
+    padding:4px 10px;margin:3px 4px 0 0;cursor:pointer}
+  .chip.on.info{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:600}
+  .chip.on.good{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+  .chip.on.bad{background:var(--bad);border-color:var(--bad);color:#fff;font-weight:600}
+  .ax input.memo{margin-top:8px;background:var(--card);font-size:13px}
+  .dline{font-size:12px;color:var(--muted);margin-top:2px}
   .ok{color:var(--accent)} .no{color:var(--bad)}
   .switch{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:14px}
-  @media (max-width:380px){ .row3{grid-template-columns:1fr 1fr} .axgrid{grid-template-columns:1fr 64px 56px 70px} }
+  @media (max-width:380px){ .row3{grid-template-columns:1fr 1fr} }
 </style>
 </head>
 <body>
@@ -208,8 +222,9 @@
         <select id="h-overall"><option>5</option><option>4</option><option selected>3</option><option>2</option><option>1</option></select></div>
     </div>
     <h3>축별 평가</h3>
-    <div class="axgrid" id="h-axes"></div>
-    <div class="small muted" style="margin-top:6px">좋았음: ✓(강도 미입력) 또는 1~3 · 불편: 강도 1~3 + 원인. 배수에는 <b>원인=장소</b> 불편만 반영.</div>
+    <div class="small muted">해당하는 축만 펼쳐서 체크하세요. 세부 항목을 고르면 좋았음/불편 칸이 자동으로 채워지고, 강도·원인은 직접 고칠 수 있습니다.</div>
+    <div id="h-axes"></div>
+    <div class="small muted" style="margin-top:6px">점수 배수에는 축 단위 강도만 반영되고(불편은 <b>원인=장소</b>만), 세부 항목은 기록·검토용으로 저장됩니다.</div>
     <label class="f">메모</label>
     <textarea id="h-note" style="min-height:60px;font-family:inherit;font-size:14px"></textarea>
     <div>
@@ -367,6 +382,36 @@
     { key: 'activity', label: '액티비티' }
   ];
   var AXIS_KEYS = AXES.map(function (a) { return a.key; });
+  // 축별 세부 체크 항목. info = 중립 사실(이용 수단 등), good = 좋았던 점, bad = 불편했던 점
+  var DETAIL_OPTIONS = {
+    move: { infoLabel: '이용 수단', info: ['자차', '렌터카', 'KTX·기차', '고속·시외버스', '비행기', '배', '전철·광역버스', '택시'],
+      good: ['빠름', '환승 없음', '좌석 편함', '예매 쉬움', '이동 중 잠·휴식'],
+      bad: ['오래 걸림', '환승 많음', '표 구하기 어려움', '좌석·차내 불편', '배차 간격 김', '막차·시간 압박', '연착·결항', '멀미'] },
+    drive: { infoLabel: '운전', info: ['직접 운전', '운전 안 함', '현지 렌터카'],
+      good: ['대중교통으로 충분', '도로 한산', '주차 쉬움', '택시 잘 잡힘'],
+      bad: ['장거리 운전', '정체 심함', '주차 어려움', '길 복잡·초행', '야간·산길 운전', '현지 대중교통 부족'] },
+    crowd: { good: ['한산함', '대기 거의 없음', '예약 없이 가능'],
+      bad: ['인파 많음', '식당 웨이팅', '입장 대기', '숙소·표 매진', '성수기 가격'] },
+    food: { infoLabel: '먹은 것', info: ['해산물', '고기', '한식', '시장', '카페·디저트', '현지 음식'],
+      good: ['맛집 많음', '지역 특산물', '가격 착함', '늦게까지 영업'],
+      bad: ['맛 기대 이하', '비쌈', '선택지 적음', '일찍 닫음', '웨이팅', '입에 안 맞음'] },
+    nature: { good: ['바다', '산·숲', '호수·강', '야경', '일출·일몰', '꽃·단풍'],
+      bad: ['기대보다 평범', '날씨로 못 봄', '관광지화', '관리 부족'] },
+    city: { good: ['볼거리 많음', '역사·문화', '전시·공연', '쇼핑', '카페 거리', '밤에 즐길 것'],
+      bad: ['볼거리 적음', '너무 상업적', '명소 간 거리 멂', '일찍 문 닫음'] },
+    walk: { good: ['동선 짧음', '평지 위주', '교통 연결 좋음'],
+      bad: ['오래 걸음', '오르막·계단', '동선 분산', '짐 들고 이동', '발·다리 통증'] },
+    stay: { infoLabel: '숙소 유형', info: ['호텔', '리조트', '펜션', '한옥·게스트하우스', '에어비앤비', '캠핑·글램핑'],
+      good: ['깨끗함', '침구 편함', '조용함', '위치 좋음', '뷰 좋음', '조식', '얼리체크인·레이트체크아웃'],
+      bad: ['청결 불량', '소음·방음', '침대·베개 불편', '위치 불편', '시설 노후', '체크인 늦음·체크아웃 이름', '벌레', '가격 대비 별로'] },
+    weather: { good: ['맑음', '선선함', '따뜻함'],
+      bad: ['비', '너무 더움', '너무 추움', '바람·태풍', '미세먼지', '습함'] },
+    value: { good: ['저렴함', '할인·특가', '쓴 만큼 만족'],
+      bad: ['숙소 비쌈', '식비 비쌈', '교통비 비쌈', '입장료·체험비 비쌈', '예상보다 지출 큼'] },
+    activity: { infoLabel: '한 것', info: ['수상 레저', '테마파크', '트레킹', '스키·보드', '온천·스파', '체험·공방', '투어'],
+      good: ['재밌음', '예약 쉬움', '초보도 가능'],
+      bad: ['예약 어려움', '비쌈', '날씨로 취소', '대기 김', '체력 소모 큼', '할 게 없음'] }
+  };
   var AXIS_LABEL = {}; AXES.forEach(function (a) { AXIS_LABEL[a.key] = a.label; });
   var TYPES = ['domestic', 'spot', 'overseas'];
   var CAUSES = ['place', 'schedule', 'condition'];
@@ -647,6 +692,17 @@
           if (h.year != null && (!isNum(h.year) || h.year < 1990 || h.year > 2100)) errors.push(tag + ': year 는 연도 숫자 또는 null');
           if (h.month != null && (!isNum(h.month) || h.month < 1 || h.month > 12)) errors.push(tag + ': month 는 1~12 또는 null');
           if (h.season != null && !SEASONS[h.season]) errors.push(tag + ': season 은 spring|summer|autumn|winter 또는 null');
+          if (h.details != null) {
+            if (typeof h.details !== 'object' || Array.isArray(h.details)) errors.push(tag + ': details 는 객체');
+            else Object.keys(h.details).forEach(function (ax) {
+              var dd = h.details[ax];
+              if (AXIS_KEYS.indexOf(ax) < 0) return errors.push(tag + '.details: 축 이름 오류 "' + ax + '"');
+              ['info', 'good', 'bad'].forEach(function (g) {
+                if (dd[g] != null && (!Array.isArray(dd[g]) || dd[g].some(function (x) { return typeof x !== 'string'; }))) errors.push(tag + '.details.' + ax + '.' + g + ': 문자열 배열');
+              });
+              if (dd.memo != null && typeof dd.memo !== 'string') errors.push(tag + '.details.' + ax + '.memo: 문자열');
+            });
+          }
           if (h.month != null && h.season != null) warnings.push(tag + ': month 와 season 이 둘 다 있음(month 사용)');
           if (!isNum(h.nights) || h.nights < 0) errors.push(tag + ': nights 0 이상 숫자');
           if (!isNum(h.overall) || h.overall < 1 || h.overall > 5) errors.push(tag + ': overall 1~5');
@@ -742,7 +798,7 @@
   }
 
   var api = { SCHEMA_VERSION: SCHEMA_VERSION, AXES: AXES, AXIS_KEYS: AXIS_KEYS, AXIS_LABEL: AXIS_LABEL, ORIGIN_LABEL: ORIGIN_LABEL,
-    SEASONS: SEASONS, normalizeTrip: normalizeTrip, whenLabel: whenLabel, whenSortKey: whenSortKey,
+    DETAIL_OPTIONS: DETAIL_OPTIONS, SEASONS: SEASONS, normalizeTrip: normalizeTrip, whenLabel: whenLabel, whenSortKey: whenSortKey,
     DEFAULT_SETTINGS: DEFAULT_SETTINGS, mergeSettings: mergeSettings, at: at, parseLocal: parseLocal, addMin: addMin,
     resolveDeparture: resolveDeparture, resolveDeadline: resolveDeadline, autoNights: autoNights, returnBy: returnBy,
     computeMultipliers: computeMultipliers, effectiveWeights: effectiveWeights, adjustedScores: adjustedScores,
@@ -1003,13 +1059,26 @@
     var likes = {}, pains = {};
     (trip && trip.likes || []).forEach(function (l) { likes[l.axis] = l.severity == null ? 'x' : String(l.severity); });
     (trip && trip.pains || []).forEach(function (p) { pains[p.axis] = p; });
-    $('h-axes').innerHTML = '<span class="h">축</span><span class="h">좋았음</span><span class="h">불편</span><span class="h">원인</span>' +
-      C.AXES.map(function (a) {
-        var p = pains[a.key];
-        return '<span>' + a.label + '</span><select data-like="' + a.key + '">' + opts(LIKE_OPTS, likes[a.key] || '') + '</select>' +
-          '<select data-pain="' + a.key + '">' + opts(PAIN_OPTS, p ? String(p.severity) : '') + '</select>' +
-          '<select data-cause="' + a.key + '">' + opts(CAUSE_OPTS, p ? p.cause : 'place') + '</select>';
-      }).join('');
+    var det = (trip && trip.details) || {};
+    $('h-axes').innerHTML = C.AXES.map(function (a) {
+      var p = pains[a.key], o = C.DETAIL_OPTIONS[a.key] || {}, dd = det[a.key] || {};
+      var chips = function (g, list, title) {
+        if (!list || !list.length) return '';
+        var sel = dd[g] || [], all = list.concat(sel.filter(function (x) { return list.indexOf(x) < 0; })); // 목록에 없는 기존 값도 표시
+        return '<div class="grp">' + title + '</div>' + all.map(function (v) {
+          return '<button type="button" class="chip ' + g + (sel.indexOf(v) >= 0 ? ' on' : '') + '" data-ax="' + a.key + '" data-g="' + g + '" data-v="' + esc(v) + '">' + esc(v) + '</button>';
+        }).join('');
+      };
+      var open = likes[a.key] || p || (dd.info || []).length || (dd.good || []).length || (dd.bad || []).length || dd.memo;
+      return '<details class="ax" data-axbox="' + a.key + '"' + (open ? ' open' : '') + '><summary><b>' + a.label + '</b>' +
+        (a.hint ? '<span class="muted small">(' + a.hint + ')</span>' : '') + '<span class="st" id="st-' + a.key + '"></span></summary>' +
+        '<div class="sel3"><div><div class="grp">좋았음</div><select data-like="' + a.key + '">' + opts(LIKE_OPTS, likes[a.key] || '') + '</select></div>' +
+        '<div><div class="grp">불편 강도</div><select data-pain="' + a.key + '">' + opts(PAIN_OPTS, p ? String(p.severity) : '') + '</select></div>' +
+        '<div><div class="grp">불편 원인</div><select data-cause="' + a.key + '">' + opts(CAUSE_OPTS, p ? p.cause : 'place') + '</select></div></div>' +
+        chips('info', o.info, o.infoLabel || '해당 사항') + chips('good', o.good, '좋았던 점') + chips('bad', o.bad, '불편했던 점') +
+        '<input class="memo" data-memo="' + a.key + '" placeholder="기타 메모 (선택)" value="' + esc(dd.memo || '') + '"></details>';
+    }).join('');
+    C.AXIS_KEYS.forEach(axStatus);
     if (trip) {
       $('h-dest').value = trip.destination_id; $('h-nights').value = trip.nights;
       $('h-year').value = trip.year ? String(trip.year) : '';
@@ -1023,13 +1092,44 @@
     $('h-form-title').textContent = trip ? '여행 기록 편집' : '여행 기록 추가';
     $('h-cancel').style.display = trip ? '' : 'none';
   }
+  function axStatus(k) {
+    var l = document.querySelector('[data-like="' + k + '"]').value, p = document.querySelector('[data-pain="' + k + '"]').value;
+    var n = document.querySelectorAll('.chip.on[data-ax="' + k + '"]').length, t = [];
+    if (l) t.push('<span class="ok">+' + (l === 'x' ? '✓' : l) + '</span>');
+    if (p) t.push('<span class="no">−' + p + '</span>');
+    if (n) t.push('<span class="muted">' + n + '개 체크</span>');
+    $('st-' + k).innerHTML = t.join(' ');
+  }
+  $('h-axes').addEventListener('click', function (e) {
+    var c = e.target.closest('.chip'); if (!c) return;
+    c.classList.toggle('on');
+    var k = c.dataset.ax;
+    // 세부 항목을 켜면 해당 축 평가가 비어 있을 때만 자동 채움 (좋음 ✓ / 불편 2·장소)
+    if (c.classList.contains('on') && c.dataset.g === 'good') { var ls = document.querySelector('[data-like="' + k + '"]'); if (!ls.value) ls.value = 'x'; }
+    if (c.classList.contains('on') && c.dataset.g === 'bad') { var ps = document.querySelector('[data-pain="' + k + '"]'); if (!ps.value) ps.value = '2'; }
+    axStatus(k);
+  });
+  $('h-axes').addEventListener('change', function (e) { var k = e.target.dataset.like || e.target.dataset.pain; if (k) axStatus(k); });
+  function collectDetails() {
+    var out = {};
+    C.AXIS_KEYS.forEach(function (k) {
+      var d = {};
+      ['info', 'good', 'bad'].forEach(function (g) {
+        var v = Array.prototype.map.call(document.querySelectorAll('.chip.on[data-ax="' + k + '"][data-g="' + g + '"]'), function (c) { return c.dataset.v; });
+        if (v.length) d[g] = v;
+      });
+      var m = document.querySelector('[data-memo="' + k + '"]').value.trim(); if (m) d.memo = m;
+      if (Object.keys(d).length) out[k] = d;
+    });
+    return out;
+  }
   $('h-save').addEventListener('click', function () {
     var unk = $('h-unknown').checked, wv = unk ? '' : $('h-when').value, yv = unk ? '' : $('h-year').value;
     if (!$('h-dest').value) { $('h-msg').innerHTML = '<div class="err">여행지를 고르세요.</div>'; return; }
     if (!unk && !wv && !yv) { $('h-msg').innerHTML = '<div class="err">연도·시기를 고르거나 "기억 안 남"을 체크하세요.</div>'; return; }
     var trip = { id: editingId || ('h' + Date.now().toString(36)), destination_id: $('h-dest').value,
       year: yv ? Number(yv) : null, month: wv[0] === 'm' ? Number(wv.slice(1)) : null, season: wv[0] === 's' ? wv.slice(1) : null,
-      nights: Math.max(0, Number($('h-nights').value) || 0), overall: Number($('h-overall').value), likes: [], pains: [], note: $('h-note').value.trim() };
+      nights: Math.max(0, Number($('h-nights').value) || 0), overall: Number($('h-overall').value), likes: [], pains: [], details: collectDetails(), note: $('h-note').value.trim() };
     C.AXIS_KEYS.forEach(function (k) {
       var l = document.querySelector('[data-like="' + k + '"]').value, p = document.querySelector('[data-pain="' + k + '"]').value;
       if (l) trip.likes.push(l === 'x' ? { axis: k } : { axis: k, severity: Number(l) });
@@ -1067,6 +1167,14 @@
       return '<div class="trip"><b>' + esc(destName(h.destination_id)) + '</b> <span class="muted small">' + esc(C.whenLabel(h)) + ' · ' + h.nights + '박 · 만족 ' + h.overall + '/5</span>' +
         '<div>' + (h.likes || []).map(function (l) { return '<span class="pill like">+' + C.AXIS_LABEL[l.axis] + (l.severity ? ' ' + l.severity : '') + '</span>'; }).join('') +
         (h.pains || []).map(function (p) { return '<span class="pill ' + (p.cause === 'place' ? 'pain' : 'dim') + '">−' + C.AXIS_LABEL[p.axis] + ' ' + p.severity + ' · ' + CAUSE_LABEL[p.cause] + '</span>'; }).join('') + '</div>' +
+        Object.keys(h.details || {}).map(function (k) {
+          var d = h.details[k], parts = [];
+          if (d.info) parts.push(d.info.map(esc).join('·'));
+          if (d.good) parts.push('<span class="ok">+' + d.good.map(esc).join(', ') + '</span>');
+          if (d.bad) parts.push('<span class="no">−' + d.bad.map(esc).join(', ') + '</span>');
+          if (d.memo) parts.push('“' + esc(d.memo) + '”');
+          return '<div class="dline"><b>' + C.AXIS_LABEL[k] + '</b> ' + parts.join(' · ') + '</div>';
+        }).join('') +
         (h.note ? '<div class="small muted">' + esc(h.note) + '</div>' : '') +
         '<button class="btn sm" data-act="edit" data-id="' + esc(h.id) + '">편집</button><button class="btn sm danger" data-act="del" data-id="' + esc(h.id) + '">삭제</button></div>';
     }).join('') : '<div class="muted small">아직 기록이 없습니다. 정리한 이력을 데이터 탭에서 import 해도 됩니다.</div>';
