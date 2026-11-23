@@ -178,9 +178,41 @@ const ATTRS = {
   phuket:[0,0,1,1,1,7,0,0,0], cebu:[0,0,1,0,1,6,0,1,0], singapore:[0,0,0,0,0,4,0,0,0], kotakinabalu:[0,0,0,0,0,5,0,0,0],
   bali:[1,0,1,0,1,10,0,0,0],
 };
+
+// 숙소·음식 선택지. [stay_variety 0~2, 숙소 유형 코드, food_variety 0~2, 음식 종류 코드]
+// 숙소: H 호텔 · R 리조트 · P 펜션 · K 한옥·게하 · C 캠핑·글램핑
+// 음식: S 해산물 · M 고기 · K 향토·한식 · T 시장 · C 카페·디저트 · N 면·분식 · L 현지 음식(해외)
+const CHOICES = {
+  gangneung:[2,'HRPK',2,'SKTCN'], sokcho:[2,'HRP',2,'STN'], yangyang:[1,'RPC',1,'SC'], chuncheon:[1,'HPC',1,'MN'],
+  pyeongchang:[1,'RPC',1,'MK'], jeongseon:[1,'RP',1,'KTN'], samcheok:[1,'RPC',1,'S'], donghae:[1,'HP',1,'ST'],
+  hongcheon:[1,'RPC',1,'M'], inje:[0,'PC',0,'K'], cheorwon:[0,'PC',0,'K'], gapyeong:[2,'RPC',1,'MC'],
+  yangpyeong:[1,'PC',1,'CK'], ganghwa:[1,'PCK',1,'SKT'], yeongjong:[2,'HRP',1,'SN'], suwon:[2,'H',2,'MTC'],
+  paju:[1,'HPC',1,'CK'], pocheon:[1,'RPC',1,'MK'], daebudo:[1,'PC',1,'SN'], danyang:[1,'RPC',1,'K'],
+  jecheon:[1,'RP',1,'KT'], chungju:[1,'RH',1,'K'], gongju:[1,'HK',1,'K'], buyeo:[1,'RK',1,'K'],
+  taean:[1,'PRC',1,'S'], boryeong:[1,'HRP',1,'S'], asan:[1,'H',1,'K'], cheongju:[1,'H',1,'MK'],
+  jeonju:[2,'HK',2,'KTCN'], gunsan:[1,'HK',1,'NCS'], yeosu:[2,'HRP',2,'ST'], suncheon:[1,'HK',1,'KT'],
+  damyang:[1,'PK',1,'MK'], mokpo:[1,'H',2,'STK'], namwon:[0,'HK',1,'K'], gwangju:[2,'H',2,'MKT'],
+  boseong:[0,'PK',0,'SK'], haenam:[0,'PK',1,'KS'], gochang:[0,'PC',1,'SK'], gyeongju:[2,'HRK',2,'KCN'],
+  andong:[1,'HK',1,'KM'], busan_haeundae:[2,'HR',2,'SMTC'], busan_old:[2,'H',2,'STNK'], tongyeong:[1,'HRP',2,'ST'],
+  geoje:[1,'RP',1,'S'], namhae:[1,'PRK',1,'S'], jinju:[1,'H',1,'KN'], pohang:[1,'HP',2,'ST'],
+  yeongdeok:[0,'P',1,'S'], uljin:[0,'RP',1,'S'], daegu:[2,'H',2,'MTN'], ulsan:[1,'H',1,'MS'],
+  mungyeong:[0,'PK',1,'MK'], hadong:[0,'PK',1,'SK'], changwon:[1,'H',1,'S'], ulleung:[0,'HP',1,'SK'],
+  jeju_city:[2,'HRPK',2,'SMTCN'], seogwipo:[2,'HRP',2,'SMTC'], jeju_east:[2,'PRKC',2,'SC'], yeongwol:[0,'PC',0,'K'],
+  everland:[1,'HR',1,'N'], caribbean:[1,'HR',1,'N'], lotteworld:[2,'H',2,'NC'], seoulland:[1,'H',1,'N'],
+  legoland:[1,'HP',1,'MN'], lotte_busan:[1,'HR',1,'S'], gyeongjuworld:[1,'HR',1,'K'], eworld:[1,'H',1,'M'],
+  folkvillage:[1,'H',1,'K'], gm_cave:[1,'H',1,'N'], aqua_ilsan:[1,'H',1,'N'], cimer:[2,'HR',1,'C'],
+  tokyo:[2,'HK',2,'LNCM'], osaka:[2,'HK',2,'LNTM'], kyoto:[2,'HK',2,'LC'], fukuoka:[2,'H',2,'LNT'],
+  sapporo:[2,'H',2,'LSN'], okinawa:[2,'RH',1,'LS'], taipei:[2,'H',2,'LNTC'], hongkong:[1,'H',2,'LNS'],
+  danang:[2,'RH',2,'LST'], nhatrang:[2,'RH',1,'LS'], bangkok:[2,'H',2,'LTNC'], chiangmai:[2,'HKR',2,'LCT'],
+  phuket:[2,'RH',1,'LS'], cebu:[1,'R',1,'LS'], singapore:[2,'H',2,'LTN'], kotakinabalu:[1,'RH',1,'SLT'],
+  bali:[2,'RHK',2,'LC'],
+};
 function attrsOf(id) {
   const row = ATTRS[id]; if (!row) throw new Error('attrs missing: ' + id);
-  const o = {}; ATTR_KEYS.forEach((k, i) => { o[k] = ATTR_BOOL[k] ? !!row[i] : row[i]; }); return o;
+  const o = {}; ATTR_KEYS.forEach((k, i) => { o[k] = ATTR_BOOL[k] ? !!row[i] : row[i]; });
+  const ch = CHOICES[id]; if (!ch) throw new Error('choices missing: ' + id);
+  o.stay_variety = ch[0]; o.stay_types = ch[1].split(''); o.food_variety = ch[2]; o.food_kinds = ch[3].split('');
+  return o;
 }
 
 const AXES_ORDER = ['drive','crowd','food','nature','city','walk','stay','weather','value','activity'];
@@ -229,7 +261,7 @@ const destinations = [
 const ids = new Set();
 for (const d of destinations) { if (ids.has(d.id)) throw new Error('dup ' + d.id); ids.add(d.id); }
 
-const seed = { schema_version: 3, exported_at: new Date().toISOString(), destinations };
+const seed = { schema_version: 4, exported_at: new Date().toISOString(), destinations };
 const out = path.join(__dirname, '..', 'data', 'seed.json');
 fs.mkdirSync(path.dirname(out), { recursive: true });
 fs.writeFileSync(out, JSON.stringify(seed, null, 1) + '\n');

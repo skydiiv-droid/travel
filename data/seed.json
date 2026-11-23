@@ -1,6 +1,6 @@
 {
- "schema_version": 3,
- "exported_at": "2026-11-23T02:28:56.372Z",
+ "schema_version": 4,
+ "exported_at": "2026-11-23T03:03:53.145Z",
  "destinations": [
   {
    "id": "gangneung",
@@ -84,7 +84,22 @@
     "content_nights": 2,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": true
+    "waiting_heavy": true,
+    "stay_variety": 2,
+    "stay_types": [
+     "H",
+     "R",
+     "P",
+     "K"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "S",
+     "K",
+     "T",
+     "C",
+     "N"
+    ]
    },
    "travel_time": {
     "work": 200,
@@ -179,7 +194,19 @@
     "content_nights": 2,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 2,
+    "stay_types": [
+     "H",
+     "R",
+     "P"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "S",
+     "T",
+     "N"
+    ]
    },
    "travel_time": {
     "work": 200,
@@ -273,7 +300,18 @@
     "content_nights": 2,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "R",
+     "P",
+     "C"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "S",
+     "C"
+    ]
    },
    "travel_time": {
     "work": 190,
@@ -368,7 +406,18 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "H",
+     "P",
+     "C"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "M",
+     "N"
+    ]
    },
    "travel_time": {
     "work": 120,
@@ -463,7 +512,18 @@
     "content_nights": 2,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "R",
+     "P",
+     "C"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "M",
+     "K"
+    ]
    },
    "travel_time": {
     "work": 175,
@@ -558,7 +618,18 @@
     "content_nights": 2,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "R",
+     "P"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "K",
+     "T",
+     "N"
+    ]
    },
    "travel_time": {
     "work": 220,
@@ -653,7 +724,17 @@
     "content_nights": 1,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "R",
+     "P",
+     "C"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "S"
+    ]
    },
    "travel_time": {
     "work": 260,
@@ -747,7 +828,17 @@
     "content_nights": 1,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "H",
+     "P"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "S",
+     "T"
+    ]
    },
    "travel_time": {
     "work": 240,
@@ -841,7 +932,17 @@
     "content_nights": 2,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "R",
+     "P",
+     "C"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "M"
+    ]
    },
    "travel_time": {
     "work": 130,
@@ -935,7 +1036,16 @@
     "content_nights": 1,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 0,
+    "stay_types": [
+     "P",
+     "C"
+    ],
+    "food_variety": 0,
+    "food_kinds": [
+     "K"
+    ]
    },
    "travel_time": {
     "work": 170,
@@ -1029,7 +1139,16 @@
     "content_nights": 1,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 0,
+    "stay_types": [
+     "P",
+     "C"
+    ],
+    "food_variety": 0,
+    "food_kinds": [
+     "K"
+    ]
    },
    "travel_time": {
     "work": 120,
@@ -1124,7 +1243,18 @@
     "content_nights": 2,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 2,
+    "stay_types": [
+     "R",
+     "P",
+     "C"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "M",
+     "C"
+    ]
    },
    "travel_time": {
     "work": 95,
@@ -1219,7 +1349,17 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "P",
+     "C"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "C",
+     "K"
+    ]
    },
    "travel_time": {
     "work": 90,
@@ -1314,7 +1454,19 @@
     "content_nights": 1,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "P",
+     "C",
+     "K"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "S",
+     "K",
+     "T"
+    ]
    },
    "travel_time": {
     "work": 35,
@@ -1408,7 +1560,18 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 2,
+    "stay_types": [
+     "H",
+     "R",
+     "P"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "S",
+     "N"
+    ]
    },
    "travel_time": {
     "work": 35,
@@ -1503,7 +1666,17 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": true
+    "waiting_heavy": true,
+    "stay_variety": 2,
+    "stay_types": [
+     "H"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "M",
+     "T",
+     "C"
+    ]
    },
    "travel_time": {
     "work": 75,
@@ -1598,7 +1771,18 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "H",
+     "P",
+     "C"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "C",
+     "K"
+    ]
    },
    "travel_time": {
     "work": 40,
@@ -1693,7 +1877,18 @@
     "content_nights": 1,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "R",
+     "P",
+     "C"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "M",
+     "K"
+    ]
    },
    "travel_time": {
     "work": 95,
@@ -1788,7 +1983,17 @@
     "content_nights": 1,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "P",
+     "C"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "S",
+     "N"
+    ]
    },
    "travel_time": {
     "work": 80,
@@ -1883,7 +2088,17 @@
     "content_nights": 1,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "R",
+     "P",
+     "C"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "K"
+    ]
    },
    "travel_time": {
     "work": 180,
@@ -1978,7 +2193,17 @@
     "content_nights": 1,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "R",
+     "P"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "K",
+     "T"
+    ]
    },
    "travel_time": {
     "work": 160,
@@ -2073,7 +2298,16 @@
     "content_nights": 1,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "R",
+     "H"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "K"
+    ]
    },
    "travel_time": {
     "work": 140,
@@ -2167,7 +2401,16 @@
     "content_nights": 1,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "H",
+     "K"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "K"
+    ]
    },
    "travel_time": {
     "work": 135,
@@ -2261,7 +2504,16 @@
     "content_nights": 1,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "R",
+     "K"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "K"
+    ]
    },
    "travel_time": {
     "work": 155,
@@ -2356,7 +2608,17 @@
     "content_nights": 2,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "P",
+     "R",
+     "C"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "S"
+    ]
    },
    "travel_time": {
     "work": 150,
@@ -2451,7 +2713,17 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "H",
+     "R",
+     "P"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "S"
+    ]
    },
    "travel_time": {
     "work": 145,
@@ -2545,7 +2817,15 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "H"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "K"
+    ]
    },
    "travel_time": {
     "work": 95,
@@ -2639,7 +2919,16 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "H"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "M",
+     "K"
+    ]
    },
    "travel_time": {
     "work": 125,
@@ -2734,7 +3023,19 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": true
+    "waiting_heavy": true,
+    "stay_variety": 2,
+    "stay_types": [
+     "H",
+     "K"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "K",
+     "T",
+     "C",
+     "N"
+    ]
    },
    "travel_time": {
     "work": 165,
@@ -2829,7 +3130,18 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "H",
+     "K"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "N",
+     "C",
+     "S"
+    ]
    },
    "travel_time": {
     "work": 175,
@@ -2925,7 +3237,18 @@
     "content_nights": 2,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": true
+    "waiting_heavy": true,
+    "stay_variety": 2,
+    "stay_types": [
+     "H",
+     "R",
+     "P"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "S",
+     "T"
+    ]
    },
    "travel_time": {
     "work": 190,
@@ -3019,7 +3342,17 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "H",
+     "K"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "K",
+     "T"
+    ]
    },
    "travel_time": {
     "work": 225,
@@ -3113,7 +3446,17 @@
     "content_nights": 1,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "P",
+     "K"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "M",
+     "K"
+    ]
    },
    "travel_time": {
     "work": 205,
@@ -3208,7 +3551,17 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "H"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "S",
+     "T",
+     "K"
+    ]
    },
    "travel_time": {
     "work": 205,
@@ -3302,7 +3655,16 @@
     "content_nights": 1,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 0,
+    "stay_types": [
+     "H",
+     "K"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "K"
+    ]
    },
    "travel_time": {
     "work": 195,
@@ -3397,7 +3759,17 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 2,
+    "stay_types": [
+     "H"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "M",
+     "K",
+     "T"
+    ]
    },
    "travel_time": {
     "work": 165,
@@ -3491,7 +3863,17 @@
     "content_nights": 1,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 0,
+    "stay_types": [
+     "P",
+     "K"
+    ],
+    "food_variety": 0,
+    "food_kinds": [
+     "S",
+     "K"
+    ]
    },
    "travel_time": {
     "work": 255,
@@ -3586,7 +3968,17 @@
     "content_nights": 2,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 0,
+    "stay_types": [
+     "P",
+     "K"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "K",
+     "S"
+    ]
    },
    "travel_time": {
     "work": 285,
@@ -3681,7 +4073,17 @@
     "content_nights": 1,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 0,
+    "stay_types": [
+     "P",
+     "C"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "S",
+     "K"
+    ]
    },
    "travel_time": {
     "work": 195,
@@ -3776,7 +4178,19 @@
     "content_nights": 2,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": true
+    "waiting_heavy": true,
+    "stay_variety": 2,
+    "stay_types": [
+     "H",
+     "R",
+     "K"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "K",
+     "C",
+     "N"
+    ]
    },
    "travel_time": {
     "work": 200,
@@ -3870,7 +4284,17 @@
     "content_nights": 1,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "H",
+     "K"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "K",
+     "M"
+    ]
    },
    "travel_time": {
     "work": 200,
@@ -3966,7 +4390,19 @@
     "content_nights": 3,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": true
+    "waiting_heavy": true,
+    "stay_variety": 2,
+    "stay_types": [
+     "H",
+     "R"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "S",
+     "M",
+     "T",
+     "C"
+    ]
    },
    "travel_time": {
     "work": 185,
@@ -4061,7 +4497,18 @@
     "content_nights": 2,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": true
+    "waiting_heavy": true,
+    "stay_variety": 2,
+    "stay_types": [
+     "H"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "S",
+     "T",
+     "N",
+     "K"
+    ]
    },
    "travel_time": {
     "work": 180,
@@ -4156,7 +4603,18 @@
     "content_nights": 2,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "H",
+     "R",
+     "P"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "S",
+     "T"
+    ]
    },
    "travel_time": {
     "work": 255,
@@ -4250,7 +4708,16 @@
     "content_nights": 2,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "R",
+     "P"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "S"
+    ]
    },
    "travel_time": {
     "work": 235,
@@ -4344,7 +4811,17 @@
     "content_nights": 2,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "P",
+     "R",
+     "K"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "S"
+    ]
    },
    "travel_time": {
     "work": 245,
@@ -4438,7 +4915,16 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "H"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "K",
+     "N"
+    ]
    },
    "travel_time": {
     "work": 215,
@@ -4533,7 +5019,17 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "H",
+     "P"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "S",
+     "T"
+    ]
    },
    "travel_time": {
     "work": 190,
@@ -4627,7 +5123,15 @@
     "content_nights": 1,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 0,
+    "stay_types": [
+     "P"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "S"
+    ]
    },
    "travel_time": {
     "work": 260,
@@ -4722,7 +5226,16 @@
     "content_nights": 1,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 0,
+    "stay_types": [
+     "R",
+     "P"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "S"
+    ]
    },
    "travel_time": {
     "work": 260,
@@ -4817,7 +5330,17 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 2,
+    "stay_types": [
+     "H"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "M",
+     "T",
+     "N"
+    ]
    },
    "travel_time": {
     "work": 170,
@@ -4911,7 +5434,16 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "H"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "M",
+     "S"
+    ]
    },
    "travel_time": {
     "work": 185,
@@ -5005,7 +5537,17 @@
     "content_nights": 1,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 0,
+    "stay_types": [
+     "P",
+     "K"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "M",
+     "K"
+    ]
    },
    "travel_time": {
     "work": 165,
@@ -5100,7 +5642,17 @@
     "content_nights": 1,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 0,
+    "stay_types": [
+     "P",
+     "K"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "S",
+     "K"
+    ]
    },
    "travel_time": {
     "work": 245,
@@ -5194,7 +5746,15 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": true
+    "waiting_heavy": true,
+    "stay_variety": 1,
+    "stay_types": [
+     "H"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "S"
+    ]
    },
    "travel_time": {
     "work": 225,
@@ -5289,7 +5849,17 @@
     "content_nights": 3,
     "early_close": true,
     "cancel_risk": true,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 0,
+    "stay_types": [
+     "H",
+     "P"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "S",
+     "K"
+    ]
    },
    "travel_time": {
     "work": 440,
@@ -5384,7 +5954,22 @@
     "content_nights": 3,
     "early_close": false,
     "cancel_risk": true,
-    "waiting_heavy": true
+    "waiting_heavy": true,
+    "stay_variety": 2,
+    "stay_types": [
+     "H",
+     "R",
+     "P",
+     "K"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "S",
+     "M",
+     "T",
+     "C",
+     "N"
+    ]
    },
    "travel_time": {
     "work": 175,
@@ -5479,7 +6064,20 @@
     "content_nights": 3,
     "early_close": false,
     "cancel_risk": true,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 2,
+    "stay_types": [
+     "H",
+     "R",
+     "P"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "S",
+     "M",
+     "T",
+     "C"
+    ]
    },
    "travel_time": {
     "work": 220,
@@ -5574,7 +6172,19 @@
     "content_nights": 3,
     "early_close": true,
     "cancel_risk": true,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 2,
+    "stay_types": [
+     "P",
+     "R",
+     "K",
+     "C"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "S",
+     "C"
+    ]
    },
    "travel_time": {
     "work": 215,
@@ -5669,7 +6279,16 @@
     "content_nights": 1,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 0,
+    "stay_types": [
+     "P",
+     "C"
+    ],
+    "food_variety": 0,
+    "food_kinds": [
+     "K"
+    ]
    },
    "travel_time": {
     "work": 180,
@@ -5762,7 +6381,16 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": true
+    "waiting_heavy": true,
+    "stay_variety": 1,
+    "stay_types": [
+     "H",
+     "R"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "N"
+    ]
    },
    "travel_time": {
     "work": 90,
@@ -5855,7 +6483,16 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": true
+    "waiting_heavy": true,
+    "stay_variety": 1,
+    "stay_types": [
+     "H",
+     "R"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "N"
+    ]
    },
    "travel_time": {
     "work": 90,
@@ -5949,7 +6586,16 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": true
+    "waiting_heavy": true,
+    "stay_variety": 2,
+    "stay_types": [
+     "H"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "N",
+     "C"
+    ]
    },
    "travel_time": {
     "work": 80,
@@ -6042,7 +6688,15 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "H"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "N"
+    ]
    },
    "travel_time": {
     "work": 65,
@@ -6135,7 +6789,17 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "H",
+     "P"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "M",
+     "N"
+    ]
    },
    "travel_time": {
     "work": 120,
@@ -6228,7 +6892,16 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "H",
+     "R"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "S"
+    ]
    },
    "travel_time": {
     "work": 200,
@@ -6322,7 +6995,16 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "H",
+     "R"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "K"
+    ]
    },
    "travel_time": {
     "work": 200,
@@ -6416,7 +7098,15 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "H"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "M"
+    ]
    },
    "travel_time": {
     "work": 170,
@@ -6510,7 +7200,15 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "H"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "K"
+    ]
    },
    "travel_time": {
     "work": 80,
@@ -6604,7 +7302,15 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "H"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "N"
+    ]
    },
    "travel_time": {
     "work": 50,
@@ -6698,7 +7404,15 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "H"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "N"
+    ]
    },
    "travel_time": {
     "work": 40,
@@ -6793,7 +7507,16 @@
     "content_nights": 1,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 2,
+    "stay_types": [
+     "H",
+     "R"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "C"
+    ]
    },
    "travel_time": {
     "work": 35,
@@ -6888,7 +7611,19 @@
     "content_nights": 5,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": true
+    "waiting_heavy": true,
+    "stay_variety": 2,
+    "stay_types": [
+     "H",
+     "K"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "L",
+     "N",
+     "C",
+     "M"
+    ]
    },
    "travel_time": {
     "work": 300,
@@ -6983,7 +7718,19 @@
     "content_nights": 4,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": true
+    "waiting_heavy": true,
+    "stay_variety": 2,
+    "stay_types": [
+     "H",
+     "K"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "L",
+     "N",
+     "T",
+     "M"
+    ]
    },
    "travel_time": {
     "work": 270,
@@ -7078,7 +7825,17 @@
     "content_nights": 3,
     "early_close": true,
     "cancel_risk": false,
-    "waiting_heavy": true
+    "waiting_heavy": true,
+    "stay_variety": 2,
+    "stay_types": [
+     "H",
+     "K"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "L",
+     "C"
+    ]
    },
    "travel_time": {
     "work": 330,
@@ -7173,7 +7930,17 @@
     "content_nights": 3,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 2,
+    "stay_types": [
+     "H"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "L",
+     "N",
+     "T"
+    ]
    },
    "travel_time": {
     "work": 265,
@@ -7268,7 +8035,17 @@
     "content_nights": 4,
     "early_close": false,
     "cancel_risk": true,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 2,
+    "stay_types": [
+     "H"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "L",
+     "S",
+     "N"
+    ]
    },
    "travel_time": {
     "work": 395,
@@ -7363,7 +8140,17 @@
     "content_nights": 4,
     "early_close": false,
     "cancel_risk": true,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 2,
+    "stay_types": [
+     "R",
+     "H"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "L",
+     "S"
+    ]
    },
    "travel_time": {
     "work": 350,
@@ -7457,7 +8244,18 @@
     "content_nights": 4,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 2,
+    "stay_types": [
+     "H"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "L",
+     "N",
+     "T",
+     "C"
+    ]
    },
    "travel_time": {
     "work": 310,
@@ -7552,7 +8350,17 @@
     "content_nights": 3,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": true
+    "waiting_heavy": true,
+    "stay_variety": 1,
+    "stay_types": [
+     "H"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "L",
+     "N",
+     "S"
+    ]
    },
    "travel_time": {
     "work": 430,
@@ -7647,7 +8455,18 @@
     "content_nights": 5,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 2,
+    "stay_types": [
+     "R",
+     "H"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "L",
+     "S",
+     "T"
+    ]
    },
    "travel_time": {
     "work": 490,
@@ -7742,7 +8561,17 @@
     "content_nights": 5,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 2,
+    "stay_types": [
+     "R",
+     "H"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "L",
+     "S"
+    ]
    },
    "travel_time": {
     "work": 535,
@@ -7837,7 +8666,18 @@
     "content_nights": 6,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 2,
+    "stay_types": [
+     "H"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "L",
+     "T",
+     "N",
+     "C"
+    ]
    },
    "travel_time": {
     "work": 555,
@@ -7932,7 +8772,19 @@
     "content_nights": 10,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 2,
+    "stay_types": [
+     "H",
+     "K",
+     "R"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "L",
+     "C",
+     "T"
+    ]
    },
    "travel_time": {
     "work": 530,
@@ -8027,7 +8879,17 @@
     "content_nights": 7,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 2,
+    "stay_types": [
+     "R",
+     "H"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "L",
+     "S"
+    ]
    },
    "travel_time": {
     "work": 605,
@@ -8122,7 +8984,16 @@
     "content_nights": 6,
     "early_close": false,
     "cancel_risk": true,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "R"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "L",
+     "S"
+    ]
    },
    "travel_time": {
     "work": 485,
@@ -8217,7 +9088,17 @@
     "content_nights": 4,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 2,
+    "stay_types": [
+     "H"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "L",
+     "T",
+     "N"
+    ]
    },
    "travel_time": {
     "work": 575,
@@ -8312,7 +9193,18 @@
     "content_nights": 5,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 1,
+    "stay_types": [
+     "R",
+     "H"
+    ],
+    "food_variety": 1,
+    "food_kinds": [
+     "S",
+     "L",
+     "T"
+    ]
    },
    "travel_time": {
     "work": 485,
@@ -8407,7 +9299,18 @@
     "content_nights": 10,
     "early_close": false,
     "cancel_risk": false,
-    "waiting_heavy": false
+    "waiting_heavy": false,
+    "stay_variety": 2,
+    "stay_types": [
+     "R",
+     "H",
+     "K"
+    ],
+    "food_variety": 2,
+    "food_kinds": [
+     "L",
+     "C"
+    ]
    },
    "travel_time": {
     "work": 650,
