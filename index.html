@@ -1237,7 +1237,11 @@
   (function () {
     var byId = {}; (SEED.destinations || []).forEach(function (d) { byId[d.id] = d; });
     var filled = 0;
-    data.destinations.forEach(function (d) { if (!d.attrs && byId[d.id] && byId[d.id].attrs) { d.attrs = JSON.parse(JSON.stringify(byId[d.id].attrs)); filled++; } });
+    data.destinations.forEach(function (d) {
+      var sa = byId[d.id] && byId[d.id].attrs; if (!sa) return;
+      d.attrs = d.attrs || {};
+      Object.keys(sa).forEach(function (k) { if (d.attrs[k] == null) { d.attrs[k] = JSON.parse(JSON.stringify(sa[k])); filled++; } });
+    });
     if (filled) save();
   })();
   data.settings = C.mergeSettings(data.settings);
