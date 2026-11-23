@@ -994,6 +994,13 @@
     return { schema_version: C.SCHEMA_VERSION, destinations: seedDestinations(), history: [], settings: {} };
   })();
   data.history = (data.history || []).map(C.normalizeTrip); data.schema_version = C.SCHEMA_VERSION;
+  // 예전 버전에서 저장된 여행지에 속성(attrs)이 없으면 같은 id 의 시드 값으로 채움 (점수 등 다른 값은 건드리지 않음)
+  (function () {
+    var byId = {}; (SEED.destinations || []).forEach(function (d) { byId[d.id] = d; });
+    var filled = 0;
+    data.destinations.forEach(function (d) { if (!d.attrs && byId[d.id] && byId[d.id].attrs) { d.attrs = JSON.parse(JSON.stringify(byId[d.id].attrs)); filled++; } });
+    if (filled) save();
+  })();
   data.settings = C.mergeSettings(data.settings);
   function save() { if (!lsSet(KEY, JSON.stringify(data))) toastStorage(); }
   var storageWarned = false;
