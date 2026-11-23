@@ -64,5 +64,15 @@ const r1 = C.recommend(data, { departure: dep, origin: 'home', deadline: C.at('2
 check('1박 + 해외 항상 보기: 해외 표시, 최소박수 경고', r1.overseasShown && r1.overseasAll.length > 0 && r1.overseasAll.every(x => x.warnings.some(t => t.indexOf('권장') >= 0)), r1.overseasAll.length + '곳');
 check('더 보기용 전체 목록 제공', r2.domesticAll.length === r2.domesticCount && r2.domesticAll.length > 5);
 
+// 7) 과거 기록 시기: 월/계절/모름 + v1(date) 이전
+const legacy = C.validateData({ schema_version: 1, history: [{ id: 'a', destination_id: 'gyeongju', date: '2024-10-03', nights: 1, overall: 4 }] }, { destinations: seed.destinations });
+check('v1 date → year·month 로 변환', legacy.ok && legacy.layers.history[0].year === 2024 && legacy.layers.history[0].month === 10 && !('date' in legacy.layers.history[0]));
+const v2 = C.validateData({ schema_version: 2, history: [
+  { id: 'a', destination_id: 'gyeongju', year: null, month: null, season: 'summer', nights: 1, overall: 4 },
+  { id: 'b', destination_id: 'gyeongju', year: null, month: null, season: null, nights: 1, overall: 4 }] }, { destinations: seed.destinations });
+check('계절만 / 기억 안 남 기록 허용', v2.ok, v2.errors.join(' / '));
+check('시기 라벨', C.whenLabel(v2.layers.history[0]) === '여름' && C.whenLabel(v2.layers.history[1]) === '시기 모름' && C.whenLabel(legacy.layers.history[0]) === '2024년 10월');
+check('잘못된 계절 값 차단', !C.validateData({ schema_version: 2, history: [{ id: 'a', destination_id: 'x', season: 'rainy', nights: 1, overall: 3 }] }, { destinations: [] }).ok);
+
 console.log(fail ? `\n${fail} FAILED` : '\nALL PASSED');
 process.exit(fail ? 1 : 0);

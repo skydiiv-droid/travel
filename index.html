@@ -197,8 +197,12 @@
     <h2 id="h-form-title">여행 기록 추가</h2>
     <label class="f">여행지</label>
     <select id="h-dest"></select>
-    <div class="row3">
-      <div><label class="f">날짜</label><input type="date" id="h-date"></div>
+    <div class="row">
+      <div><label class="f">연도</label><select id="h-year"></select></div>
+      <div><label class="f">시기 (월 또는 계절)</label><select id="h-when"></select></div>
+    </div>
+    <label class="switch"><input type="checkbox" id="h-unknown"> 언제 갔는지 기억 안 남</label>
+    <div class="row">
       <div><label class="f">박수</label><input type="number" id="h-nights" min="0" inputmode="numeric" value="1"></div>
       <div><label class="f">전체 만족</label>
         <select id="h-overall"><option>5</option><option>4</option><option selected>3</option><option>2</option><option>1</option></select></div>
@@ -323,7 +327,32 @@
 <script id="core">
 (function (root) {
   'use strict';
-  var SCHEMA_VERSION = 1;
+  var SCHEMA_VERSION = 2; // v2: history.date → year / month / season (모두 선택)
+  var SEASONS = { spring: '봄', summer: '여름', autumn: '가을', winter: '겨울' };
+  var SEASON_MID = { spring: 4, summer: 7, autumn: 10, winter: 1 };
+  // 과거 기록 시기 정규화. v1 의 date(YYYY-MM-DD)는 year·month 로 옮긴다.
+  function normalizeTrip(h) {
+    var t = {}; Object.keys(h || {}).forEach(function (k) { t[k] = h[k]; });
+    if (typeof t.date === 'string' && /^\d{4}-\d{2}/.test(t.date)) {
+      if (t.year == null) t.year = Number(t.date.slice(0, 4));
+      if (t.month == null && t.season == null) t.month = Number(t.date.slice(5, 7));
+    }
+    delete t.date;
+    t.year = isNum(t.year) ? t.year : null;
+    t.month = isNum(t.month) && t.month >= 1 && t.month <= 12 ? t.month : null;
+    t.season = t.month == null && SEASONS[t.season] ? t.season : null;
+    return t;
+  }
+  function whenLabel(h) {
+    var p = h.month ? h.month + '월' : h.season ? SEASONS[h.season] : '';
+    if (h.year && p) return h.year + '년 ' + p;
+    if (h.year) return h.year + '년';
+    return p || '시기 모름';
+  }
+  function whenSortKey(h) {
+    if (!h.year && !h.month && !h.season) return -1;
+    return (h.year || 0) * 100 + (h.month || SEASON_MID[h.season] || 0);
+  }
   var AXES = [
     { key: 'move', label: '이동 피로', hint: '편함' },
     { key: 'drive', label: '운전 부담', hint: '적음' },
@@ -614,7 +643,11 @@
           if (!h.id) errors.push(tag + ': id 없음'); else if (hs[h.id]) errors.push(tag + ': id 중복'); else hs[h.id] = true;
           if (!h.destination_id) errors.push(tag + ': destination_id 없음');
           else if (!destIds[h.destination_id]) warnings.push(tag + ': 여행지 "' + h.destination_id + '" 가 목록에 없음');
-          if (!h.date || !/^\d{4}-\d{2}-\d{2}$/.test(h.date)) errors.push(tag + ': date 는 YYYY-MM-DD');
+          if (h.date != null && !/^\d{4}-\d{2}(-\d{2})?$/.test(h.date)) errors.push(tag + ': date 는 YYYY-MM-DD (구버전 형식, 생략 가능)');
+          if (h.year != null && (!isNum(h.year) || h.year < 1990 || h.year > 2100)) errors.push(tag + ': year 는 연도 숫자 또는 null');
+          if (h.month != null && (!isNum(h.month) || h.month < 1 || h.month > 12)) errors.push(tag + ': month 는 1~12 또는 null');
+          if (h.season != null && !SEASONS[h.season]) errors.push(tag + ': season 은 spring|summer|autumn|winter 또는 null');
+          if (h.month != null && h.season != null) warnings.push(tag + ': month 와 season 이 둘 다 있음(month 사용)');
           if (!isNum(h.nights) || h.nights < 0) errors.push(tag + ': nights 0 이상 숫자');
           if (!isNum(h.overall) || h.overall < 1 || h.overall > 5) errors.push(tag + ': overall 1~5');
           (h.likes || []).forEach(function (l, j) {
@@ -627,7 +660,7 @@
             if (CAUSES.indexOf(p.cause) < 0) errors.push(tag + '.pains[' + j + ']: cause 는 place|schedule|condition');
           });
         });
-        layers.history = obj.history;
+        layers.history = errors.length ? obj.history : obj.history.map(normalizeTrip);
       }
     }
     if ('settings' in obj) {
@@ -660,7 +693,7 @@
   function diffData(current, layers) {
     var r = {};
     if (layers.destinations) r.destinations = diffList(current.destinations, layers.destinations, function (d) { return d.name + ' (' + d.id + ')'; });
-    if (layers.history) r.history = diffList(current.history, layers.history, function (h) { return h.date + ' ' + h.destination_id; });
+    if (layers.history) r.history = diffList(current.history, layers.history, function (h) { return whenLabel(normalizeTrip(h)) + ' ' + h.destination_id; });
     if (layers.settings) {
       var a = mergeSettings(current.settings), b = mergeSettings(layers.settings), ch = [];
       Object.keys(DEFAULT_SETTINGS).forEach(function (k) {
@@ -678,7 +711,7 @@
     function near(a, b) { return Math.abs(a - b) < 1e-9; }
     function trips(n, painTrips) {
       var h = [];
-      for (var i = 0; i < n; i++) h.push({ id: 't' + i, destination_id: 'x', date: '2026-01-01', nights: 1, overall: 3, likes: [],
+      for (var i = 0; i < n; i++) h.push({ id: 't' + i, destination_id: 'x', year: null, month: null, season: null, nights: 1, overall: 3, likes: [],
         pains: i < painTrips ? [{ axis: 'crowd', severity: 3, cause: 'place' }] : [] });
       return h;
     }
@@ -709,6 +742,7 @@
   }
 
   var api = { SCHEMA_VERSION: SCHEMA_VERSION, AXES: AXES, AXIS_KEYS: AXIS_KEYS, AXIS_LABEL: AXIS_LABEL, ORIGIN_LABEL: ORIGIN_LABEL,
+    SEASONS: SEASONS, normalizeTrip: normalizeTrip, whenLabel: whenLabel, whenSortKey: whenSortKey,
     DEFAULT_SETTINGS: DEFAULT_SETTINGS, mergeSettings: mergeSettings, at: at, parseLocal: parseLocal, addMin: addMin,
     resolveDeparture: resolveDeparture, resolveDeadline: resolveDeadline, autoNights: autoNights, returnBy: returnBy,
     computeMultipliers: computeMultipliers, effectiveWeights: effectiveWeights, adjustedScores: adjustedScores,
@@ -738,7 +772,7 @@
     try { var d = JSON.parse(lsGet(KEY)); if (d && Array.isArray(d.destinations)) return d; } catch (e) {}
     return { schema_version: C.SCHEMA_VERSION, destinations: seedDestinations(), history: [], settings: {} };
   })();
-  data.history = data.history || [];
+  data.history = (data.history || []).map(C.normalizeTrip); data.schema_version = C.SCHEMA_VERSION;
   data.settings = C.mergeSettings(data.settings);
   function save() { if (!lsSet(KEY, JSON.stringify(data))) toastStorage(); }
   var storageWarned = false;
@@ -950,6 +984,16 @@
   function opts(list, v) { return list.map(function (o) { return '<option value="' + o[0] + '"' + (o[0] === v ? ' selected' : '') + '>' + o[1] + '</option>'; }).join(''); }
   function destName(id) { var d = data.destinations.filter(function (x) { return x.id === id; })[0]; return d ? d.name : id + ' (목록에 없음)'; }
 
+  (function () {
+    var y = today.getFullYear(), yo = '<option value="">연도 모름</option>';
+    for (var i = y; i >= y - 15; i--) yo += '<option value="' + i + '">' + i + '년</option>';
+    $('h-year').innerHTML = yo;
+    $('h-when').innerHTML = '<option value="">시기 모름</option><optgroup label="계절">' +
+      Object.keys(C.SEASONS).map(function (k) { return '<option value="s' + k + '">' + C.SEASONS[k] + '</option>'; }).join('') +
+      '</optgroup><optgroup label="월">' + [1,2,3,4,5,6,7,8,9,10,11,12].map(function (m) { return '<option value="m' + m + '">' + m + '월</option>'; }).join('') + '</optgroup>';
+  })();
+  function syncUnknown() { var u = $('h-unknown').checked; $('h-year').disabled = u; $('h-when').disabled = u; }
+  $('h-unknown').addEventListener('change', syncUnknown);
   function renderHistForm(trip) {
     var groups = { domestic: '국내', spot: '거점', overseas: '해외' };
     $('h-dest').innerHTML = Object.keys(groups).map(function (g) {
@@ -967,18 +1011,25 @@
           '<select data-cause="' + a.key + '">' + opts(CAUSE_OPTS, p ? p.cause : 'place') + '</select>';
       }).join('');
     if (trip) {
-      $('h-dest').value = trip.destination_id; $('h-date').value = trip.date; $('h-nights').value = trip.nights;
+      $('h-dest').value = trip.destination_id; $('h-nights').value = trip.nights;
+      $('h-year').value = trip.year ? String(trip.year) : '';
+      $('h-when').value = trip.month ? 'm' + trip.month : trip.season ? 's' + trip.season : '';
+      $('h-unknown').checked = !trip.year && !trip.month && !trip.season;
       $('h-overall').value = String(trip.overall); $('h-note').value = trip.note || '';
     } else {
-      $('h-date').value = ymd(today); $('h-nights').value = 1; $('h-overall').value = '3'; $('h-note').value = '';
+      $('h-year').value = ''; $('h-when').value = ''; $('h-unknown').checked = false; $('h-nights').value = 1; $('h-overall').value = '3'; $('h-note').value = '';
     }
+    syncUnknown();
     $('h-form-title').textContent = trip ? '여행 기록 편집' : '여행 기록 추가';
     $('h-cancel').style.display = trip ? '' : 'none';
   }
   $('h-save').addEventListener('click', function () {
-    var trip = { id: editingId || ('h' + Date.now().toString(36)), destination_id: $('h-dest').value, date: $('h-date').value,
+    var unk = $('h-unknown').checked, wv = unk ? '' : $('h-when').value, yv = unk ? '' : $('h-year').value;
+    if (!$('h-dest').value) { $('h-msg').innerHTML = '<div class="err">여행지를 고르세요.</div>'; return; }
+    if (!unk && !wv && !yv) { $('h-msg').innerHTML = '<div class="err">연도·시기를 고르거나 "기억 안 남"을 체크하세요.</div>'; return; }
+    var trip = { id: editingId || ('h' + Date.now().toString(36)), destination_id: $('h-dest').value,
+      year: yv ? Number(yv) : null, month: wv[0] === 'm' ? Number(wv.slice(1)) : null, season: wv[0] === 's' ? wv.slice(1) : null,
       nights: Math.max(0, Number($('h-nights').value) || 0), overall: Number($('h-overall').value), likes: [], pains: [], note: $('h-note').value.trim() };
-    if (!trip.destination_id || !trip.date) { $('h-msg').innerHTML = '<div class="err">여행지와 날짜를 입력하세요.</div>'; return; }
     C.AXIS_KEYS.forEach(function (k) {
       var l = document.querySelector('[data-like="' + k + '"]').value, p = document.querySelector('[data-pain="' + k + '"]').value;
       if (l) trip.likes.push(l === 'x' ? { axis: k } : { axis: k, severity: Number(l) });
@@ -1011,9 +1062,9 @@
           '</td><td class="num">' + x.m_like.toFixed(3) + '</td><td class="num"><b>' + x.m.toFixed(3) + '</b></td></tr>'; }).join('') + '</table>';
     if (!editingId) renderHistForm(null);
     $('h-count').textContent = data.history.length + '건';
-    var list = data.history.slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+    var list = data.history.slice().sort(function (a, b) { return C.whenSortKey(b) - C.whenSortKey(a); });
     $('h-list').innerHTML = list.length ? list.map(function (h) {
-      return '<div class="trip"><b>' + esc(destName(h.destination_id)) + '</b> <span class="muted small">' + esc(h.date) + ' · ' + h.nights + '박 · 만족 ' + h.overall + '/5</span>' +
+      return '<div class="trip"><b>' + esc(destName(h.destination_id)) + '</b> <span class="muted small">' + esc(C.whenLabel(h)) + ' · ' + h.nights + '박 · 만족 ' + h.overall + '/5</span>' +
         '<div>' + (h.likes || []).map(function (l) { return '<span class="pill like">+' + C.AXIS_LABEL[l.axis] + (l.severity ? ' ' + l.severity : '') + '</span>'; }).join('') +
         (h.pains || []).map(function (p) { return '<span class="pill ' + (p.cause === 'place' ? 'pain' : 'dim') + '">−' + C.AXIS_LABEL[p.axis] + ' ' + p.severity + ' · ' + CAUSE_LABEL[p.cause] + '</span>'; }).join('') + '</div>' +
         (h.note ? '<div class="small muted">' + esc(h.note) + '</div>' : '') +
@@ -1108,7 +1159,7 @@
     var b; try { b = JSON.parse(lsGet(BKEY)); } catch (e) {}
     if (!b || !b.data) return alert('백업이 없습니다.');
     if (!confirm(b.saved_at.slice(0, 16).replace('T', ' ') + ' (' + b.reason + ') 백업으로 되돌릴까요? 현재 상태와 백업이 서로 바뀝니다.')) return;
-    var cur = data; data = b.data; data.settings = C.mergeSettings(data.settings); data.history = data.history || [];
+    var cur = data; data = b.data; data.settings = C.mergeSettings(data.settings); data.history = (data.history || []).map(C.normalizeTrip);
     lsSet(BKEY, JSON.stringify({ saved_at: new Date().toISOString(), reason: '되돌리기 직전', data: cur }));
     save(); renderAll();
   });
