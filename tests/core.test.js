@@ -116,5 +116,16 @@ const v2rec = C.validateData({ schema_version: 2, history: [{ id: 'a', destinati
 check('v2 → v4 연쇄 변환 · 배수 유지', v2rec.ok && Math.abs(C.computeMultipliers(v2rec.layers.history).crowd.m - 1.25) < 1e-9 && v2rec.layers.history[0].context.go_modes[0] === 'train');
 check('v4 잘못된 평점·코드 차단', !C.validateData({ schema_version: 4, history: [{ id: 'a', destination_id: 'x', nights: 1, overall: 3, ratings: { stay_sat: 7 }, stay_types: ['Z'], context: { pre_shift: 'X' } }] }, { destinations: [] }).ok);
 
+// 9) v5: 가는 수단 / 현지 수단 분리, 차 필요 직접 확인
+const jejuTrip = T({ drive_fatigue: 3 }, {}, { pre_shift: 'O', go_modes: ['plane'], local_modes: ['rent'], car_verdict: 'no' }, { destination_id: 'jeju_city', year: 2025 });
+const nRule = T({ drive_fatigue: 5 }, { drive_fatigue: ['r_dr_shift'] }, { pre_shift: 'N', go_modes: ['car'] }, { destination_id: 'namhae', year: 2024 });
+const rJ = recWith([jejuTrip, nRule], 'N', ['jeju_city', 'seogwipo']);
+const jc = rJ.domesticAll.find(i => i.dest.id === 'jeju_city'), sg = rJ.domesticAll.find(i => i.dest.id === 'seogwipo');
+check('비행기+렌트 기록: "차 없어도 됨" 확인한 제주시는 N 조건 감점 없음, 서귀포(추정 필수)는 감점', jc.condPenalty === 0 && sg.condPenalty > 0 && jc.observed.car_needed === 0,
+  jc.condPenalty.toFixed(2) + ' / ' + sg.condPenalty.toFixed(2));
+const v4rent = C.validateData({ schema_version: 4, history: [{ id: 'a', destination_id: 'jeju_city', nights: 2, overall: 4, ratings: {}, context: { go_modes: ['plane', 'rent'] } }] }, { destinations: seed.destinations });
+check('v4 기록의 렌터카(가는 수단) → 현지 수단으로 이전', v4rent.ok && v4rent.layers.history[0].context.local_modes[0] === 'rent' && v4rent.layers.history[0].context.go_modes.join() === 'plane');
+check('잘못된 현지 수단·판정 차단', !C.validateData({ schema_version: 5, history: [{ id: 'a', destination_id: 'x', nights: 1, overall: 3, context: { local_modes: ['ufo'], car_verdict: 'maybe' } }] }, { destinations: [] }).ok);
+
 console.log(fail ? `\n${fail} FAILED` : '\nALL PASSED');
 process.exit(fail ? 1 : 0);

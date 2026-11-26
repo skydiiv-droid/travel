@@ -256,9 +256,13 @@
     <div class="seg" id="h-pre"></div>
     <label class="f">복귀 후 첫 근무</label>
     <div class="seg" id="h-post"></div>
-    <label class="f">가는 길 이동수단</label>
+    <label class="f">목적지까지 이동수단</label>
     <div id="h-modes"></div>
-    <div id="h-drive-box" style="display:none"><label class="f">운전 시간 (편도)</label><div class="seg" id="h-drive"></div></div>
+    <div id="h-drive-box" style="display:none"><label class="f">가는 길 운전 시간 (편도)</label><div class="seg" id="h-drive"></div></div>
+    <label class="f">목적지 안에서 이동수단</label>
+    <div id="h-local"></div>
+    <label class="f">다녀보니 이곳은 차가… <span class="muted small">(여행지 데이터의 "차 필요"를 이 답으로 바꿈)</span></label>
+    <div class="seg" id="h-carv"></div>
     <h3>어땠나요?</h3>
     <div class="small muted">1~5로 매기고, 해당 없으면 비워 두세요. <b>3(보통)은 점수에 반영되지 않고</b>, 기준선(4) 이상 나빴거나 좋았을 때만 이유를 고르면 됩니다.</div>
     <div id="h-rates"></div>
@@ -397,7 +401,7 @@
 <script id="core">
 (function (root) {
   'use strict';
-  var SCHEMA_VERSION = 4; // v2: date → year/month/season · v3: 체크(checks)+attrs · v4: 맥락+평점+이유, 숙소·음식 선택지
+  var SCHEMA_VERSION = 5; // v2: date → year/month/season · v3: 체크(checks)+attrs · v4: 맥락+평점+이유 · v5: 가는 수단/현지 수단 분리 + 차 필요 직접 확인
   var SEASONS = { spring: '봄', summer: '여름', autumn: '가을', winter: '겨울' };
   var SEASON_MID = { spring: 4, summer: 7, autumn: 10, winter: 1 };
   // 과거 기록 시기 정규화. v1 의 date(YYYY-MM-DD)는 year·month 로 옮긴다.
@@ -430,11 +434,12 @@
       // v3 → v4: (구)체크 → 축 평가는 manual 로 보존, 사실 항목은 맥락·숙소·음식으로, 나머지는 메모로
       var le = legacyCheckEvals(checks);
       man.likes = man.likes.concat(le.likes); man.pains = man.pains.concat(le.pains);
-      var ctx = { pre_shift: null, post_shift: null, go_modes: [], drive_time: null }, stays = [], foods = [], labels = [];
+      var ctx = { pre_shift: null, post_shift: null, go_modes: [], local_modes: [], drive_time: null, car_verdict: null }, stays = [], foods = [], labels = [];
       checks.forEach(function (c) {
         var d = LEGACY_BY_ID[c.id]; if (!d) return;
         var mp = LEGACY_INFO_MAP[c.id];
         if (mp && mp[0] === 'go') { if (ctx.go_modes.indexOf(mp[1]) < 0) ctx.go_modes.push(mp[1]); }
+        else if (mp && mp[0] === 'local') { if (ctx.local_modes.indexOf(mp[1]) < 0) ctx.local_modes.push(mp[1]); }
         else if (mp && mp[0] === 'stay') { if (stays.indexOf(mp[1]) < 0) stays.push(mp[1]); }
         else if (mp && mp[0] === 'food') { if (foods.indexOf(mp[1]) < 0) foods.push(mp[1]); }
         else labels.push((d.kind === 'bad' ? '−' : d.kind === 'good' ? '+' : '') + d.label);
@@ -447,7 +452,11 @@
     t.manual = t.manual && typeof t.manual === 'object' ? { likes: t.manual.likes || [], pains: t.manual.pains || [] } : { likes: [], pains: [] };
     var c0 = t.context || {};
     t.context = { pre_shift: SHIFTS[c0.pre_shift] ? c0.pre_shift : null, post_shift: SHIFTS[c0.post_shift] ? c0.post_shift : null,
-      go_modes: (c0.go_modes || []).filter(function (x) { return GO_MODES[x]; }), drive_time: DRIVE_TIMES[c0.drive_time] ? c0.drive_time : null };
+      go_modes: (c0.go_modes || []).filter(function (x) { return GO_MODES[x]; }),
+      local_modes: (c0.local_modes || []).filter(function (x) { return LOCAL_MODES[x]; }),
+      drive_time: DRIVE_TIMES[c0.drive_time] ? c0.drive_time : null, car_verdict: CAR_VERDICT[c0.car_verdict] ? c0.car_verdict : null };
+    // v4 → v5: 가는 수단에 섞여 있던 렌터카는 현지 수단으로
+    if ((c0.go_modes || []).indexOf('rent') >= 0 && t.context.local_modes.indexOf('rent') < 0) t.context.local_modes.push('rent');
     t.reasons = t.reasons && typeof t.reasons === 'object' ? t.reasons : {};
     ['stay_types', 'food_eaten', 'food_liked'].forEach(function (k) { t[k] = Array.isArray(t[k]) ? t[k] : []; });
     t.revisit = REVISIT[t.revisit] ? t.revisit : null;
@@ -517,7 +526,10 @@
 
   // ---------- 여행 맥락 ----------
   var SHIFTS = { N: 'N 직후', D: 'D 후', E: 'E 후', O: 'O(휴무)' };
-  var GO_MODES = { car: '자차', rent: '렌터카', train: 'KTX·기차', bus: '고속·시외버스', plane: '비행기', ship: '배', metro: '전철·광역버스' };
+  var GO_MODES = { car: '자차', train: 'KTX·기차', bus: '고속·시외버스', plane: '비행기', ship: '배', metro: '전철·광역버스' }; // 목적지까지
+  var LOCAL_MODES = { car: '타고 간 자차', rent: '렌터카', taxi: '택시', transit: '버스·전철', walk: '도보 위주', tour: '투어·셔틀' }; // 목적지 안에서
+  var CAR_VERDICT = { must: '필수', nice: '있으면 편함', no: '없어도 됨' };
+  var CAR_VERDICT_LEVEL = { must: 2, nice: 1, no: 0 };
   var DRIVE_TIMES = { h1: '~1시간', h2: '1~2시간', h3: '2~3시간', h4: '3시간+' };
   var CAUSE_LABEL = { place: '장소', schedule: '일정·시기', condition: '컨디션', shift: '근무 피로', booking: '예약 선택' };
 
@@ -541,9 +553,9 @@
      ['r_go_ticket', '표 구하기 어려움', 'place', ['ticket_hard']], ['r_go_cancel', '연착·결항', 'place', ['cancel_risk']],
      ['r_go_shift', '근무 직후라 피곤', 'shift', ['long_travel']], ['r_go_sick', '멀미·컨디션', 'condition'], ['r_go_rush', '출발 시간 촉박', 'schedule']],
     [['r_go_direct', '환승 없이 한 번에', ['!transfer_load']], ['r_go_short', '금방 도착', ['!long_travel']]]);
-  rt({ id: 'drive_fatigue', scene: 'go', label: '운전 피로', polarity: 'bad', axis: 'drive', lo: '괜찮았음', hi: '힘들었음', showIf: 'drove' },
+  rt({ id: 'drive_fatigue', scene: 'go', label: '운전 피로 (가는 길 + 현지)', polarity: 'bad', axis: 'drive', lo: '괜찮았음', hi: '힘들었음', showIf: 'drove' },
     [['r_dr_long', '운전 시간이 김', 'place', ['long_travel']], ['r_dr_traffic', '정체', 'place'], ['r_dr_road', '길 복잡·초행', 'place'],
-     ['r_dr_shift', '근무 직후라 피곤', 'shift', ['car_needed']], ['r_dr_night', '야간 운전', 'schedule']]);
+     ['r_dr_shift', '근무 직후라 피곤', 'shift', ['car_needed']], ['r_dr_night', '야간 운전', 'schedule'], ['r_dr_local', '현지에서 운전 많이 함', 'place', ['car_needed', 'spread_out']]]);
   rt({ id: 'local_ease', scene: 'local', label: '현지 이동', polarity: 'good', axis: 'drive', lo: '불편', hi: '편함' },
     [['r_lo_car', '차 없으면 불편', 'place', ['car_needed']], ['r_lo_spread', '명소가 흩어짐', 'place', ['spread_out']], ['r_lo_parking', '주차 어려움', 'place']],
     [['r_lo_walk', '걸어서 다 됨', ['!spread_out']], ['r_lo_transit', '대중교통 편함', ['!car_needed']]]);
@@ -622,7 +634,7 @@
     ['md_quiet', '분위기 심심', null], ['ab_lang', '언어 불편'], ['ab_money', '결제·환전 불편'], ['ab_airport', '입국·공항 대기 김', 'move'], ['ab_jetlag', '장거리 비행 피로', 'move', 'condition']]);
   var LEGACY_BY_ID = {}; LEGACY_CHECKS.forEach(function (c) { LEGACY_BY_ID[c.id] = c; });
   var LEGACY_INFO_MAP = { go_car: ['go', 'car'], go_train: ['go', 'train'], go_bus: ['go', 'bus'], go_plane: ['go', 'plane'], go_ship: ['go', 'ship'], go_metro: ['go', 'metro'],
-    lo_rent: ['go', 'rent'], sl_hotel: ['stay', 'H'], sl_resort: ['stay', 'R'], sl_pension: ['stay', 'P'], sl_hanok: ['stay', 'K'], sl_camp: ['stay', 'C'],
+    lo_rent: ['local', 'rent'], lo_taxi: ['local', 'taxi'], lo_bus: ['local', 'transit'], lo_walk: ['local', 'walk'], sl_hotel: ['stay', 'H'], sl_resort: ['stay', 'R'], sl_pension: ['stay', 'P'], sl_hanok: ['stay', 'K'], sl_camp: ['stay', 'C'],
     ea_seafood: ['food', 'S'], ea_meat: ['food', 'M'], ea_korean: ['food', 'K'], ea_market: ['food', 'T'], ea_cafe: ['food', 'C'], ea_local: ['food', 'L'] };
   function legacyCheckEvals(checks) {
     var likes = [], pains = [];
@@ -845,6 +857,23 @@
     Object.keys(food).forEach(function (k) { L.foodAff[k] = food[k].liked / (food[k].c + s.smoothing); });
     return L;
   }
+  // 기록에서 직접 확인한 여행지 특성 (최근 기록 우선). 지금은 "현지에서 차가 필요했나" → car_needed
+  function observedAttrs(history) {
+    var out = {};
+    (history || []).slice().sort(function (a, b) { return whenSortKey(a) - whenSortKey(b); }).forEach(function (h) {
+      var v = h.context && h.context.car_verdict;
+      if (v && CAR_VERDICT_LEVEL[v] != null) { out[h.destination_id] = out[h.destination_id] || {}; out[h.destination_id].car_needed = CAR_VERDICT_LEVEL[v]; }
+    });
+    return out;
+  }
+  function withObserved(dest, obs) {
+    var o = obs && obs[dest.id]; if (!o) return dest;
+    var d = {}; Object.keys(dest).forEach(function (k) { d[k] = dest[k]; });
+    d.attrs = {}; Object.keys(dest.attrs || {}).forEach(function (k) { d.attrs[k] = dest.attrs[k]; });
+    Object.keys(o).forEach(function (k) { d.attrs[k] = o[k]; });
+    d.observed = o;
+    return d;
+  }
   function attrName(k) { var inv = k.charAt(0) === '!', a = ATTR_BY_KEY[inv ? k.slice(1) : k]; return a ? a.label + (inv ? ' 낮음' : '') : k; }
   // 여행지 하나에 대한 학습 반영: 속성 감점 / 근무 조건부 감점 / 가점(속성·선호). ctx = { nights, go, pre_shift }
   function learnedAdjust(dest, L, ctx, settings) {
@@ -915,7 +944,7 @@
   function recommend(data, cond) {
     var s = mergeSettings(data.settings);
     var mult = computeMultipliers(data.history, s);
-    var learned = computeLearned(data.history, s);
+    var learned = computeLearned(data.history, s), observed = observedAttrs(data.history);
     var w = effectiveWeights(cond.base_weights, mult);
     var visited = {}; (data.history || []).forEach(function (h) { visited[h.destination_id] = true; });
     var retAt = returnBy(cond.departure, cond.deadline, cond.nights, s);
@@ -941,7 +970,8 @@
       if (activeH < s.active_penalty_h && s.active_penalty_h > s.active_filter_h) {
         pen = s.active_penalty_max * (s.active_penalty_h - activeH) / (s.active_penalty_h - s.active_filter_h);
       }
-      var la = learnedAdjust(d, learned, { nights: cond.nights, go: go, pre_shift: cond.pre_shift || null }, s), plus = [];
+      var dObs = withObserved(d, observed);
+      var la = learnedAdjust(dObs, learned, { nights: cond.nights, go: go, pre_shift: cond.pre_shift || null }, s), plus = [];
       var arrival = addMin(cond.departure, go), warnings = softWarn;
       var ah = arrival.getHours();
       if (ah >= s.late_arrival_hour || ah < 5) warnings.push('늦은 도착 ' + pad(ah) + ':' + pad(arrival.getMinutes()));
@@ -954,7 +984,7 @@
       var cn = d.attrs && d.attrs.content_nights;
       if (cn != null && d.type !== 'spot' && cond.nights > cn + 1) warnings.push('볼거리 대비 ' + cond.nights + '박은 길 수 있음 (적정 ' + cn + '박)');
       if (d.type === 'overseas') warnings.push('항공편 시간 확인 필요');
-      var item = { dest: d, total: r.total, final: r.total - pen - la.pen - la.cond + la.bonus, penalty: pen, attrPenalty: la.pen, condPenalty: la.cond, bonus: la.bonus, learned: la, plus: plus, contrib: r.contrib, scores: r.scores,
+      var item = { dest: d, total: r.total, observed: dObs.observed || null, final: r.total - pen - la.pen - la.cond + la.bonus, penalty: pen, attrPenalty: la.pen, condPenalty: la.cond, bonus: la.bonus, learned: la, plus: plus, contrib: r.contrib, scores: r.scores,
         go: go, back: back, arrival: arrival, leaveBy: cond.deadline ? addMin(cond.deadline, -back) : null,
         activeH: activeH, warnings: warnings, visited: !!visited[d.id] };
       item.reason = reasonLine(item, mult);
@@ -1078,7 +1108,9 @@
             if (cx.pre_shift != null && !SHIFTS[cx.pre_shift]) errors.push(tag + '.context.pre_shift 는 N|D|E|O');
             if (cx.post_shift != null && !SHIFTS[cx.post_shift]) errors.push(tag + '.context.post_shift 는 N|D|E|O');
             if (cx.drive_time != null && !DRIVE_TIMES[cx.drive_time]) errors.push(tag + '.context.drive_time 은 ' + Object.keys(DRIVE_TIMES).join('|'));
-            (cx.go_modes || []).forEach(function (m) { if (!GO_MODES[m]) errors.push(tag + '.context.go_modes: "' + m + '" (' + Object.keys(GO_MODES).join('|') + ')'); });
+            (cx.local_modes || []).forEach(function (m) { if (!LOCAL_MODES[m]) errors.push(tag + '.context.local_modes: "' + m + '" (' + Object.keys(LOCAL_MODES).join('|') + ')'); });
+            if (cx.car_verdict != null && !CAR_VERDICT[cx.car_verdict]) errors.push(tag + '.context.car_verdict 는 must|nice|no');
+            (cx.go_modes || []).forEach(function (m) { if (m === 'rent') return warnings.push(tag + '.context.go_modes: rent 는 현지 수단으로 옮김'); if (!GO_MODES[m]) errors.push(tag + '.context.go_modes: "' + m + '" (' + Object.keys(GO_MODES).join('|') + ')'); });
           }
           [['stay_types', STAY_TYPES], ['food_eaten', FOOD_KINDS], ['food_liked', FOOD_KINDS]].forEach(function (x) {
             var v = h[x[0]]; if (v == null) return;
@@ -1195,11 +1227,15 @@
     t('숙소 선택지 적음 → 선택지 폭 좁은 곳만 감점', learnedAdjust({ attrs: { stay_variety: 0 } }, Lb, { nights: 1 }).pen > 0 && learnedAdjust({ attrs: { stay_variety: 2 } }, Lb, { nights: 1 }).pen === 0);
     var Lt = computeLearned([tr({ stay_sat: 1 }, { stay_sat: ['r_st_noise'] })]);
     t('숙소 소음(예약 선택) → 점수 영향 없이 팁만', learnedAdjust({ attrs: { stay_variety: 0 } }, Lt, { nights: 1 }).pen === 0 && !!Lt.tips.r_st_noise);
+    var ob = observedAttrs([{ destination_id: 'z', year: 2024, context: { car_verdict: 'no' } }, { destination_id: 'z', year: 2025, context: { car_verdict: 'must' } }]);
+    t('"현지에서 차 필수" 직접 확인 → 최근 기록으로 차 필요 2', ob.z && ob.z.car_needed === 2 && withObserved({ id: 'z', attrs: { car_needed: 0 } }, ob).attrs.car_needed === 2);
+    var mv = normalizeTrip({ id: 'm', destination_id: 'z', nights: 1, overall: 3, ratings: {}, context: { go_modes: ['plane', 'rent'] } });
+    t('v4 가는 수단의 렌터카 → 현지 수단으로', mv.context.go_modes.join() === 'plane' && mv.context.local_modes.join() === 'rent');
     return res;
   }
 
   var api = { SCHEMA_VERSION: SCHEMA_VERSION, AXES: AXES, AXIS_KEYS: AXIS_KEYS, AXIS_LABEL: AXIS_LABEL, ORIGIN_LABEL: ORIGIN_LABEL,
-    ATTRS: ATTRS, STAY_TYPES: STAY_TYPES, FOOD_KINDS: FOOD_KINDS, SHIFTS: SHIFTS, GO_MODES: GO_MODES, DRIVE_TIMES: DRIVE_TIMES,
+    ATTRS: ATTRS, STAY_TYPES: STAY_TYPES, FOOD_KINDS: FOOD_KINDS, SHIFTS: SHIFTS, GO_MODES: GO_MODES, LOCAL_MODES: LOCAL_MODES, CAR_VERDICT: CAR_VERDICT, observedAttrs: observedAttrs, withObserved: withObserved, DRIVE_TIMES: DRIVE_TIMES,
     CAUSE_LABEL: CAUSE_LABEL, RATING_SCENES: RATING_SCENES, RATINGS: RATINGS, RATING_BY_ID: RATING_BY_ID, REASON_BY_ID: REASON_BY_ID,
     REVISIT: REVISIT, tripEvals: tripEvals, ratingEvents: ratingEvents, computeLearned: computeLearned, learnedAdjust: learnedAdjust,
     attrMatch: attrMatch, attrName: attrName, SEASONS: SEASONS, normalizeTrip: normalizeTrip, whenLabel: whenLabel, whenSortKey: whenSortKey,
@@ -1401,7 +1437,8 @@
           '</span><div class="tr"><div class="fl" style="width:' + (item.contrib[k] / maxC * 100).toFixed(1) + '%"></div></div><span>' + item.contrib[k].toFixed(2) + '</span></div>';
       }).join('');
     };
-    var typeTag = d.type === 'spot' ? '<span class="tag">거점</span>' : d.long_off_tag ? '<span class="tag">장기오프</span>' : '';
+    var typeTag = (d.type === 'spot' ? '<span class="tag">거점</span>' : d.long_off_tag ? '<span class="tag">장기오프</span>' : '') +
+      (item.observed && item.observed.car_needed != null ? '<span class="tag">차 ' + ['없어도 됨', '있으면 편함', '필수'][item.observed.car_needed] + ' (직접 확인)</span>' : '');
     var meta = C.ORIGIN_LABEL[origin].replace(/\(.+\)/, '') + '→ 편도 ' + fmtDur(item.go) + ' · 도착 ' + fmtDT(item.arrival).replace(/^.*\) /, '') +
       ' · 활동 ' + fmtDur(item.activeH * 60) + ' · ' + ['', '저', '중', '고'][d.cost_level];
     var detail = '<table><tr><th>축</th><th class="num">점수(월 보정)</th><th class="num">w\'</th><th class="num">기여</th></tr>' +
@@ -1475,7 +1512,8 @@
   })();
   function syncUnknown() { var u = $('h-unknown').checked; $('h-year').disabled = u; $('h-when').disabled = u; }
   $('h-unknown').addEventListener('change', syncUnknown);
-  function drove() { return form.modes.indexOf('car') >= 0 || form.modes.indexOf('rent') >= 0; }
+  function droveThere() { return form.modes.indexOf('car') >= 0; }
+  function drove() { return droveThere() || form.local.indexOf('rent') >= 0 || form.local.indexOf('car') >= 0; }
   function chipList(group, map, sel) {
     return Object.keys(map).map(function (k) { return '<button type="button" class="chip info' + (sel.indexOf(k) >= 0 ? ' on' : '') + '" data-grp="' + group + '" data-v="' + k + '">' + map[k] + '</button>'; }).join('');
   }
@@ -1485,9 +1523,12 @@
     });
     document.querySelectorAll('#h-revisit button').forEach(function (x) { x.classList.toggle('on', x.dataset.v === form.revisit); });
     $('h-modes').innerHTML = chipList('modes', C.GO_MODES, form.modes);
-    $('h-drive-box').style.display = drove() ? '' : 'none';
+    $('h-local').innerHTML = chipList('local', droveThere() ? C.LOCAL_MODES : (function () { var m = {}; Object.keys(C.LOCAL_MODES).forEach(function (k) { if (k !== 'car') m[k] = C.LOCAL_MODES[k]; }); return m; })(), form.local);
+    $('h-drive-box').style.display = droveThere() ? '' : 'none';
+    document.querySelectorAll('#h-carv button').forEach(function (b) { b.classList.toggle('on', b.dataset.v === form.carv); });
   }
-  ['pre', 'post', 'drive', 'revisit'].forEach(function (k) {
+  $('h-carv').innerHTML = Object.keys(C.CAR_VERDICT).map(function (k) { return '<button data-v="' + k + '">' + C.CAR_VERDICT[k] + '</button>'; }).join('');
+  ['pre', 'post', 'drive', 'revisit', 'carv'].forEach(function (k) {
     $('h-' + k).addEventListener('click', function (e) {
       var b = e.target.closest('button'); if (!b) return;
       form[k] = form[k] === b.dataset.v ? null : b.dataset.v; renderContext(); if (k === 'pre') renderRates();
@@ -1541,7 +1582,13 @@
   });
   $('h-modes').addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;
-    toggleIn(form.modes, b.dataset.v); if (!drove()) form.drive = null; renderContext(); renderRates();
+    toggleIn(form.modes, b.dataset.v);
+    if (!droveThere()) { form.drive = null; var i = form.local.indexOf('car'); if (i >= 0) form.local.splice(i, 1); }
+    renderContext(); renderRates();
+  });
+  $('h-local').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    toggleIn(form.local, b.dataset.v); renderContext(); renderRates();
   });
   function toggleIn(arr, v) { var i = arr.indexOf(v); if (i >= 0) arr.splice(i, 1); else arr.push(v); }
   $('h-dest').addEventListener('change', renderRates);
@@ -1561,7 +1608,7 @@
     }).join('');
     var t = trip ? C.normalizeTrip(trip) : null, cx = t ? t.context : {};
     form = { ratings: Object.assign({}, t ? t.ratings : {}), reasons: JSON.parse(JSON.stringify(t ? t.reasons : {})), revisit: t ? t.revisit : null,
-      pre: cx.pre_shift || null, post: cx.post_shift || null, modes: (cx.go_modes || []).slice(), drive: cx.drive_time || null,
+      pre: cx.pre_shift || null, post: cx.post_shift || null, modes: (cx.go_modes || []).slice(), local: (cx.local_modes || []).slice(), drive: cx.drive_time || null, carv: cx.car_verdict || null,
       stays: t ? t.stay_types.slice() : [], eaten: t ? t.food_eaten.slice() : [], liked: t ? t.food_liked.slice() : [] };
     var man = (t && t.manual) || { likes: [], pains: [] }, likes = {}, pains = {};
     man.likes.forEach(function (l) { likes[l.axis] = l.severity == null ? 'x' : String(l.severity); });
@@ -1609,7 +1656,8 @@
     var trip = { id: editingId || ('h' + Date.now().toString(36)), destination_id: $('h-dest').value,
       year: yv ? Number(yv) : null, month: wv[0] === 'm' ? Number(wv.slice(1)) : null, season: wv[0] === 's' ? wv.slice(1) : null,
       nights: Math.max(0, Number($('h-nights').value) || 0), overall: Number($('h-overall').value), revisit: form.revisit,
-      context: { pre_shift: form.pre, post_shift: form.post, go_modes: form.modes.slice(), drive_time: drove() ? form.drive : null },
+      context: { pre_shift: form.pre, post_shift: form.post, go_modes: form.modes.slice(), local_modes: form.local.slice(),
+        drive_time: droveThere() ? form.drive : null, car_verdict: form.carv },
       ratings: ratings, reasons: reasons, stay_types: form.stays.slice(), food_eaten: form.eaten.slice(), food_liked: form.liked.slice(),
       manual: manual, note: $('h-note').value.trim() };
     if (editingId) data.history = data.history.map(function (h) { return h.id === editingId ? trip : h; });
@@ -1655,6 +1703,11 @@
       Object.keys(L.stayAff).map(function (t) { var v = s.pref_gain * L.stayAff[t]; return '<tr><td>숙소 유형 ' + C.STAY_TYPES[t] + '</td><td>숙소 평점 평균</td><td class="num">' + (v >= 0 ? '+' : '') + v.toFixed(2) + '</td></tr>'; }).join('') +
       Object.keys(L.foodAff).filter(function (k) { return L.foodAff[k] > 0; }).map(function (k) { return '<tr><td>음식 ' + C.FOOD_KINDS[k] + '</td><td>특히 좋았던 것</td><td class="num">+' + (s.pref_gain * L.foodAff[k]).toFixed(2) + '</td></tr>'; }).join('');
     h += tbl('가점 · 선호', pb, '아직 없음. 예: 음식 5점 + "고를 데가 많았음" → 먹을 곳 많은 곳 가점, 해산물을 "특히 좋았던 것"으로 → 해산물 강한 곳 가점');
+    var obs = C.observedAttrs(data.history);
+    h += '<h3>직접 확인한 여행지 특성</h3>' + (Object.keys(obs).length ? '<table><tr><th>여행지</th><th>차 필요</th><th>원래 추정</th></tr>' +
+      Object.keys(obs).map(function (id) { var d = destOf(id), lv = ['없어도 됨', '있으면 편함', '필수'];
+        return '<tr><td>' + esc(destName(id)) + '</td><td><b>' + lv[obs[id].car_needed] + '</b></td><td class="muted">' + (d && d.attrs && d.attrs.car_needed != null ? lv[d.attrs.car_needed] : '-') + '</td></tr>'; }).join('') + '</table>'
+      : '<div class="small muted">기록에서 "다녀보니 이곳은 차가…"에 답하면 그 여행지의 차 필요 여부를 추정치 대신 이 값으로 계산합니다.</div>');
     var tips = Object.keys(L.tips).map(function (k) { return L.tips[k]; });
     h += '<h3>예약 팁 (점수 영향 없음)</h3>' + (tips.length ? '<ul class="small">' + tips.map(function (t) { return '<li>' + esc(t.tip) + ' <span class="muted">← ' + esc(t.label) + (t.count > 1 ? ' ×' + t.count : '') + '</span></li>'; }).join('') + '</ul>'
       : '<div class="small muted">숙소 소음·청결 같은 "그 숙소" 문제는 여행지 점수 대신 여기 예약 팁으로 모입니다.</div>');
@@ -1668,8 +1721,9 @@
     var list = data.history.slice().sort(function (a, b) { return C.whenSortKey(b) - C.whenSortKey(a); });
     $('h-list').innerHTML = list.length ? list.map(function (h0) {
       var h = C.normalizeTrip(h0), cx = h.context;
-      var ctxs = [cx.pre_shift ? C.SHIFTS[cx.pre_shift] + ' 출발' : '', cx.go_modes.map(function (m) { return C.GO_MODES[m]; }).join('·'),
-        cx.drive_time ? '운전 ' + C.DRIVE_TIMES[cx.drive_time] : '', cx.post_shift ? '복귀 후 ' + cx.post_shift : ''].filter(Boolean).join(' · ');
+      var ctxs = [cx.pre_shift ? C.SHIFTS[cx.pre_shift] + ' 출발' : '', cx.go_modes.length ? '가는 길 ' + cx.go_modes.map(function (m) { return C.GO_MODES[m]; }).join('·') : '',
+        cx.drive_time ? '운전 ' + C.DRIVE_TIMES[cx.drive_time] : '', cx.local_modes.length ? '현지 ' + cx.local_modes.map(function (m) { return C.LOCAL_MODES[m]; }).join('·') : '',
+        cx.car_verdict ? '차 ' + C.CAR_VERDICT[cx.car_verdict] : '', cx.post_shift ? '복귀 후 ' + cx.post_shift : ''].filter(Boolean).join(' · ');
       var pills = C.RATINGS.filter(function (r) { return h.ratings[r.id]; }).map(function (r) {
         var v = h.ratings[r.id], b = badnessOf(r, v), cls = b >= T ? 'pain' : (6 - b) >= T ? 'like' : 'dim';
         var rs = (h.reasons[r.id] || []).map(function (id) { var x = C.REASON_BY_ID[id]; return x ? x.label : null; }).filter(Boolean);
